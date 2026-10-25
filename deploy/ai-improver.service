@@ -1,0 +1,20 @@
+[Unit]
+Description=AI Improver (OpenAI-compatible enhancing proxy)
+After=network.target
+
+[Service]
+Type=simple
+User=aiimprover
+WorkingDirectory=/opt/ai-improver
+EnvironmentFile=/opt/ai-improver/.env
+ExecStart=/usr/bin/node server/index.js
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ai-improver/data
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
