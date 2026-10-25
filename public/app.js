@@ -168,6 +168,13 @@ const VIEWS = {
         </div>
       </div>
       <div class="card" style="margin-top:14px">
+        <div class="card-head"><h2>Вход без пароля</h2>${sw('rememberIp', S.state.rememberIp, '<span class="small muted">запоминать IP после входа</span>')}</div>
+        <p class="muted small" style="margin:-6px 0 10px">С этих адресов панель открывается сразу. Ваш текущий IP: <span class="mono">${esc(S.state.myIp)}</span>. «Выйти» убирает текущий адрес из списка.</p>
+        <div class="list">${S.state.trustedIps.map(t => `
+          <div class="item"><div class="grow"><div class="title mono">${esc(t.ip)}${t.ip === S.state.myIp ? ' <span class="pill ok">это вы</span>' : ''}</div><div class="sub">${new Date(t.added).toLocaleString()} · ${esc(t.agent || '')}</div></div>
+          <button class="btn sm ghost danger" data-a="delTrusted" data-ip="${esc(t.ip)}">Убрать</button></div>`).join('') || '<div class="empty">Пока пусто — адрес добавится при следующем входе</div>'}</div>
+      </div>
+      <div class="card" style="margin-top:14px">
         <div class="card-head"><h2>Какие инструкции срабатывают</h2><span class="muted small">≈ ${fmt(s.injectedTokensEst)} токенов подмешано всего</span></div>
         ${hits.length ? `<table><tbody>${hits.map(([id, n]) => `<tr><td style="width:200px">${esc(S.state.guides.find(g => g.id === id)?.title || id)}</td><td><div class="bar"><b style="width:${(n / maxHit) * 100}%"></b></div></td><td class="num" style="width:60px">${n}</td></tr>`).join('')}</tbody></table>` : '<div class="empty">Пока нет данных — отправьте запрос в песочнице</div>'}
       </div>`;
@@ -301,6 +308,10 @@ function metaHtml(m) {
 // ---------- per-view wiring ----------
 const AFTER = {
   overview() {
+    $('[name=rememberIp]').onchange = run(async e => {
+      await api('/general', { method: 'PUT', body: { rememberIp: e.target.checked } });
+      toast(e.target.checked ? 'IP будут запоминаться' : 'Вход только по паролю');
+    });
     $('[name=requireApiKey]').onchange = run(async e => {
       await api('/general', { method: 'PUT', body: { requireApiKey: e.target.checked } });
       toast(e.target.checked ? 'Ключ обязателен' : 'Доступ без ключа');
@@ -592,6 +603,11 @@ const ACTIONS = {
   delKey: run(async el => {
     if (!confirm('Удалить ключ? Клиенты с ним перестанут работать.')) return;
     await api('/keys/' + el.dataset.id, { method: 'DELETE' });
+    await refresh();
+    render();
+  }),
+  delTrusted: run(async el => {
+    await api('/trusted/' + encodeURIComponent(el.dataset.ip), { method: 'DELETE' });
     await refresh();
     render();
   }),

@@ -12,6 +12,9 @@ function defaults() {
   return {
     sessionSecret: rid(32),
     requireApiKey: true,
+    // Remember the address of every successful admin login and skip the password from it.
+    rememberIp: true,
+    trustedIps: [],
     apiKeys: [{ id: rid(), name: 'default', key: 'sk-imp-' + rid(20), created: Date.now() }],
     providers: [
       { id: 'openai', name: 'OpenAI', baseUrl: 'https://api.openai.com/v1', apiKey: '' }

@@ -57,11 +57,25 @@ function sign(payload) {
 }
 
 function makeSession() {
-  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + 7 * 864e5 })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + 365 * 864e5 })).toString('base64url');
   return `${payload}.${sign(payload)}`;
 }
 
+// Behind a reverse proxy (TRUST_PROXY=1) the client address comes from
+// X-Forwarded-For, which the proxy must overwrite, not append to. Without the
+// flag the header is ignored, since anyone could forge it.
+function clientIp(req) {
+  const fwd = process.env.TRUST_PROXY ? String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() : '';
+  return (fwd || req.socket.remoteAddress || '').replace(/^::ffff:/, '');
+}
+
+const isTrustedIp = req => {
+  const cfg = getConfig();
+  return cfg.rememberIp && cfg.trustedIps.some(t => t.ip === clientIp(req));
+};
+
 function isAdmin(req) {
+  if (isTrustedIp(req)) return true;
   const m = /(?:^|;\s*)imp_session=([^;]+)/.exec(req.headers.cookie || '');
   if (!m) return false;
   const [payload, sig] = m[1].split('.');
@@ -102,6 +116,8 @@ function publicState() {
   const c = getConfig();
   return {
     requireApiKey: c.requireApiKey,
+    rememberIp: c.rememberIp,
+    trustedIps: c.trustedIps,
     apiKeys: c.apiKeys,
     providers: c.providers.map(p => ({ ...p, apiKey: '', apiKeyPreview: mask(p.apiKey), apiKeySet: !!p.apiKey })),
     classifier: c.classifier,
@@ -218,17 +234,31 @@ async function admin(req, res, url) {
   const method = req.method;
 
   if (p === '/login' && method === 'POST') {
-    const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
+    const ip = clientIp(req);
     if (!loginAllowed(ip)) return apiError(res, 429, 'Too many attempts, try later');
     const { password } = await readBody(req);
     if (!safeEq(password || '', ADMIN_PASSWORD)) {
       attempts.get(ip).n++;
       return apiError(res, 401, 'Wrong password');
     }
+    const cfg = getConfig();
+    if (cfg.rememberIp && !cfg.trustedIps.some(t => t.ip === ip)) {
+      cfg.trustedIps.push({ ip, added: Date.now(), agent: String(req.headers['user-agent'] || '').slice(0, 120) });
+      saveConfig();
+    }
     const secure = req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
-    return sendJson(res, 200, { ok: true }, { 'set-cookie': `imp_session=${makeSession()}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800${secure}` });
+    return sendJson(res, 200, { ok: true }, { 'set-cookie': `imp_session=${makeSession()}; HttpOnly; SameSite=Strict; Path=/; Max-Age=31536000${secure}` });
   }
-  if (p === '/logout') return sendJson(res, 200, { ok: true }, { 'set-cookie': 'imp_session=; Path=/; Max-Age=0' });
+  if (p === '/logout') {
+    // Logging out also forgets this address, otherwise the next visit would be let straight back in.
+    const cfg = getConfig();
+    const ip = clientIp(req);
+    if (cfg.trustedIps.some(t => t.ip === ip)) {
+      cfg.trustedIps = cfg.trustedIps.filter(t => t.ip !== ip);
+      saveConfig();
+    }
+    return sendJson(res, 200, { ok: true }, { 'set-cookie': 'imp_session=; Path=/; Max-Age=0' });
+  }
   if (p === '/me') return sendJson(res, 200, { admin: isAdmin(req) });
 
   if (!isAdmin(req)) return apiError(res, 401, 'Login required', 'authentication_error');
@@ -243,7 +273,7 @@ async function admin(req, res, url) {
 
   switch (kind) {
     case 'state':
-      return sendJson(res, 200, publicState());
+      return sendJson(res, 200, { ...publicState(), myIp: clientIp(req) });
     case 'logs':
       return sendJson(res, 200, { logs: stats.logs(200) });
     case 'stats':
@@ -251,7 +281,8 @@ async function admin(req, res, url) {
       return sendJson(res, 200, stats.snapshot());
     case 'general':
       if ('requireApiKey' in body) cfg.requireApiKey = !!body.requireApiKey;
-      out = { requireApiKey: cfg.requireApiKey };
+      if ('rememberIp' in body) cfg.rememberIp = !!body.rememberIp;
+      out = { requireApiKey: cfg.requireApiKey, rememberIp: cfg.rememberIp };
       break;
     case 'classifier':
       Object.assign(cfg.classifier, pick(body, CLASSIFIER_FIELDS));
@@ -339,6 +370,10 @@ async function admin(req, res, url) {
         ...f
       }));
       clearClassifierCache();
+      break;
+    case 'trusted':
+      cfg.trustedIps = cfg.trustedIps.filter(t => t.ip !== decodeURIComponent(id || ''));
+      out = cfg.trustedIps;
       break;
     case 'keys':
       if (method === 'DELETE') cfg.apiKeys = cfg.apiKeys.filter(k => k.id !== id);

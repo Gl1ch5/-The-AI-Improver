@@ -107,6 +107,8 @@ before(async () => {
   const state = await admin('/state');
   apiKey = state.apiKeys[0].key;
   await admin('/providers/openai', 'PUT', { baseUrl: `http://127.0.0.1:${MOCK_PORT}/v1`, apiKey: 'x' });
+  // Login remembered 127.0.0.1; switch that off so auth tests see a stranger.
+  await admin('/general', 'PUT', { rememberIp: false });
 });
 
 after(() => {
@@ -238,6 +240,23 @@ test('journal records the routing decision', async () => {
   assert.ok(hit, 'a logged request carries its guides');
   assert.equal(hit.status, 200);
   assert.equal(typeof hit.totalMs, 'number');
+});
+
+test('a remembered IP opens the panel without a password until logout', async () => {
+  const me = () => fetch(BASE + '/api/me').then(r => r.json());
+  assert.equal((await me()).admin, false);
+  await admin('/general', 'PUT', { rememberIp: true });
+  const state = await admin('/state');
+  assert.ok(state.trustedIps.some(t => t.ip === state.myIp));
+  assert.equal((await me()).admin, true);
+  await fetch(BASE + '/api/logout', { method: 'POST', headers: { 'content-type': 'application/json' } });
+  assert.equal((await me()).admin, false);
+  await admin('/general', 'PUT', { rememberIp: false });
+});
+
+test('forged X-Forwarded-For is ignored without TRUST_PROXY', async () => {
+  const r = await fetch(BASE + '/api/state', { headers: { cookie, 'x-forwarded-for': '6.6.6.6' } });
+  assert.notEqual((await r.json()).myIp, '6.6.6.6');
 });
 
 test('admin writes require JSON content type', async () => {
