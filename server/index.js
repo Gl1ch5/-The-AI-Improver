@@ -201,7 +201,32 @@ async function chatCompletions(req, res) {
     apiError(res, e.status || 502, e.message, e.type || 'upstream_error');
   } finally {
     entry.totalMs = Date.now() - started;
+    logRequest(entry, body);
   }
+}
+
+// One JSON line per request in the service journal, so routing can be audited
+// with journalctl without the admin panel. No keys, headers or full prompts.
+function logRequest(e, body) {
+  const msgs = Array.isArray(body?.messages) ? body.messages : [];
+  console.log('[req] ' + JSON.stringify({
+    model: e.model,
+    status: e.status,
+    msgs: msgs.length,
+    last: msgs.at(-1)?.role,
+    tools: body?.tools?.length || 0,
+    src: e.source,
+    cx: e.complexity,
+    guides: e.guides,
+    matched: e.matched?.length ? e.matched : undefined,
+    clsMs: e.classifierMs,
+    clsErr: e.classifierError,
+    inj: e.injectedTokens,
+    advisor: e.tool || undefined,
+    ms: e.totalMs,
+    err: e.error?.slice(0, 160),
+    q: (e.preview || '').replace(/\s+/g, ' ').slice(0, 80)
+  }));
 }
 
 function listV1Models(req, res) {

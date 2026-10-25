@@ -205,6 +205,8 @@ async function analyze(cfg, s) {
 }
 
 function record(ev) {
+  const { title, ...rest } = ev;
+  console.log('[learn] ' + JSON.stringify({ ...rest, title: title.slice(0, 60) }));
   events.unshift(ev);
   if (events.length > 50) events.length = 50;
   return ev;
