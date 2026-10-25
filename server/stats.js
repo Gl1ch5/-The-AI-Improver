@@ -54,12 +54,11 @@ export const stats = {
     for (const id of ids) totals.guideHits[id] = (totals.guideHits[id] || 0) + 1;
     dirty = true;
   },
+  // Stores the entry by reference so the request handler can fill it in as it goes.
   record(entry) {
-    log.unshift({ at: Date.now(), ...entry });
+    entry.at = Date.now();
+    log.unshift(entry);
     if (log.length > LOG_SIZE) log.length = LOG_SIZE;
-  },
-  update(entry, patch) {
-    Object.assign(entry, patch);
   },
   snapshot() {
     const llm = totals.classifierCalls || 1;

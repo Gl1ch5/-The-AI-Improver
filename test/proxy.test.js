@@ -184,6 +184,14 @@ test('unknown model returns OpenAI-style 404', async () => {
   assert.equal((await res.json()).error.type, 'model_not_found');
 });
 
+test('journal records the routing decision', async () => {
+  const { logs } = await admin('/logs');
+  const hit = logs.find(l => l.guides?.includes('web-design'));
+  assert.ok(hit, 'a logged request carries its guides');
+  assert.equal(hit.status, 200);
+  assert.equal(typeof hit.totalMs, 'number');
+});
+
 test('admin writes require JSON content type', async () => {
   const r = await fetch(BASE + '/api/keys', { method: 'POST', headers: { cookie } });
   assert.equal(r.status, 415);
