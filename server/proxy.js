@@ -82,8 +82,11 @@ export async function prepare(cfg, body) {
   let cls = { guides: [], complexity: 'simple', critique: '', source: 'off', ms: 0 };
   if (mode !== 'off') cls = await classify(cfg, body.messages, stats);
 
+  // Only on a fresh user turn: in agent loops the last message is a tool result,
+  // and re-reviewing the plan on every step would add latency for nothing.
+  const freshTurn = body.messages.at(-1)?.role === 'user';
   const toolEnabled =
-    (mode === 'tool' || mode === 'both') && cls.complexity === 'complex' && body.tool_choice !== 'none';
+    (mode === 'tool' || mode === 'both') && freshTurn && cls.complexity === 'complex' && body.tool_choice !== 'none';
   const guidance =
     mode === 'off' || cls.complexity === 'trivial'
       ? { text: '', used: [] }

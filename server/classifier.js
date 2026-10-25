@@ -125,9 +125,17 @@ export async function classify(cfg, messages, stats) {
     stats?.classifierCall(r.usage, r.ms);
     const j = parseJsonLoose(r.text);
     const known = new Set(guides.map(g => g.id));
+    let picked = (Array.isArray(j.g) ? j.g : []).filter(id => known.has(id));
+    let complexity = ['trivial', 'simple', 'complex'].includes(j.c) ? j.c : 'simple';
+    // Small models over-use "trivial" for short real tasks ("write is_prime").
+    // Only genuine small talk may skip enhancement.
+    if (complexity === 'trivial' && !isTrivial(text)) {
+      complexity = 'simple';
+      if (!picked.length) picked = heuristicClassify(text, guides).guides;
+    }
     const result = {
-      guides: (Array.isArray(j.g) ? j.g : []).filter(id => known.has(id)),
-      complexity: ['trivial', 'simple', 'complex'].includes(j.c) ? j.c : 'simple',
+      guides: picked,
+      complexity,
       critique: typeof j.t === 'string' ? j.t.trim().slice(0, 600) : '',
       lang: typeof j.l === 'string' ? j.l : detectLang(text),
       source: 'llm'

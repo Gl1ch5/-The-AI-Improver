@@ -20,6 +20,9 @@ function startMock() {
     const body = JSON.parse(raw);
     seen.push(body);
     const sys = body.messages[0]?.role === 'system' ? body.messages[0].content : '';
+    if (sys.includes('request router') && body.messages[1].content.includes('is_prime')) {
+      return res.end(JSON.stringify({ choices: [{ message: { content: '{"g":[],"c":"trivial","t":"","l":"ru"}' } }] }));
+    }
     if (sys.includes('request router')) {
       return res.end(JSON.stringify({
         choices: [{ message: { content: '{"g":["web-design"],"c":"complex","t":"Needs a clear hero and real copy.","l":"ru"}' } }],
@@ -181,6 +184,30 @@ test('advisor tool round-trip works without streaming', async () => {
   const j = await res.json();
   assert.equal(j.choices[0].message.content, 'guided=true advice=- Add a pricing section');
   assert.equal(j.choices[0].message.tool_calls, undefined);
+});
+
+test('agent continuation after a tool result does not offer the advisor again', async () => {
+  seen.length = 0;
+  const res = await chat({
+    model: 'improved-gpt',
+    tools: [{ type: 'function', function: { name: 'read_file', parameters: { type: 'object', properties: {} } } }],
+    messages: [
+      { role: 'user', content: 'Сделай сайт для барбершопа' },
+      { role: 'assistant', content: null, tool_calls: [{ id: 't1', type: 'function', function: { name: 'read_file', arguments: '{}' } }] },
+      { role: 'tool', tool_call_id: 't1', content: 'file contents' }
+    ]
+  });
+  await res.json();
+  const main = seen.at(-1);
+  assert.deepEqual(main.tools.map(t => t.function.name), ['read_file']);
+  assert.match(main.messages[0].content, /Web \/ UI design/, 'guides still apply on continuation steps');
+});
+
+test('a real task the classifier calls trivial still gets guidance', async () => {
+  seen.length = 0;
+  await (await chat({ model: 'improved-gpt', messages: [{ role: 'user', content: 'Напиши на Python функцию is_prime(n), только код' }] })).json();
+  const main = seen.at(-1);
+  assert.match(main.messages[0].content, /General coding quality/);
 });
 
 test('unknown model returns OpenAI-style 404', async () => {
