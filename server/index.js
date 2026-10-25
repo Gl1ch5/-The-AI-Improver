@@ -8,6 +8,7 @@ import { prepare, handleStream, handleJson, HttpError } from './proxy.js';
 import { classify, clearClassifierCache } from './classifier.js';
 import { listModels, providerById } from './upstream.js';
 import { stats } from './stats.js';
+import { track, sweep, startLearner, learnerState } from './learner.js';
 
 const PORT = Number(process.env.PORT || 3210);
 const HOST = process.env.HOST || '0.0.0.0';
@@ -15,6 +16,7 @@ const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.
 
 loadConfig();
 const ADMIN_PASSWORD = adminPassword();
+startLearner(getConfig);
 
 // ---------- helpers ----------
 
@@ -122,6 +124,7 @@ function publicState() {
     providers: c.providers.map(p => ({ ...p, apiKey: '', apiKeyPreview: mask(p.apiKey), apiKeySet: !!p.apiKey })),
     classifier: c.classifier,
     advisor: c.advisor,
+    learning: c.learning,
     models: c.models,
     guides: c.guides,
     defaults: defaultPrompts,
@@ -145,6 +148,7 @@ async function chatCompletions(req, res) {
 
   try {
     const prep = await prepare(cfg, body);
+    track(cfg, prep.model.name, body.messages);
     const cls = prep.meta.classification;
     const lastUser = [...body.messages].reverse().find(m => m.role === 'user');
     Object.assign(entry, {
@@ -153,6 +157,7 @@ async function chatCompletions(req, res) {
       source: cls.source,
       complexity: cls.complexity,
       guides: prep.meta.guides,
+      matched: cls.matched,
       critique: cls.critique,
       classifierMs: cls.ms,
       classifierError: cls.error,
@@ -213,9 +218,10 @@ const pick = (o, keys) => Object.fromEntries(keys.filter(k => k in o).map(k => [
 
 const MODEL_FIELDS = ['name', 'enabled', 'providerId', 'upstreamModel', 'systemPrompt', 'extraBody', 'enhance'];
 const PROVIDER_FIELDS = ['name', 'baseUrl', 'apiKey'];
-const GUIDE_FIELDS = ['title', 'hint', 'keywords', 'stickyTriggers', 'text', 'enabled', 'edited', 'category'];
+const GUIDE_FIELDS = ['title', 'hint', 'keywords', 'stickyTriggers', 'patterns', 'topic', 'text', 'enabled', 'edited', 'category'];
 const CLASSIFIER_FIELDS = ['enabled', 'providerId', 'model', 'temperature', 'maxTokens', 'timeoutMs', 'maxInputChars', 'cacheTtlSec', 'skipTrivial', 'extraBody', 'systemPrompt'];
 const ADVISOR_FIELDS = ['providerId', 'model', 'maxTokens', 'timeoutMs', 'systemPrompt'];
+const LEARNING_FIELDS = ['enabled', 'providerId', 'model', 'idleMin', 'minUserTurns', 'minMessages', 'maxInputChars', 'maxTokens', 'timeoutMs', 'autoEnable', 'maxLearned', 'systemPrompt'];
 
 function crud(list, id, patch, fields, res, makeNew) {
   if (id) {
@@ -293,6 +299,15 @@ async function admin(req, res, url) {
       Object.assign(cfg.advisor, pick(body, ADVISOR_FIELDS));
       out = cfg.advisor;
       break;
+    case 'learning':
+      if (id === 'flush' && method === 'POST') {
+        await sweep(cfg, true);
+        return sendJson(res, 200, learnerState());
+      }
+      if (method === 'GET') return sendJson(res, 200, learnerState());
+      Object.assign(cfg.learning, pick(body, LEARNING_FIELDS));
+      out = cfg.learning;
+      break;
     case 'classify': {
       const messages = body.messages || [{ role: 'user', content: String(body.text || '') }];
       const model = cfg.models.find(m => m.id === body.modelId) || cfg.models[0];
@@ -357,7 +372,7 @@ async function admin(req, res, url) {
         break;
       }
       if (!id && body.id && cfg.guides.some(g => g.id === body.id)) return apiError(res, 409, 'Guide id already used');
-      if (id && ['title', 'hint', 'keywords', 'text'].some(k => k in body)) body.edited = true;
+      if (id && ['title', 'hint', 'keywords', 'patterns', 'text'].some(k => k in body)) body.edited = true;
       out = crud(cfg.guides, id, body, GUIDE_FIELDS, res, f => ({
         id: (body.id || 'custom-' + rid(3)).toLowerCase().replace(/[^a-z0-9-]/g, '-'),
         title: 'New guide',

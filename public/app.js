@@ -6,7 +6,7 @@ const fmt = n => (n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e4 ? (n / 1e3).t
 
 // Relative URLs so the panel works both at the domain root and under a path prefix (e.g. /improver/).
 const ROOT = new URL('.', location.href.split('#')[0]);
-const S = { cat: 'all', q: '', state: null, view: location.hash.slice(1) || 'overview', chat: [], meta: null, logs: [] };
+const S = { cat: 'all', q: '', state: null, view: location.hash.slice(1) || 'overview', chat: [], meta: null, logs: [], learn: { sessions: [], events: [] } };
 
 async function api(path, opts = {}) {
   const res = await fetch(new URL('api' + path, ROOT), {
@@ -50,6 +50,7 @@ const I = {
   classifier: '<circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/>',
   providers: '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1.5"/><circle cx="16" cy="12" r="1.5"/><circle cx="10" cy="18" r="1.5"/>',
   library: '<path d="M4 4h6v16H4zM14 4l6 1-2 15-6-1z"/>',
+  learning: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
   playground: '<path d="M4 5h16v11H8l-4 4z"/>',
   logs: '<path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/>'
 };
@@ -61,6 +62,7 @@ const NAV = [
   ['classifier', 'Классификатор'],
   ['providers', 'Провайдеры'],
   ['library', 'Библиотека'],
+  ['learning', 'Обучение'],
   ['playground', 'Песочница'],
   ['logs', 'Журнал']
 ];
@@ -102,10 +104,15 @@ window.addEventListener('hashchange', () => {
   S.view = location.hash.slice(1) || 'overview';
   run(async () => {
     await refresh();
-    if (S.view === 'logs') S.logs = (await api('/logs')).logs;
+    await loadView();
     render();
   })();
 });
+
+async function loadView() {
+  if (S.view === 'logs') S.logs = (await api('/logs')).logs;
+  if (S.view === 'learning') S.learn = await api('/learning');
+}
 
 // ---------- views ----------
 const head = (title, sub, actions = '') => `<div class="head"><div><h1>${title}</h1><p>${sub}</p></div><div class="row">${actions}</div></div>`;
@@ -113,7 +120,7 @@ const sw = (name, on, label = '') => `<label class="switch"><input type="checkbo
 const provName = id => S.state.providers.find(p => p.id === id)?.name || '—';
 const modeLabel = { off: 'выкл', pre: 'подсказки', tool: 'советник', both: 'подсказки + советник' };
 
-const CAT_LABEL = { all: 'Все', behavior: 'Поведение', writing: 'Тексты', design: 'Дизайн', coding: 'Код', reasoning: 'Рассуждения', domains: 'Сферы', custom: 'Свои' };
+const CAT_LABEL = { all: 'Все', behavior: 'Поведение', writing: 'Тексты', design: 'Дизайн', coding: 'Код', reasoning: 'Рассуждения', domains: 'Сферы', custom: 'Свои', learned: 'Выученные' };
 
 function guideRows() {
   const q = S.q.trim().toLowerCase();
@@ -262,6 +269,54 @@ const VIEWS = {
       <div class="card"><div class="list" id="guideList">${guideRows()}</div></div>`;
   },
 
+  learning() {
+    const L = S.state.learning;
+    const learned = S.state.guides.filter(g => g.learned).sort((a, b) => b.learned.at - a.learned.at);
+    const ago = t => Math.max(0, Math.round((Date.now() - t) / 60e3)) + ' мин назад';
+    return `
+      ${head('Обучение', 'Когда сессия агента затихает, маленькая модель читает её сжатую выжимку (запросы пользователя, ошибки, вызовы инструментов) и пишет короткие заметки: что пользователь исправлял, какие были ошибки и их причины. Заметки попадают в библиотеку и подключаются классификатором; заметка с текстом ошибки подключается мгновенно, без классификатора.', '<button class="btn" data-a="flushLearning">Разобрать сессии сейчас</button>')}
+      <form class="card stack" id="learnForm">
+        <div class="card-head" style="margin:0"><h2>Режим обучения</h2>${sw('enabled', L.enabled, '<span class="small muted">включён</span>')}</div>
+        <div class="grid g2">
+          <label class="f"><span>Провайдер</span><select name="providerId"><option value="">как у классификатора</option>${S.state.providers.map(p => `<option value="${p.id}" ${p.id === L.providerId ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></label>
+          <label class="f"><span>Модель</span><input name="model" value="${esc(L.model)}" placeholder="как у классификатора"></label>
+        </div>
+        <div class="grid g4">
+          <label class="f"><span>Конец сессии после тишины, мин</span><input type="number" name="idleMin" value="${L.idleMin}" min="1"></label>
+          <label class="f"><span>Мин. реплик пользователя</span><input type="number" name="minUserTurns" value="${L.minUserTurns}" min="1"></label>
+          <label class="f"><span>…или мин. сообщений</span><input type="number" name="minMessages" value="${L.minMessages}" min="1"></label>
+          <label class="f"><span>Символов выжимки</span><input type="number" name="maxInputChars" value="${L.maxInputChars}"></label>
+          <label class="f"><span>Макс. токенов ответа</span><input type="number" name="maxTokens" value="${L.maxTokens}"></label>
+          <label class="f"><span>Таймаут, мс</span><input type="number" name="timeoutMs" value="${L.timeoutMs}"></label>
+          <label class="f"><span>Лимит выученных заметок</span><input type="number" name="maxLearned" value="${L.maxLearned}"></label>
+        </div>
+        <div class="row">${sw('autoEnable', L.autoEnable, '<span class="small">Сразу включать новые заметки (иначе — после проверки вручную)</span>')}</div>
+        <label class="f"><span>Системный промпт обучения</span><textarea name="systemPrompt" rows="7">${esc(L.systemPrompt)}</textarea></label>
+        <div class="row spread"><button type="button" class="btn ghost sm" data-a="resetPrompt" data-k="learner">Вернуть промпт по умолчанию</button><button class="btn primary">Сохранить</button></div>
+      </form>
+      <div class="card">
+        <div class="card-head"><h2>Идущие сессии</h2><span class="muted small">в памяти, до ${L.idleMin} мин тишины</span></div>
+        <div class="list">${S.learn.sessions.map(x => `
+          <div class="item"><div class="grow"><div class="title">${esc(x.title)}</div><div class="sub">${esc(x.model)} · ${x.requests} запросов · ${x.messages} сообщений · ${x.userTurns} реплик · ${ago(x.lastAt)}</div></div></div>`).join('') || `<div class="empty">${L.enabled ? 'Пока нет' : 'Режим выключен'}</div>`}</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Разборы</h2><span class="muted small">последние 50</span></div>
+        <div class="list">${S.learn.events.map(e => `
+          <div class="item"><div class="grow"><div class="title">${esc(e.title)}</div><div class="sub">${new Date(e.at).toLocaleString()} · ${e.error ? `<span style="color:var(--bad)">${esc(e.error)}</span>` : e.skipped ? 'слишком короткая' : e.notes.length ? 'заметки: ' + e.notes.map(esc).join(', ') : 'ничего полезного'}${e.ms ? ` · ${e.ms} мс` : ''}</div></div></div>`).join('') || '<div class="empty">Ещё не было</div>'}</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Выученные заметки</h2><span class="muted small">${learned.length} из ${L.maxLearned}</span></div>
+        <div class="list">${learned.map(g => `
+          <div class="item">
+            <label class="switch" data-guide-toggle="${g.id}"><input type="checkbox" ${g.enabled ? 'checked' : ''}><i></i></label>
+            <div class="grow"><div class="title">${esc(g.title)} <span class="faint mono small">${esc(g.id)}</span>${g.edited ? ' <span class="pill">изменена</span>' : ''}</div><div class="sub">${esc(g.hint)}${g.patterns?.length ? ' · ошибки: <span class="mono">' + g.patterns.map(esc).join(' | ') + '</span>' : ''}</div></div>
+            <span class="pill">${esc(g.topic || 'general')}</span>
+            <span class="pill">×${g.learned.sessions}</span>
+            <button class="btn sm" data-a="editGuide" data-id="${g.id}">Изменить</button>
+          </div>`).join('') || '<div class="empty">Пока пусто</div>'}</div>
+      </div>`;
+  },
+
   playground() {
     const ms = S.state.models.filter(m => m.enabled);
     return `
@@ -351,6 +406,18 @@ const AFTER = {
     prov.onchange = loadList;
     loadList();
   },
+  learning() {
+    $('#learnForm').onsubmit = run(async e => {
+      e.preventDefault();
+      const f = e.target;
+      const num = k => Number(f[k].value);
+      await api('/learning', { method: 'PUT', body: { enabled: f.enabled.checked, autoEnable: f.autoEnable.checked, providerId: f.providerId.value, model: f.model.value.trim(), idleMin: num('idleMin'), minUserTurns: num('minUserTurns'), minMessages: num('minMessages'), maxInputChars: num('maxInputChars'), maxTokens: num('maxTokens'), timeoutMs: num('timeoutMs'), maxLearned: num('maxLearned'), systemPrompt: f.systemPrompt.value } });
+      await refresh();
+      render();
+      toast('Сохранено');
+    });
+    AFTER.library();
+  },
   library() {
     const bindToggles = () =>
       document.querySelectorAll('[data-guide-toggle]').forEach(el => {
@@ -363,6 +430,7 @@ const AFTER = {
       $('#guideList').innerHTML = guideRows();
       bindToggles();
     };
+    if (!$('#guideSearch')) return bindToggles();
     $('#guideSearch').oninput = e => {
       S.q = e.target.value;
       redraw();
@@ -568,6 +636,7 @@ function editGuide(id) {
     <label class="f"><span>Когда применять — подсказка для классификатора (одна строка)</span><input name="hint" value="${esc(g.hint)}" placeholder="landing pages, UI, CSS"></label>
     <label class="f"><span>Ключевые слова для запасной эвристики (через запятую)</span><input name="keywords" value="${esc((g.keywords || []).join(', '))}"></label>
     <label class="f"><span>Липкие фразы: если пользователь хоть раз их написал, инструкция действует до конца диалога (через запятую, можно пусто)</span><input name="stickyTriggers" value="${esc((g.stickyTriggers || []).join(', '))}" placeholder="как человек, без воды"></label>
+    <label class="f"><span>Тексты ошибок: если такая строка есть в последнем сообщении или выводе инструмента, инструкция подключается сразу (через |, можно пусто)</span><input name="patterns" value="${esc((g.patterns || []).join(' | '))}" placeholder="Invalid get index | Parser Error"></label>
     <label class="f"><span>Текст инструкции — пишите коротко и повелительно</span><textarea name="text" rows="14">${esc(g.text)}</textarea></label>
     <div class="actions" style="justify-content:space-between">
       <div class="row">${id && g.builtin ? '<button type="button" class="btn ghost" data-act="reset">Сбросить к исходной</button>' : ''}${id && !g.builtin ? '<button type="button" class="btn ghost danger" data-act="delete">Удалить</button>' : ''}</div>
@@ -579,7 +648,7 @@ function editGuide(id) {
         if (!confirm('Удалить инструкцию?')) throw new Error('Отменено');
         return api('/guides/' + id, { method: 'DELETE' });
       }
-      const body = { title: f.title.value.trim(), hint: f.hint.value.trim(), keywords: f.keywords.value.split(',').map(s => s.trim()).filter(Boolean), stickyTriggers: f.stickyTriggers.value.split(',').map(s => s.trim()).filter(Boolean), text: f.text.value.trim() };
+      const body = { title: f.title.value.trim(), hint: f.hint.value.trim(), keywords: f.keywords.value.split(',').map(s => s.trim()).filter(Boolean), stickyTriggers: f.stickyTriggers.value.split(',').map(s => s.trim()).filter(Boolean), patterns: f.patterns.value.split('|').map(s => s.trim()).filter(Boolean), text: f.text.value.trim() };
       if (!id) body.id = f.id.value.trim();
       await api('/guides' + (id ? '/' + id : ''), { method: id ? 'PUT' : 'POST', body });
       toast('Сохранено');
@@ -628,6 +697,13 @@ const ACTIONS = {
     S.meta = null;
     render();
   },
+  flushLearning: run(async el => {
+    el.disabled = true;
+    S.learn = await api('/learning/flush', { method: 'POST', body: {} });
+    await refresh();
+    render();
+    toast('Готово');
+  }),
   reloadLogs: run(async () => {
     S.logs = (await api('/logs')).logs;
     render();
@@ -660,6 +736,6 @@ document.addEventListener('click', e => {
   const me = await fetch(new URL('api/me', ROOT)).then(r => r.json());
   if (!me.admin) return renderLogin();
   await refresh();
-  if (S.view === 'logs') S.logs = (await api('/logs')).logs;
+  await loadView();
   render();
 })();

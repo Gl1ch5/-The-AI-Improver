@@ -95,11 +95,12 @@ function cachePut(key, value) {
 
 // One line per category with bare ids: built-in ids are descriptive, so this
 // keeps ~120 guides under ~800 tokens. Custom guides carry their hint since
-// their ids may say nothing. The text is static, so providers cache it.
+// their ids may say nothing; learned ones are grouped by topic ("learned godot")
+// so the router sees the stack at a glance. The text is static, so providers cache it.
 export function catalog(guides) {
   const groups = new Map();
   for (const g of guides) {
-    const label = g.builtin === false || !g.category ? g.category || 'custom' : g.category;
+    const label = g.learned ? `learned ${g.topic || 'general'}` : g.category || 'custom';
     const entry = g.builtin === false ? `${g.id} (${g.hint || g.title})` : g.id;
     groups.set(label, [...(groups.get(label) || []), entry]);
   }

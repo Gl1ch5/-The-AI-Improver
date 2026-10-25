@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { BUILTIN_GUIDES, DEFAULT_CLASSIFIER_PROMPT, DEFAULT_ADVISOR_PROMPT } from './guides.js';
+import { BUILTIN_GUIDES, DEFAULT_CLASSIFIER_PROMPT, DEFAULT_ADVISOR_PROMPT, DEFAULT_LEARNER_PROMPT } from './guides.js';
 
 export const DATA_DIR = process.env.DATA_DIR || path.resolve(process.cwd(), 'data');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
@@ -42,6 +42,22 @@ function defaults() {
       timeoutMs: 6000,
       systemPrompt: DEFAULT_ADVISOR_PROMPT
     },
+    learning: {
+      // After an agent session goes quiet, a small model distils it into
+      // `learned` guides. Empty providerId/model = reuse the classifier model.
+      enabled: false,
+      providerId: '',
+      model: '',
+      idleMin: 10,
+      minUserTurns: 2,
+      minMessages: 8,
+      maxInputChars: 8000,
+      maxTokens: 900,
+      timeoutMs: 60000,
+      autoEnable: true,
+      maxLearned: 150,
+      systemPrompt: DEFAULT_LEARNER_PROMPT
+    },
     models: [
       {
         id: rid(),
@@ -69,7 +85,8 @@ export function loadConfig() {
       ...base,
       ...saved,
       classifier: { ...base.classifier, ...saved.classifier },
-      advisor: { ...base.advisor, ...saved.advisor }
+      advisor: { ...base.advisor, ...saved.advisor },
+      learning: { ...base.learning, ...saved.learning }
     };
     // Built-in guides follow the shipped library unless the operator edited
     // them; guides added in an update appear automatically.
@@ -115,7 +132,7 @@ export function resetGuide(id) {
   return config.guides[i];
 }
 
-export const defaultPrompts = { classifier: DEFAULT_CLASSIFIER_PROMPT, advisor: DEFAULT_ADVISOR_PROMPT };
+export const defaultPrompts = { classifier: DEFAULT_CLASSIFIER_PROMPT, advisor: DEFAULT_ADVISOR_PROMPT, learner: DEFAULT_LEARNER_PROMPT };
 
 // Admin password: env ADMIN_PASSWORD wins; otherwise one is generated once and
 // written to data/admin-password.txt so the operator can read it on the server.

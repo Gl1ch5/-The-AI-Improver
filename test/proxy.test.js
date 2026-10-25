@@ -11,6 +11,7 @@ const MOCK_PORT = 39212;
 const BASE = `http://127.0.0.1:${PORT}`;
 let proc, mock, cookie, apiKey;
 const seen = [];
+const learnerInputs = [];
 
 // Fake OpenAI-compatible upstream that plays classifier, advisor and main model.
 function startMock() {
@@ -28,6 +29,19 @@ function startMock() {
         choices: [{ message: { content: '{"g":["web-design"],"c":"complex","t":"Needs a clear hero and real copy.","l":"ru"}' } }],
         usage: { prompt_tokens: 300, completion_tokens: 30 }
       }));
+    }
+    if (sys.includes('reusable working notes')) {
+      learnerInputs.push(body.messages[1].content);
+      const note = {
+        id: 'godot-null-node-access',
+        topic: 'godot',
+        title: 'Godot: null node access',
+        hint: 'Godot errors on missing nodes',
+        keywords: ['godot', 'gdscript', 'get_node'],
+        patterns: ['Invalid get index', 'made-up error that never happened'],
+        text: '- Resolve child nodes with @onready var x = $Path and check is_instance_valid() before use.\n- Invalid get index on null means the node path is wrong or the node was freed; print get_path() and fix the scene tree instead of guarding every access.'
+      };
+      return res.end(JSON.stringify({ choices: [{ message: { content: JSON.stringify({ notes: [note] }) } }] }));
     }
     if (sys.includes('strict, fast reviewer')) {
       return res.end(JSON.stringify({ choices: [{ message: { content: '- Add a pricing section' } }] }));
@@ -262,4 +276,53 @@ test('forged X-Forwarded-For is ignored without TRUST_PROXY', async () => {
 test('admin writes require JSON content type', async () => {
   const r = await fetch(BASE + '/api/keys', { method: 'POST', headers: { cookie } });
   assert.equal(r.status, 415);
+});
+
+test('learning mode turns a finished session into a note that fires on its error', async () => {
+  const state = await admin('/state');
+  await admin('/models/' + state.models[0].id, 'PUT', { enhance: { mode: 'pre', guides: true, critique: true, maxGuides: 2 } });
+  await admin('/learning', 'PUT', { enabled: true });
+  const session = [
+    { role: 'user', content: 'Сделай игру на Godot: игрок прыгает по платформам' },
+    { role: 'assistant', content: null, tool_calls: [{ id: 'r1', type: 'function', function: { name: 'run_game', arguments: '{}' } }] },
+    { role: 'tool', tool_call_id: 'r1', content: "loaded scene\nSCRIPT ERROR: Invalid get index 'position' (on base: 'null instance').\n   at: player.gd:12" },
+    { role: 'assistant', content: 'Исправил путь к узлу.' },
+    { role: 'user', content: 'Не обвешивай всё проверками на null, найди причину' }
+  ];
+  await (await chat({ model: 'improved-gpt', messages: session.slice(0, 3) })).json();
+  await (await chat({ model: 'improved-gpt', messages: session })).json();
+  const pending = await admin('/learning');
+  assert.equal(pending.sessions.length, 1);
+  assert.equal(pending.sessions[0].userTurns, 2);
+
+  const done = await admin('/learning/flush', 'POST', {});
+  assert.deepEqual(done.events[0].notes, ['godot-null-node-access']);
+  const digest = learnerInputs.at(-1);
+  assert.match(digest, /TASK: Сделай игру на Godot/);
+  assert.match(digest, /TOOL ERROR: SCRIPT ERROR: Invalid get index/);
+  assert.match(digest, /USER: Не обвешивай/);
+  assert.doesNotMatch(digest, /loaded scene/, 'only error lines of tool output');
+
+  const note = (await admin('/state')).guides.find(g => g.id === 'godot-null-node-access');
+  assert.equal(note.category, 'learned');
+  assert.deepEqual(note.patterns, ['Invalid get index'], 'patterns that never occurred are dropped');
+
+  // Same error in a new session's tool output attaches the note without the classifier.
+  seen.length = 0;
+  await (await chat({
+    model: 'improved-gpt',
+    messages: [
+      { role: 'user', content: 'Почини врага' },
+      { role: 'assistant', content: null, tool_calls: [{ id: 'r2', type: 'function', function: { name: 'run_game', arguments: '{}' } }] },
+      { role: 'tool', tool_call_id: 'r2', content: "Invalid get index 'health' (on base: 'null instance')" }
+    ]
+  })).json();
+  assert.match(seen.at(-1).messages[0].content, /Godot: null node access/);
+
+  // A resumed session is only learned from its new messages.
+  await (await chat({ model: 'improved-gpt', messages: session })).json();
+  const again = await admin('/learning/flush', 'POST', {});
+  const resumed = again.events.find(e => e.title.startsWith('Сделай игру'));
+  assert.equal(resumed.skipped, 'short');
+  await admin('/learning', 'PUT', { enabled: false });
 });

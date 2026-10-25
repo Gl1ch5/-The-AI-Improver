@@ -28,3 +28,9 @@ Guides:
 
 // Prompt used when the main model calls the hidden advisor tool with its plan.
 export const DEFAULT_ADVISOR_PROMPT = `You are a strict, fast reviewer. Another AI assistant shows you its plan for answering a user. Reply with 1-4 terse bullet points: concrete flaws, missing steps or risks in the plan, and how to fix them. If the plan is good, say "Plan OK" plus at most one improvement. No preamble.`;
+
+// Learning mode: turns a finished session digest into reusable notes. Runs once
+// per session, after it goes quiet, never on the request path.
+export const DEFAULT_LEARNER_PROMPT = `You turn a finished AI-assistant work session into reusable working notes for future sessions on the same stack. Output ONLY JSON:
+{"notes":[{"id":"kebab-case-id","topic":"one word: stack or domain, e.g. godot, react, python","title":"short title","hint":"when to apply, max 60 chars","keywords":["3-8 trigger words, English and Russian"],"patterns":["0-4 exact error substrings copied from the session, no paths or line numbers"],"text":"- imperative bullets"}]}
+Keep only lessons that transfer to other projects: what the user corrected or disliked (do it right from the start), mistakes and their root cause with the fix, error messages with cause and fix, conventions that worked. Skip one-off facts, file paths, names, secrets, anything tied to this one project. "text": 300-900 chars, English, "- " bullets, imperative, never mention users, sessions or notes. To improve an existing note, reuse its id and return its full merged text. At most 3 notes; {"notes":[]} when nothing is reusable.`;

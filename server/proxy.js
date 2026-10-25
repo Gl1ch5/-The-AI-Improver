@@ -1,6 +1,7 @@
 import { classify, lastUserText, stickyGuides } from './classifier.js';
 import { providerById, chatRequest, quickCompletion } from './upstream.js';
 import { stats, estTokens } from './stats.js';
+import { patternGuides } from './learner.js';
 
 export const ADVISOR_TOOL = 'quality_review';
 
@@ -34,7 +35,7 @@ function buildGuidance(cfg, model, cls, toolEnabled) {
   if (e.critique && cls.critique && !cls.trivialOnlySticky) parts.push(`Focus for this request: ${cls.critique}`);
   const used = [];
   if (e.guides) {
-    const ids = [...new Set([...(cls.trivialOnlySticky ? [] : cls.guides.slice(0, e.maxGuides ?? 2)), ...(cls.sticky || [])])];
+    const ids = [...new Set([...(cls.matched || []), ...(cls.trivialOnlySticky ? [] : cls.guides.slice(0, e.maxGuides ?? 2)), ...(cls.sticky || [])])];
     for (const id of ids) {
       const g = cfg.guides.find(x => x.id === id && x.enabled);
       if (!g) continue;
@@ -88,11 +89,15 @@ export async function prepare(cfg, body) {
   const freshTurn = body.messages.at(-1)?.role === 'user';
   const toolEnabled =
     (mode === 'tool' || mode === 'both') && freshTurn && cls.complexity === 'complex' && body.tool_choice !== 'none';
-  if (mode !== 'off') cls.sticky = stickyGuides(cfg.guides, body.messages);
+  if (mode !== 'off') {
+    cls.sticky = stickyGuides(cfg.guides, body.messages);
+    // A known error in the latest user or tool message pulls in its learned fix.
+    cls.matched = patternGuides(cfg.guides, body.messages);
+  }
   // Small talk gets no task guidance, but a style the user asked for still applies.
   if (cls.complexity === 'trivial') cls.trivialOnlySticky = true;
   const guidance =
-    mode === 'off' || (cls.complexity === 'trivial' && !cls.sticky?.length)
+    mode === 'off' || (cls.complexity === 'trivial' && !cls.sticky?.length && !cls.matched?.length)
       ? { text: '', used: [] }
       : buildGuidance(cfg, mode === 'tool' ? { ...model, enhance: { ...model.enhance, guides: false, critique: false } } : model, cls, toolEnabled);
 

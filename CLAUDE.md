@@ -7,7 +7,8 @@ OpenAI-compatible proxy. A small classifier reads the latest user message, picks
 - `server/index.js` — HTTP server, `/v1/*` (client API) and `/api/*` (admin API), static UI.
 - `server/proxy.js` — request preparation, advisor round-trip, streaming. Advisor only on a fresh user turn.
 - `server/classifier.js` — classifier, cache, local heuristics, sticky guides, `catalog()`.
-- `server/guides.js` — loads the library; classifier prompt and advisor prompt live here.
+- `server/learner.js` — learning mode: tracks sessions by first user message, digests a quiet session, writes `learned` guides; `patternGuides()` attaches a learned guide instantly when its error text appears in the latest user/tool message.
+- `server/guides.js` — loads the library; classifier, advisor and learner prompts live here.
 - `server/library/*.json` — the guide library (6 categories, ~118 guides). Source of truth for guide text.
 - `server/config.js` — defaults, `data/config.json`, admin password, remembered IPs.
 - `public/` — dependency-free admin UI (`app.js`, `style.css`). Use relative URLs only.
@@ -17,7 +18,7 @@ OpenAI-compatible proxy. A small classifier reads the latest user message, picks
 
 ## Commands
 
-- `npm test` — must pass before every commit (currently 16 tests).
+- `npm test` — must pass before every commit (currently 17 tests).
 - `node --env-file=.env server/index.js` — run locally on port 3210.
 
 ## Conventions
