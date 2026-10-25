@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Установка на Ubuntu/Debian как systemd-сервис. Запуск: sudo bash deploy/install.sh
 set -euo pipefail
+umask 022
 DIR=/opt/ai-improver
 id aiimprover &>/dev/null || useradd --system --home "$DIR" --shell /usr/sbin/nologin aiimprover
 mkdir -p "$DIR/data"
 cp -r package.json server public "$DIR/"
+chmod -R a+rX "$DIR/package.json" "$DIR/server" "$DIR/public"
 [ -f "$DIR/.env" ] || cp .env.example "$DIR/.env"
 chown -R aiimprover:aiimprover "$DIR/data"
 chmod 600 "$DIR/.env"
