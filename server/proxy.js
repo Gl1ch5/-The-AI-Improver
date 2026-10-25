@@ -91,7 +91,12 @@ export async function prepare(cfg, body) {
 
   const messages = mergeSystem(body.messages, model.systemPrompt?.trim(), guidance.text);
   const upstreamBody = { ...body, ...(model.extraBody || {}), model: model.upstreamModel, messages };
-  if (toolEnabled) upstreamBody.tools = [...(body.tools || []), advisorToolDef];
+  if (toolEnabled) {
+    upstreamBody.tools = [...(body.tools || []), advisorToolDef];
+    // Models often skip an optional tool; when the client has no tools of its
+    // own, force the plan review so the critique reliably happens.
+    if (!body.tools?.length && !body.tool_choice) upstreamBody.tool_choice = { type: 'function', function: { name: ADVISOR_TOOL } };
+  }
 
   return {
     model,

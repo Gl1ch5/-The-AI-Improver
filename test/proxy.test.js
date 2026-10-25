@@ -169,6 +169,11 @@ test('advisor tool round-trip is invisible to a streaming client', async () => {
   assert.equal(out.content, 'guided=true advice=- Add a pricing section');
   assert.equal(out.toolCalls.length, 0);
   assert.deepEqual(out.finish, ['stop']);
+  const first = seen.find(b => b.tools?.some(t => t.function.name === 'quality_review'));
+  assert.equal(first.tool_choice.function.name, 'quality_review');
+  const second = seen.findLast(b => b.messages.some(m => m.role === 'tool'));
+  assert.equal(second.tools, undefined);
+  assert.equal(second.tool_choice, undefined);
 });
 
 test('advisor tool round-trip works without streaming', async () => {
