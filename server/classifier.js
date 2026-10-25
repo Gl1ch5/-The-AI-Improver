@@ -59,6 +59,21 @@ export function heuristicClassify(text, guides, maxGuides = 2) {
   };
 }
 
+// Style requests ("talk like a human", "keep it short") are said once and
+// should hold for the rest of the dialog, while the classifier only sees the
+// latest turn. Guides with `stickyTriggers` stay on once any earlier user
+// message contained one of those phrases. Local string match, no tokens.
+export function stickyGuides(guides, messages, limit = 1) {
+  const said = messages
+    .filter(m => m.role === 'user')
+    .map(m => textOf(m.content).toLowerCase())
+    .join('\n');
+  return guides
+    .filter(g => g.enabled && g.stickyTriggers?.some(t => said.includes(t.toLowerCase())))
+    .slice(0, limit)
+    .map(g => g.id);
+}
+
 // ---------- LLM classifier ----------
 
 const cache = new Map();

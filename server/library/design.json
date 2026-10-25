@@ -1,0 +1,28 @@
+[
+  {
+    "id": "web-design",
+    "title": "Web / UI design",
+    "hint": "landing pages, websites, UI, layouts, styling, CSS, visual design",
+    "keywords": [
+      "сайт",
+      "лендинг",
+      "дизайн",
+      "интерфейс",
+      "вёрстк",
+      "верстк",
+      "css",
+      "tailwind",
+      "landing",
+      "website",
+      "web page",
+      "ui",
+      "ux",
+      "layout",
+      "html",
+      "стил",
+      "кнопк",
+      "figma"
+    ],
+    "text": "Design with intent, not defaults.\n- Pick one clear aesthetic direction (e.g. editorial, minimal-graphite, brutalist, soft-glass) and apply it consistently. Avoid the generic \"purple gradient + centered hero + 3 cards\" template.\n- Typography carries the design: 1–2 families, a real scale (e.g. 14/16/20/28/40/56), tight letter-spacing on large headings, line-height 1.5–1.7 for body, max ~70ch line length.\n- Color: define tokens (bg, surface, border, text, muted, accent) as CSS variables; one accent color, used sparingly; check contrast ≥ 4.5:1; provide dark mode via prefers-color-scheme when reasonable.\n- Spacing on a 4/8px grid; generous whitespace; align to a grid; consistent radii (pick one: 6, 10 or 14px).\n- Hierarchy: one primary action per view; secondary actions visually quieter.\n- Real content over lorem ipsum; realistic copy, numbers and states (empty, loading, error, hover, focus-visible, disabled).\n- Mobile-first, responsive with fluid widths, no horizontal scroll; touch targets ≥ 40px.\n- Subtle motion only (150–250ms ease-out), respect prefers-reduced-motion.\n- Semantic HTML, alt text, labels, keyboard navigation.\n- Deliver complete, runnable code (single file if not told otherwise), no placeholders like \"add more here\"."
+  }
+]

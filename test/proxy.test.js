@@ -210,6 +210,24 @@ test('a real task the classifier calls trivial still gets guidance', async () =>
   assert.match(main.messages[0].content, /General coding quality/);
 });
 
+test('a style asked for once sticks for the rest of the dialog, even on small talk', async () => {
+  await admin('/guides', 'POST', { id: 'human-test', title: 'Human voice', hint: 'casual', text: 'Talk like a friend.', stickyTriggers: ['как человек'] });
+  seen.length = 0;
+  await (await chat({
+    model: 'improved-gpt',
+    messages: [
+      { role: 'user', content: 'Давай общайся как человек' },
+      { role: 'assistant', content: 'Ок' },
+      { role: 'user', content: 'привет' }
+    ]
+  })).json();
+  const sys = seen.at(-1).messages[0];
+  assert.equal(sys.role, 'system');
+  assert.match(sys.content, /Talk like a friend/);
+  assert.doesNotMatch(sys.content, /Focus for this request/);
+  await admin('/guides/human-test', 'DELETE');
+});
+
 test('unknown model returns OpenAI-style 404', async () => {
   const res = await chat({ model: 'nope', messages: [{ role: 'user', content: 'x' }] });
   assert.equal(res.status, 404);

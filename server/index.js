@@ -197,7 +197,7 @@ const pick = (o, keys) => Object.fromEntries(keys.filter(k => k in o).map(k => [
 
 const MODEL_FIELDS = ['name', 'enabled', 'providerId', 'upstreamModel', 'systemPrompt', 'extraBody', 'enhance'];
 const PROVIDER_FIELDS = ['name', 'baseUrl', 'apiKey'];
-const GUIDE_FIELDS = ['title', 'hint', 'keywords', 'text', 'enabled'];
+const GUIDE_FIELDS = ['title', 'hint', 'keywords', 'stickyTriggers', 'text', 'enabled', 'edited', 'category'];
 const CLASSIFIER_FIELDS = ['enabled', 'providerId', 'model', 'temperature', 'maxTokens', 'timeoutMs', 'maxInputChars', 'cacheTtlSec', 'skipTrivial', 'extraBody', 'systemPrompt'];
 const ADVISOR_FIELDS = ['providerId', 'model', 'maxTokens', 'timeoutMs', 'systemPrompt'];
 
@@ -326,6 +326,7 @@ async function admin(req, res, url) {
         break;
       }
       if (!id && body.id && cfg.guides.some(g => g.id === body.id)) return apiError(res, 409, 'Guide id already used');
+      if (id && ['title', 'hint', 'keywords', 'text'].some(k => k in body)) body.edited = true;
       out = crud(cfg.guides, id, body, GUIDE_FIELDS, res, f => ({
         id: (body.id || 'custom-' + rid(3)).toLowerCase().replace(/[^a-z0-9-]/g, '-'),
         title: 'New guide',
@@ -334,6 +335,7 @@ async function admin(req, res, url) {
         text: '',
         enabled: true,
         builtin: false,
+        category: 'custom',
         ...f
       }));
       clearClassifierCache();

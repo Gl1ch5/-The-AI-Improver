@@ -1,4 +1,4 @@
-import { classify, lastUserText } from './classifier.js';
+import { classify, lastUserText, stickyGuides } from './classifier.js';
 import { providerById, chatRequest, quickCompletion } from './upstream.js';
 import { stats, estTokens } from './stats.js';
 
@@ -31,10 +31,11 @@ export class HttpError extends Error {
 function buildGuidance(cfg, model, cls, toolEnabled) {
   const e = model.enhance;
   const parts = [];
-  if (e.critique && cls.critique) parts.push(`Focus for this request: ${cls.critique}`);
+  if (e.critique && cls.critique && !cls.trivialOnlySticky) parts.push(`Focus for this request: ${cls.critique}`);
   const used = [];
   if (e.guides) {
-    for (const id of cls.guides.slice(0, e.maxGuides ?? 2)) {
+    const ids = [...new Set([...(cls.trivialOnlySticky ? [] : cls.guides.slice(0, e.maxGuides ?? 2)), ...(cls.sticky || [])])];
+    for (const id of ids) {
       const g = cfg.guides.find(x => x.id === id && x.enabled);
       if (!g) continue;
       used.push(g.id);
@@ -87,8 +88,11 @@ export async function prepare(cfg, body) {
   const freshTurn = body.messages.at(-1)?.role === 'user';
   const toolEnabled =
     (mode === 'tool' || mode === 'both') && freshTurn && cls.complexity === 'complex' && body.tool_choice !== 'none';
+  if (mode !== 'off') cls.sticky = stickyGuides(cfg.guides, body.messages);
+  // Small talk gets no task guidance, but a style the user asked for still applies.
+  if (cls.complexity === 'trivial') cls.trivialOnlySticky = true;
   const guidance =
-    mode === 'off' || cls.complexity === 'trivial'
+    mode === 'off' || (cls.complexity === 'trivial' && !cls.sticky?.length)
       ? { text: '', used: [] }
       : buildGuidance(cfg, mode === 'tool' ? { ...model, enhance: { ...model.enhance, guides: false, critique: false } } : model, cls, toolEnabled);
 

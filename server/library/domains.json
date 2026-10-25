@@ -1,0 +1,45 @@
+[
+  {
+    "id": "business",
+    "title": "Business, product & strategy",
+    "hint": "business plans, marketing, product decisions, startups, pricing, strategy",
+    "keywords": [
+      "бизнес",
+      "business",
+      "маркетинг",
+      "marketing",
+      "стартап",
+      "startup",
+      "продукт",
+      "product",
+      "стратеги",
+      "strategy",
+      "монетизац",
+      "pricing",
+      "цен",
+      "клиент",
+      "customer",
+      "конкурент",
+      "competitor",
+      "бизнес-план"
+    ],
+    "text": "- Start from the goal and constraints (budget, timeline, market); ask for or state assumptions.\n- Be concrete: numbers, examples, prioritized actions with rough effort and impact.\n- Name the main risks and the cheapest way to test the key assumption first.\n- Avoid generic frameworks dumped without application to the user's case."
+  },
+  {
+    "id": "prompting",
+    "title": "Prompt engineering",
+    "hint": "writing prompts or system prompts for LLMs, AI agents",
+    "keywords": [
+      "промпт",
+      "prompt",
+      "системный промпт",
+      "system prompt",
+      "llm",
+      "gpt",
+      "нейросет",
+      "агент",
+      "agent"
+    ],
+    "text": "- Clarify role, task, context, constraints and output format; put examples where format matters.\n- Be explicit and positive (\"do X\") rather than vague; give the why behind non-obvious rules.\n- Separate instructions from data with clear delimiters; keep it as short as it can be while unambiguous.\n- Suggest how to test the prompt on a few edge-case inputs."
+  }
+]

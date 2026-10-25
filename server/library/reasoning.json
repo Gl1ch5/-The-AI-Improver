@@ -1,0 +1,29 @@
+[
+  {
+    "id": "math-logic",
+    "title": "Math & reasoning",
+    "hint": "math problems, calculations, proofs, physics, logic puzzles",
+    "keywords": [
+      "реши",
+      "задач",
+      "уравнен",
+      "equation",
+      "интеграл",
+      "integral",
+      "производн",
+      "derivative",
+      "математ",
+      "math",
+      "вероятност",
+      "probability",
+      "докаж",
+      "prove",
+      "физик",
+      "physics",
+      "вычисли",
+      "calculate",
+      "сколько будет"
+    ],
+    "text": "- Restate what is asked and the given data; define variables.\n- Work step by step, checking each transformation; keep units through the calculation.\n- Verify the result (substitute back, sanity-check magnitude, limiting cases).\n- End with a clearly marked final answer. If the problem is ambiguous, say which interpretation you used."
+  }
+]

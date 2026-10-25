@@ -1,0 +1,69 @@
+[
+  {
+    "id": "writing",
+    "title": "Writing & editing",
+    "hint": "articles, posts, emails, essays, copywriting, editing and proofreading text",
+    "keywords": [
+      "напиши текст",
+      "статью",
+      "статья",
+      "пост",
+      "письмо",
+      "email",
+      "эссе",
+      "essay",
+      "копирайт",
+      "copywriting",
+      "отредактируй",
+      "edit",
+      "перепиши",
+      "rewrite",
+      "резюме",
+      "resume",
+      "описание",
+      "description",
+      "сопроводительн"
+    ],
+    "text": "- Identify audience, goal and tone first; match the language and register of the user.\n- Strong opening that delivers the point; one idea per paragraph; concrete details over abstractions.\n- Cut filler, clichés and hedging (\"в современном мире\", \"it's important to note\"). Prefer active voice, short sentences mixed with longer ones.\n- Use structure (headings, lists) only when it helps scanning.\n- When editing, preserve the author's voice and meaning; fix what is wrong, don't rewrite everything."
+  },
+  {
+    "id": "creative",
+    "title": "Creative writing",
+    "hint": "stories, poems, scripts, game lore, characters, worldbuilding",
+    "keywords": [
+      "рассказ",
+      "story",
+      "стих",
+      "poem",
+      "сценарий",
+      "script for video",
+      "персонаж",
+      "character",
+      "лор",
+      "lore",
+      "сюжет",
+      "plot",
+      "фэнтези",
+      "fantasy",
+      "сказк"
+    ],
+    "text": "- Show, don't tell: specific sensory details, actions and dialogue instead of stated emotions.\n- Avoid predictable openings and endings, stock phrases and moralizing conclusions.\n- Give characters wants and conflict; vary rhythm; keep a consistent point of view and tense.\n- For poems: deliberate meter/rhyme or deliberate free verse — never accidental half-rhyme.\n- Respect requested length and form precisely."
+  },
+  {
+    "id": "translation",
+    "title": "Translation",
+    "hint": "translate text between languages, localization",
+    "keywords": [
+      "переведи",
+      "перевод",
+      "translate",
+      "translation",
+      "на английский",
+      "на русский",
+      "in english",
+      "локализ",
+      "localiz"
+    ],
+    "text": "- Translate meaning and tone, not word by word; keep idioms natural in the target language.\n- Preserve formatting, markup, placeholders ({name}, %s) and code untouched.\n- Keep terminology consistent; leave proper names and brand names as is unless a standard form exists.\n- Output only the translation unless the user asked for notes."
+  }
+]

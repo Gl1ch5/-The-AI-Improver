@@ -68,7 +68,10 @@ export function loadConfig() {
       classifier: { ...base.classifier, ...saved.classifier },
       advisor: { ...base.advisor, ...saved.advisor }
     };
-    // New built-in guides shipped in an update appear automatically.
+    // Built-in guides follow the shipped library unless the operator edited
+    // them; guides added in an update appear automatically.
+    const lib = new Map(BUILTIN_GUIDES.map(g => [g.id, g]));
+    config.guides = config.guides.map(g => (g.builtin && !g.edited && lib.has(g.id) ? { ...lib.get(g.id), builtin: true, enabled: g.enabled } : g));
     const have = new Set(config.guides.map(g => g.id));
     for (const g of BUILTIN_GUIDES) if (!have.has(g.id)) config.guides.push({ ...g, builtin: true, enabled: true });
   } else {

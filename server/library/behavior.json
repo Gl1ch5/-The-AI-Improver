@@ -1,0 +1,23 @@
+[
+  {
+    "id": "explain",
+    "title": "Explaining & teaching",
+    "hint": "explain a concept, how something works, learning, comparisons",
+    "keywords": [
+      "объясни",
+      "explain",
+      "что такое",
+      "what is",
+      "как работает",
+      "how does",
+      "расскажи",
+      "в чем разница",
+      "difference between",
+      "сравни",
+      "compare",
+      "для чайников",
+      "простыми словами"
+    ],
+    "text": "- Lead with a direct one-or-two-sentence answer, then go deeper.\n- Build from what the reader likely knows; one good analogy beats three weak ones.\n- Use a small concrete example; for comparisons use a compact table.\n- Be accurate over impressive: mark uncertainty, don't invent facts, citations or numbers.\n- Match depth to the question; stop when the question is answered."
+  }
+]

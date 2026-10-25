@@ -6,7 +6,7 @@ const fmt = n => (n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e4 ? (n / 1e3).t
 
 // Relative URLs so the panel works both at the domain root and under a path prefix (e.g. /improver/).
 const ROOT = new URL('.', location.href.split('#')[0]);
-const S = { state: null, view: location.hash.slice(1) || 'overview', chat: [], meta: null, logs: [] };
+const S = { cat: 'all', q: '', state: null, view: location.hash.slice(1) || 'overview', chat: [], meta: null, logs: [] };
 
 async function api(path, opts = {}) {
   const res = await fetch(new URL('api' + path, ROOT), {
@@ -112,6 +112,21 @@ const head = (title, sub, actions = '') => `<div class="head"><div><h1>${title}<
 const sw = (name, on, label = '') => `<label class="switch"><input type="checkbox" name="${name}" ${on ? 'checked' : ''}><i></i>${label}</label>`;
 const provName = id => S.state.providers.find(p => p.id === id)?.name || '—';
 const modeLabel = { off: 'выкл', pre: 'подсказки', tool: 'советник', both: 'подсказки + советник' };
+
+const CAT_LABEL = { all: 'Все', behavior: 'Поведение', writing: 'Тексты', design: 'Дизайн', coding: 'Код', reasoning: 'Рассуждения', domains: 'Сферы', custom: 'Свои' };
+
+function guideRows() {
+  const q = S.q.trim().toLowerCase();
+  const list = S.state.guides.filter(g => (S.cat === 'all' || (g.category || 'custom') === S.cat) && (!q || [g.id, g.title, g.hint, ...(g.keywords || [])].join(' ').toLowerCase().includes(q)));
+  return list.map(g => `
+        <div class="item">
+          <label class="switch" data-guide-toggle="${g.id}"><input type="checkbox" ${g.enabled ? 'checked' : ''}><i></i></label>
+          <div class="grow"><div class="title">${esc(g.title)} <span class="faint mono small">${esc(g.id)}</span>${g.edited ? ' <span class="pill">изменена</span>' : ''}</div><div class="sub">${esc(g.hint)}</div></div>
+          <span class="pill">${esc(CAT_LABEL[g.category] || g.category || 'свои')}</span>
+          <span class="pill">≈${Math.ceil(g.text.length / 3.6)} ток.</span>
+          <button class="btn sm" data-a="editGuide" data-id="${g.id}">Изменить</button>
+        </div>`).join('') || '<div class="empty">Ничего не найдено</div>';
+}
 
 const VIEWS = {
   overview() {
@@ -229,15 +244,15 @@ const VIEWS = {
   },
 
   library() {
+    const cats = ['all', ...new Set(S.state.guides.map(g => g.category || 'custom'))];
+    const on = S.state.guides.filter(g => g.enabled).length;
     return `
-      ${head('Библиотека', 'Не скиллы, а короткие рабочие заметки. Классификатор выбирает до двух подходящих, и они тихо добавляются в контекст.', '<button class="btn primary" data-a="editGuide">Новая инструкция</button>')}
-      <div class="card"><div class="list">${S.state.guides.map(g => `
-        <div class="item">
-          <label class="switch" data-guide-toggle="${g.id}"><input type="checkbox" ${g.enabled ? 'checked' : ''}><i></i></label>
-          <div class="grow"><div class="title">${esc(g.title)} <span class="faint mono small">${esc(g.id)}</span></div><div class="sub">${esc(g.hint)}</div></div>
-          <span class="pill">≈${Math.ceil(g.text.length / 3.6)} ток.</span>
-          <button class="btn sm" data-a="editGuide" data-id="${g.id}">Изменить</button>
-        </div>`).join('')}</div></div>`;
+      ${head('Библиотека', `Не скиллы, а короткие рабочие заметки. Классификатор выбирает до двух подходящих, и они тихо добавляются в контекст. Включено ${on} из ${S.state.guides.length}.`, '<button class="btn primary" data-a="editGuide">Новая инструкция</button>')}
+      <div class="row spread" style="margin-bottom:14px">
+        <div class="seg" id="catSeg">${cats.map(c => `<button type="button" data-cat="${esc(c)}" class="${c === S.cat ? 'on' : ''}">${esc(CAT_LABEL[c] || c)}</button>`).join('')}</div>
+        <input id="guideSearch" placeholder="Поиск по названию, id, описанию…" style="max-width:300px" value="${esc(S.q)}">
+      </div>
+      <div class="card"><div class="list" id="guideList">${guideRows()}</div></div>`;
   },
 
   playground() {
@@ -326,12 +341,27 @@ const AFTER = {
     loadList();
   },
   library() {
-    document.querySelectorAll('[data-guide-toggle]').forEach(el => {
-      el.querySelector('input').onchange = run(async e => {
-        await api('/guides/' + el.dataset.guideToggle, { method: 'PUT', body: { enabled: e.target.checked } });
-        await refresh();
+    const bindToggles = () =>
+      document.querySelectorAll('[data-guide-toggle]').forEach(el => {
+        el.querySelector('input').onchange = run(async e => {
+          await api('/guides/' + el.dataset.guideToggle, { method: 'PUT', body: { enabled: e.target.checked } });
+          await refresh();
+        });
       });
-    });
+    const redraw = () => {
+      $('#guideList').innerHTML = guideRows();
+      bindToggles();
+    };
+    $('#guideSearch').oninput = e => {
+      S.q = e.target.value;
+      redraw();
+    };
+    document.querySelectorAll('#catSeg button').forEach(b => (b.onclick = () => {
+      S.cat = b.dataset.cat;
+      document.querySelectorAll('#catSeg button').forEach(x => x.classList.toggle('on', x === b));
+      redraw();
+    }));
+    bindToggles();
   },
   playground() {
     const ta = $('#chatForm textarea');
@@ -526,6 +556,7 @@ function editGuide(id) {
     </div>
     <label class="f"><span>Когда применять — подсказка для классификатора (одна строка)</span><input name="hint" value="${esc(g.hint)}" placeholder="landing pages, UI, CSS"></label>
     <label class="f"><span>Ключевые слова для запасной эвристики (через запятую)</span><input name="keywords" value="${esc((g.keywords || []).join(', '))}"></label>
+    <label class="f"><span>Липкие фразы: если пользователь хоть раз их написал, инструкция действует до конца диалога (через запятую, можно пусто)</span><input name="stickyTriggers" value="${esc((g.stickyTriggers || []).join(', '))}" placeholder="как человек, без воды"></label>
     <label class="f"><span>Текст инструкции — пишите коротко и повелительно</span><textarea name="text" rows="14">${esc(g.text)}</textarea></label>
     <div class="actions" style="justify-content:space-between">
       <div class="row">${id && g.builtin ? '<button type="button" class="btn ghost" data-act="reset">Сбросить к исходной</button>' : ''}${id && !g.builtin ? '<button type="button" class="btn ghost danger" data-act="delete">Удалить</button>' : ''}</div>
@@ -537,7 +568,7 @@ function editGuide(id) {
         if (!confirm('Удалить инструкцию?')) throw new Error('Отменено');
         return api('/guides/' + id, { method: 'DELETE' });
       }
-      const body = { title: f.title.value.trim(), hint: f.hint.value.trim(), keywords: f.keywords.value.split(',').map(s => s.trim()).filter(Boolean), text: f.text.value.trim() };
+      const body = { title: f.title.value.trim(), hint: f.hint.value.trim(), keywords: f.keywords.value.split(',').map(s => s.trim()).filter(Boolean), stickyTriggers: f.stickyTriggers.value.split(',').map(s => s.trim()).filter(Boolean), text: f.text.value.trim() };
       if (!id) body.id = f.id.value.trim();
       await api('/guides' + (id ? '/' + id : ''), { method: id ? 'PUT' : 'POST', body });
       toast('Сохранено');
