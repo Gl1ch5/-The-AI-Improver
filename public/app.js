@@ -4,10 +4,12 @@ const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const fmt = n => (n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e4 ? (n / 1e3).toFixed(1) + 'k' : String(n ?? 0));
 
+// Relative URLs so the panel works both at the domain root and under a path prefix (e.g. /improver/).
+const ROOT = new URL('.', location.href.split('#')[0]);
 const S = { state: null, view: location.hash.slice(1) || 'overview', chat: [], meta: null, logs: [] };
 
 async function api(path, opts = {}) {
-  const res = await fetch('/api' + path, {
+  const res = await fetch(new URL('api' + path, ROOT), {
     method: opts.method || 'GET',
     headers: opts.method && opts.method !== 'GET' ? { 'content-type': 'application/json' } : {},
     body: opts.body ? JSON.stringify(opts.body) : undefined
@@ -114,7 +116,7 @@ const modeLabel = { off: 'выкл', pre: 'подсказки', tool: 'сове�
 const VIEWS = {
   overview() {
     const s = S.state.stats;
-    const base = location.origin + '/v1';
+    const base = new URL('v1', ROOT).href;
     const enhancedPct = s.requests ? Math.round((s.enhanced / s.requests) * 100) : 0;
     const hits = Object.entries(s.guideHits || {}).sort((a, b) => b[1] - a[1]);
     const maxHit = hits[0]?.[1] || 1;
@@ -363,7 +365,7 @@ async function streamChat(model) {
   msgs.appendChild(bubble);
   msgs.scrollTop = msgs.scrollHeight;
 
-  const res = await fetch('/v1/chat/completions', {
+  const res = await fetch(new URL('v1/chat/completions', ROOT), {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-improver-debug': '1' },
     body: JSON.stringify({ model, stream: true, messages: S.chat.map(({ role, content }) => ({ role, content })) })
@@ -608,7 +610,7 @@ document.addEventListener('click', e => {
 
 // ---------- boot ----------
 (async () => {
-  const me = await fetch('/api/me').then(r => r.json());
+  const me = await fetch(new URL('api/me', ROOT)).then(r => r.json());
   if (!me.admin) return renderLogin();
   await refresh();
   if (S.view === 'logs') S.logs = (await api('/logs')).logs;
