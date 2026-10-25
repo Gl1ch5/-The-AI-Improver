@@ -24,5 +24,332 @@
       "figma"
     ],
     "text": "Design with intent, not defaults.\n- Pick one clear aesthetic direction (e.g. editorial, minimal-graphite, brutalist, soft-glass) and apply it consistently. Avoid the generic \"purple gradient + centered hero + 3 cards\" template.\n- Typography carries the design: 1–2 families, a real scale (e.g. 14/16/20/28/40/56), tight letter-spacing on large headings, line-height 1.5–1.7 for body, max ~70ch line length.\n- Color: define tokens (bg, surface, border, text, muted, accent) as CSS variables; one accent color, used sparingly; check contrast ≥ 4.5:1; provide dark mode via prefers-color-scheme when reasonable.\n- Spacing on a 4/8px grid; generous whitespace; align to a grid; consistent radii (pick one: 6, 10 or 14px).\n- Hierarchy: one primary action per view; secondary actions visually quieter.\n- Real content over lorem ipsum; realistic copy, numbers and states (empty, loading, error, hover, focus-visible, disabled).\n- Mobile-first, responsive with fluid widths, no horizontal scroll; touch targets ≥ 40px.\n- Subtle motion only (150–250ms ease-out), respect prefers-reduced-motion.\n- Semantic HTML, alt text, labels, keyboard navigation.\n- Deliver complete, runnable code (single file if not told otherwise), no placeholders like \"add more here\"."
+  },
+  {
+    "id": "frontend-taste",
+    "title": "Frontend Taste Rules",
+    "hint": "Frontend UI, landing pages or visual design work",
+    "keywords": [
+      "дизайн",
+      "интерфейс",
+      "вёрстка",
+      "верстка",
+      "design",
+      "taste",
+      "frontend",
+      "фронтенд",
+      "landing"
+    ],
+    "text": "- Build around one idea from the subject's world and show it first, not a generic headline and stats.\n- Use one ground, one ink and one accent; the accent marks only the primary action and one other element.\n- Never use violet, indigo, cream-and-terracotta palettes, background or text gradients, glassmorphism, neon glows or emoji.\n- Keep headlines to two lines; no styled accent words, monospace outside code or tiny tracked uppercase labels.\n- Use at most two type families; display at 4-6x body size, body 16-18px, line-height 1.5, 45-75 characters per line.\n- Avoid pill badges, 01/02/03 numbering without a real sequence, icon-topped feature cards and rows of identical cards.\n- Separate surfaces with tone steps, not hairlines or resting shadows; use one grid with equal 16-32px margins.\n- Never invent testimonials, logos or statistics; label placeholders and check 1440, 768 and 390px."
+  },
+  {
+    "id": "landing-marketing",
+    "title": "Landing Pages and Marketing Sites",
+    "hint": "Landing pages, marketing sites, product heroes and pricing sections",
+    "keywords": [
+      "лендинг",
+      "landing",
+      "маркетинг",
+      "промо",
+      "hero",
+      "pricing",
+      "конверсия",
+      "marketing",
+      "тарифы"
+    ],
+    "text": "- Write a hero headline of two lines or fewer that states the product outcome, e.g. 'Ship invoices in 40 seconds', not a category.\n- Place one primary CTA above the fold named for its outcome ('Start free trial'), with at most one secondary text link.\n- Show the product in the first screen: a real screenshot, a muted loop or a live element covering about half the viewport.\n- Order sections by buyer questions: what it does, how it works, proof, pricing, closing CTA; each gets an h2 and a nav anchor.\n- Use only real proof with a source; otherwise a clearly marked placeholder, never invented quotes or logo walls.\n- Avoid centred heroes over gradient blobs, three identical icon cards and filler words like seamless or revolutionary.\n- Keep pricing to two or three tiers; highlight the recommended one with a fill or border, not a glow."
+  },
+  {
+    "id": "app-dashboard-ui",
+    "title": "App Dashboards and Admin Panels",
+    "hint": "Dashboards, admin panels, data-dense app screens and settings",
+    "keywords": [
+      "дашборд",
+      "панель",
+      "админка",
+      "админ",
+      "dashboard",
+      "admin",
+      "таблица",
+      "table",
+      "crm",
+      "saas",
+      "приложение",
+      "app"
+    ],
+    "text": "- Build the shell first: sidebar 220-260px or 56-64px collapsed, top bar 56-64px, 24px content padding, one scroll container.\n- Open each screen with its task: title, one primary action at top right, filters in one row above the content.\n- Make tables dense: 36-44px rows, 13-14px text, right-aligned tabular-nums, sticky header, sortable columns.\n- Give every panel and table explicit loading, empty and error states; a blank area is never acceptable.\n- Use a neutral surface system with low-contrast 1px borders; reserve the accent for selection and primary actions.\n- Pair every status colour with a text label; keep semantic hues to success, warning, danger and neutral.\n- Edit inline or open details in a 400-480px side drawer instead of page reloads; avoid cards inside cards."
+  },
+  {
+    "id": "typography-spacing",
+    "title": "Typography and Spacing Systems",
+    "hint": "Font pairing, type scale, line length and spacing rhythm",
+    "keywords": [
+      "типографика",
+      "шрифт",
+      "шрифты",
+      "типограф",
+      "отступы",
+      "spacing",
+      "typography",
+      "font",
+      "шкала",
+      "line-height",
+      "интервал"
+    ],
+    "text": "- Build UI type on a fixed ratio (1.2 or 1.25) and cap each page at five visible sizes; reserve 4-6x jumps for display headlines.\n- Set body text at 16-18px with line-height 1.5-1.6 and headlines at 1.0-1.15 with -0.01 to -0.03em tracking.\n- Limit running text to 45-75 characters using max-width in ch units; never let paragraphs span a full 1440px row.\n- Build spacing on a 4px base (4, 8, 12, 16, 24, 32, 48, 64, 96); section gaps should be at least double component gaps.\n- Pair fonts by visible contrast, one family with varied weights or two clearly different faces; never a third face.\n- Use tabular-nums for prices and table columns, keep text at 12px or above, and align text to one shared left edge.\n- Avoid monospace for non-code labels, wide-tracked all-caps captions and centred paragraphs longer than two lines."
+  },
+  {
+    "id": "color-theming",
+    "title": "Color, Tokens and Dark Mode",
+    "hint": "Color palettes, design tokens, dark mode and theme switching",
+    "keywords": [
+      "цвет",
+      "тема",
+      "темная",
+      "тёмная",
+      "dark",
+      "палитра",
+      "color",
+      "theme",
+      "токен",
+      "токены",
+      "contrast",
+      "контраст"
+    ],
+    "text": "- Define semantic tokens (background, surface, foreground, muted, border, primary, destructive) as CSS variables; components never use raw hex.\n- Build dark mode as its own token set, not an inversion: background near #0E0F12, text at 92-95% lightness, surfaces one step lighter.\n- Desaturate accents by 10-20% in dark mode and check each brand colour against both theme backgrounds.\n- Honour prefers-color-scheme, persist an explicit choice, and set color-scheme on the root so native controls match.\n- Keep one neutral ramp of 9-11 steps, one accent ramp and at most three semantic hues; avoid rainbow palettes and violet defaults.\n- Hold body text at 4.5:1 and large text plus UI borders at 3:1; check muted text separately, since it fails most often.\n- Avoid gradients on backgrounds and text, coloured glows, and pure #000 backgrounds with pure #FFF text."
+  },
+  {
+    "id": "charts-dataviz",
+    "title": "Charts and Data Visualization",
+    "hint": "Charts, graphs, data visualization choices, axes and tooltips",
+    "keywords": [
+      "график",
+      "диаграмма",
+      "чарт",
+      "chart",
+      "graph",
+      "визуализация",
+      "plot",
+      "легенда",
+      "ось",
+      "tooltip",
+      "дашборд"
+    ],
+    "text": "- Pick the chart by question: trends use lines, category comparisons use horizontal bars sorted by value, part-of-whole uses at most a donut with three parts.\n- Start bar charts at zero, label every axis, and avoid dual y-axes unless the title explains the relationship.\n- Use one hue for a single series; cap categorical palettes at six or seven colours and keep series colours consistent across the page.\n- Label series directly when there are four or fewer; use a legend only beyond that.\n- Round axis ticks to two or three significant digits and show exact values with units in tooltips.\n- Title each chart with its takeaway, add a source and date line, and offer a data-table toggle.\n- Avoid 3D charts, gradient fills, drop shadows on bars, heavy gridlines, pie charts above five slices and animations over 600ms."
+  },
+  {
+    "id": "responsive-mobile-first",
+    "title": "Responsive and Mobile-First Layout",
+    "hint": "Responsive layouts, mobile-first CSS, breakpoints and touch targets",
+    "keywords": [
+      "адаптив",
+      "адаптивность",
+      "мобильный",
+      "responsive",
+      "mobile",
+      "вёрстка",
+      "breakpoint",
+      "брейкпоинт",
+      "медиазапрос",
+      "grid",
+      "flex",
+      "экран"
+    ],
+    "text": "- Write base styles for 360-390px, then add min-width breakpoints at 640, 768, 1024 and 1280px.\n- Use grid with repeat(auto-fit, minmax(min(100%, 280px), 1fr)) for card sets and flex for toolbars; avoid fixed container widths.\n- Guarantee no horizontal scroll at 320px: min-width: 0 on flex and grid children, overflow-wrap: anywhere, wide tables in an overflow container.\n- Make touch targets at least 44x44 CSS px with 8px gaps, enlarging hit areas with padding rather than visuals.\n- Replace hover-only interactions with tap or focus equivalents; never hide essential actions behind hover.\n- Use clamp() for fluid type and spacing, e.g. clamp(2rem, 1.2rem + 3vw, 4.5rem), instead of jumps at breakpoints.\n- Use dvh for full-height mobile sections and env(safe-area-inset-*) for fixed bars."
+  },
+  {
+    "id": "motion-microinteractions",
+    "title": "Motion and Micro-interactions",
+    "hint": "Animations, transitions, hover and press feedback, entrance effects",
+    "keywords": [
+      "анимация",
+      "анимации",
+      "переход",
+      "микроанимация",
+      "motion",
+      "animation",
+      "transition",
+      "hover",
+      "эффект",
+      "эффекты",
+      "интеракция",
+      "микровзаимодействие"
+    ],
+    "text": "- Allow one signature motion moment per page plus feedback on controls; decorative looping animation is off by default.\n- Animate only transform and opacity; never width, height, top, left, margin or box-shadow.\n- Use 150-250ms for UI transitions and 300-450ms for entrances, with ease-out such as cubic-bezier(0.16, 1, 0.3, 1).\n- Give every control press (scale 0.97), hover and focus-visible feedback within 100ms.\n- Stagger reveals 60-90ms per item, rising 16-24px with opacity, triggered once on entry via IntersectionObserver.\n- Keep content visible by default and add reveal classes from script so text survives if JavaScript fails.\n- Wrap motion in prefers-reduced-motion: reduce, removing travel and keeping only opacity changes under 200ms."
+  },
+  {
+    "id": "accessibility-wcag",
+    "title": "Accessibility and WCAG 2.2",
+    "hint": "Accessibility audits, WCAG contrast, keyboard focus and screen readers",
+    "keywords": [
+      "доступность",
+      "доступности",
+      "a11y",
+      "accessibility",
+      "wcag",
+      "aria",
+      "контраст",
+      "клавиатура",
+      "фокус",
+      "screen reader",
+      "озвучка",
+      "инклюзив"
+    ],
+    "text": "- Use semantic HTML first: button for actions, a for links, a label on every input, one h1, and main and nav landmarks; add ARIA only when needed.\n- Keep body text at 4.5:1 and large text (18pt, or 14pt bold) at 3:1; focus rings and control boundaries need 3:1 against neighbours.\n- Make every control keyboard-operable in DOM order with a visible focus ring of at least 2px; never remove outline without a replacement.\n- Add a skip link first; move focus into dialogs on open, keep it there, and return it to the trigger on close.\n- Give icon-only buttons an aria-label, give images alt text that states purpose, and hide decorative SVG with aria-hidden.\n- Survive 200% text resize, 320px reflow and text-spacing overrides (1.5 line-height, 0.12em letter-spacing) without clipping.\n- Announce async results with role=status and failed submissions with role=alert; never rely on colour alone."
+  },
+  {
+    "id": "tailwind-css",
+    "title": "Tailwind CSS v4 Practice",
+    "hint": "Tailwind CSS styling, theme tokens, utility organisation and dark variant",
+    "keywords": [
+      "tailwind",
+      "тейлвинд",
+      "утилиты",
+      "класс",
+      "классы",
+      "css",
+      "стили",
+      "theme",
+      "токены",
+      "tailwindcss",
+      "utility",
+      "верстка"
+    ],
+    "text": "- Define tokens in an @theme block (--color-*, --font-*, --spacing-*, --radius-*) so bg-accent and font-display are generated from one source.\n- Use :root for plain variables that must not create utilities; use @theme only when a value should map to a utility class.\n- Keep the default 4px spacing unit and use p-4 or gap-6; promote any arbitrary value used twice, such as p-[13px], into @theme.\n- Enable class dark mode with @custom-variant dark (&:where(.dark, .dark *)) and style with semantic colour tokens, not raw shades.\n- Extract repeated class strings into components instead of @apply chains; reserve @apply for third-party markup.\n- Write mobile-first: base utility first, then md: and lg: overrides; avoid max-* breakpoints as the default.\n- Merge prop-driven classes with cn() built on clsx and tailwind-merge; never concatenate p-2 and p-4 into one string."
+  },
+  {
+    "id": "react-component-craft",
+    "title": "React UI Components (shadcn/Radix style)",
+    "hint": "React UI components with shadcn/ui, Radix primitives and variants",
+    "keywords": [
+      "react",
+      "реакт",
+      "компонент",
+      "компоненты",
+      "shadcn",
+      "radix",
+      "кнопка",
+      "модалка",
+      "диалог",
+      "component",
+      "variants",
+      "tsx"
+    ],
+    "text": "- Build dialogs, popovers, selects, tabs and menus on Radix or React Aria instead of hand-rolling focus management and ARIA state.\n- Define variants with class-variance-authority using semantic names (default, destructive, outline, ghost) and one defaultVariants object.\n- Forward refs, spread remaining props onto the root element, and merge className last through cn().\n- Use asChild or Slot so a Button can render as a link without nesting interactive elements.\n- Stay uncontrolled by default, with value and onValueChange for controlled use; do not copy props into useState.\n- Keep components presentational; fetching and business logic live in hooks or the route layer.\n- Style open, selected and disabled states with data-state and aria-* attributes, not boolean className branches."
+  },
+  {
+    "id": "html-email-templates",
+    "title": "HTML Email Templates",
+    "hint": "HTML email layouts, newsletters and transactional templates",
+    "keywords": [
+      "письмо",
+      "письма",
+      "email",
+      "e-mail",
+      "рассылка",
+      "newsletter",
+      "шаблон",
+      "template",
+      "html",
+      "transactional",
+      "outlook",
+      "gmail"
+    ],
+    "text": "- Build with nested tables using role=\"presentation\", cellpadding 0, cellspacing 0 and border 0; flexbox and grid break in Outlook desktop.\n- Set a 600px maximum width on a centred table with a fluid 100% wrapper for narrow screens.\n- Inline critical CSS on each element, keep the style block for media queries and dark mode, and keep the message under 102KB to avoid Gmail clipping.\n- Build CTA buttons as a padded table cell with background colour and an inline-block link, never background images.\n- Give every image width, height, alt text and display: block, with a background colour behind it.\n- Use Arial, Helvetica, sans-serif for body text; load web fonts only as progressive enhancement.\n- Add 90-100 characters of hidden preheader text and keep visible copy under 200 words with one primary CTA."
+  },
+  {
+    "id": "svg-icons-logos",
+    "title": "SVG Icons and Logo Marks",
+    "hint": "SVG icons, logo marks, inline vector graphics and icon sets",
+    "keywords": [
+      "иконка",
+      "иконки",
+      "иконок",
+      "svg",
+      "логотип",
+      "лого",
+      "logo",
+      "icon",
+      "icons",
+      "векторный",
+      "vector",
+      "значок"
+    ],
+    "text": "- Draw icons on a 24x24 viewBox with 1.5-2px strokes and round caps and joins; leave width and height off the root so CSS sizes them.\n- Use currentColor for fill and stroke so icons inherit text colour in both themes.\n- Keep one icon style per product: one stroke width, one corner radius, all outline or all filled; never mix icon sets.\n- Strip editor metadata, transforms and unused defs, and round coordinates to two decimals.\n- Mark decorative SVG with aria-hidden=\"true\" and focusable=\"false\"; give meaningful SVG role=\"img\" and a title.\n- Reuse icons through an SVG symbol sprite referenced with use href instead of duplicating paths.\n- Give logo marks clear space equal to the mark height, and test them at 16px and in single colour."
+  },
+  {
+    "id": "presentation-slide-design",
+    "title": "Presentation and Slide Visual Design",
+    "hint": "Slide decks and presentations: hierarchy and one message per slide",
+    "keywords": [
+      "презентация",
+      "слайд",
+      "слайды",
+      "deck",
+      "slides",
+      "presentation",
+      "pitch",
+      "питч",
+      "powerpoint",
+      "keynote",
+      "доклад",
+      "питчинг"
+    ],
+    "text": "- Give every slide one message as a full-sentence headline of 12 words or fewer; the headline states the takeaway, not the topic.\n- Use a 16:9 grid with 5-7% margins; body at 18pt minimum, headlines at 32-44pt, and at most six bullets of six words each.\n- Put one visual per slide, a chart, diagram, photo or large number; never stack a chart, a table and bullets together.\n- Limit the palette to background, text, one accent and one neutral, with at least 4.5:1 body-text contrast on the projected background.\n- Keep one template with the same title position, margins and footer with page number and source.\n- Move long explanations into speaker notes; avoid paragraphs, clip art and gradient or shadow decoration.\n- End on one slide that states the ask or next step."
+  },
+  {
+    "id": "threejs-webgl-scenes",
+    "title": "Three.js and WebGL Scenes",
+    "hint": "Three.js, WebGL and canvas 3D scenes, rendering performance and loops",
+    "keywords": [
+      "three",
+      "threejs",
+      "three.js",
+      "webgl",
+      "канвас",
+      "canvas",
+      "сцена",
+      "рендер",
+      "шейдер",
+      "shader"
+    ],
+    "text": "- Create the renderer once with setPixelRatio(Math.min(devicePixelRatio, 2)); handle resize with setSize, not per frame.\n- Drive the loop with renderer.setAnimationLoop and a clock delta; never tie motion speed to frame count.\n- Dispose geometries, materials, textures and the renderer on teardown, and remove the canvas and listeners, to avoid GPU leaks in SPAs.\n- Reuse geometries and materials, switch to InstancedMesh beyond about 100 identical objects, and keep mobile draw calls under about 200.\n- Pause rendering when the canvas is offscreen or the tab is hidden, and lower the pixel ratio on weak devices.\n- Use MeshStandardMaterial with an environment map and at most three lights; load glTF with Draco or KTX2 compression.\n- Stop auto-rotation under prefers-reduced-motion and give the canvas a static fallback image and a text description."
+  },
+  {
+    "id": "forms-microcopy",
+    "title": "Forms, Validation and Microcopy",
+    "hint": "Forms, validation errors, empty states, button labels and microcopy",
+    "keywords": [
+      "форма",
+      "формы",
+      "ошибки",
+      "валидация",
+      "микрокопи",
+      "copy",
+      "form",
+      "empty state",
+      "кнопка"
+    ],
+    "text": "- Use one column with labels above fields; never use placeholder text as the label.\n- Validate on blur for single fields and on submit for the form; show each error beside its field with the fix, e.g. 'Enter a date like 12/05/2026'.\n- Write errors in plain words that state the problem and the fix; avoid 'Invalid input' and apologies.\n- Name buttons by outcome ('Save changes', 'Delete project'); never bare 'Submit', 'OK' or 'Yes' for destructive actions.\n- Write empty states as one sentence on what appears here plus one button to create the first item.\n- Keep one term per object across the flow, sentence case, and no ALL CAPS or exclamation marks.\n- Set type, inputmode and autocomplete attributes so mobile keyboards and autofill work; preserve input after errors."
+  },
+  {
+    "id": "mobile-app-ui",
+    "title": "Native Mobile App UI (iOS and Android)",
+    "hint": "Native iOS or Android app screens and tab bars",
+    "keywords": [
+      "мобильное приложение",
+      "приложение",
+      "ios",
+      "android",
+      "мобильный",
+      "mobile",
+      "app",
+      "hig",
+      "material",
+      "таббар",
+      "навигация",
+      "swift"
+    ],
+    "text": "- Use a bottom tab bar with three to five labelled items for primary navigation; avoid hamburger menus for top-level sections.\n- Keep touch targets at least 44x44 pt on iOS and 48x48 dp on Android, with 8pt or dp gaps.\n- Place primary actions in the bottom thumb zone; use the large title on iOS and a 64dp top app bar on Android.\n- Use system text styles so type scales with settings: body 17pt with Dynamic Type on iOS, sp units on Android.\n- Keep content inside safe areas for the status bar and home indicator, with 16pt or 16dp side margins.\n- Use native segmented controls, sheets, switches and pull-to-refresh before building custom widgets.\n- Confirm destructive actions with a dialog or action sheet that names the consequence; avoid web-style hover states."
   }
 ]

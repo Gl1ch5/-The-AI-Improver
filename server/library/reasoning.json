@@ -25,5 +25,364 @@
       "сколько будет"
     ],
     "text": "- Restate what is asked and the given data; define variables.\n- Work step by step, checking each transformation; keep units through the calculation.\n- Verify the result (substitute back, sanity-check magnitude, limiting cases).\n- End with a clearly marked final answer. If the problem is ambiguous, say which interpretation you used."
+  },
+  {
+    "id": "competition-math",
+    "title": "Competition math (AIME style)",
+    "hint": "Olympiad or AIME-style math problems with integer or closed-form answers",
+    "keywords": [
+      "математика",
+      "олимпиада",
+      "задача",
+      "уравнение",
+      "комбинаторика",
+      "аиме",
+      "competition",
+      "olympiad",
+      "algebra",
+      "combinatorics",
+      "number theory",
+      "proof",
+      "integer answer",
+      "modular"
+    ],
+    "text": "- Restate the problem in your own variables; list the given data and the exact quantity asked.\n- Look for structure first: symmetry, invariants, telescoping sums, modular patterns, or a substitution that simplifies.\n- Pick the method by problem type: algebraic manipulation for equations, casework for counting, complementary counting for 'at least' questions.\n- Test small cases (n=1, 2, 3) to spot a pattern, then verify the general formula on a case not used to find it.\n- Keep exact arithmetic (fractions, radicals, factored forms) until the final step; do not round intermediate values.\n- Watch typical traps: double-counting in combinatorics, missing domain restrictions, extraneous roots, and off-by-one errors in ranges.\n- Check the answer format against the question (integer modulo N, simplest form, units) before finalizing."
+  },
+  {
+    "id": "word-problems-arithmetic",
+    "title": "Word problems and arithmetic",
+    "hint": "Multi-step word problems, percentages, rates, and exact arithmetic",
+    "keywords": [
+      "задача",
+      "арифметика",
+      "проценты",
+      "скорость",
+      "расчет",
+      "сколько",
+      "word problem",
+      "arithmetic",
+      "percent",
+      "rate",
+      "calculate",
+      "how many",
+      "total",
+      "остаток"
+    ],
+    "text": "- Translate each sentence into a variable or equation before computing anything.\n- Write units next to every number and cancel them as you go.\n- Identify the whole and the parts; for percentages of a changed base, state the base explicitly.\n- Compute in steps and keep a running total; recheck the final operation by a different order of operations.\n- Watch trap wording: 'per', 'of', 'more than' (addition, not multiplication), and 'left' versus 'spent'.\n- Solve rate and work problems with rate x time = quantity, and check that combined rates add correctly.\n- Sanity-check the result: magnitude, sign, and whether the answer must be an integer for counts of people or items."
+  },
+  {
+    "id": "science-qa",
+    "title": "Graduate science questions",
+    "hint": "Physics, chemistry, or biology questions testing concepts and mechanisms",
+    "keywords": [
+      "наука",
+      "физика",
+      "химия",
+      "биология",
+      "механизм",
+      "physics",
+      "chemistry",
+      "biology",
+      "science",
+      "mechanism",
+      "gpqa",
+      "why",
+      "explain"
+    ],
+    "text": "- Identify the concept being tested (mechanism, law, trend) before evaluating options or doing math.\n- Recall the governing principle explicitly, such as conservation laws, Le Chatelier, Mendelian ratios, or the Nernst equation.\n- Check the direction of the effect: does the variable increase or decrease the quantity, and why.\n- Watch question traps: 'NOT' or 'EXCEPT' phrasing, 'most likely' versus 'definitely', and the level of the question (molecular, cellular, organism).\n- Separate correlation from causation and mechanism from outcome in biology questions.\n- Eliminate answers that violate known constraints (units, symmetry, limiting cases) before choosing.\n- Pick the best-supported answer; do not pick a distractor that is true in general but does not answer the question asked."
+  },
+  {
+    "id": "multiple-choice-strategy",
+    "title": "Multiple-choice strategy",
+    "hint": "Questions with lettered options where one answer must be chosen",
+    "keywords": [
+      "выбор",
+      "вариант",
+      "варианты",
+      "ответ",
+      "options",
+      "multiple choice",
+      "choose",
+      "which",
+      "select",
+      "a b c d",
+      "elimination",
+      "quiz",
+      "test"
+    ],
+    "text": "- Read the stem fully and predict the answer in your own words before looking at the options.\n- Eliminate options that are clearly wrong and record the specific reason for each elimination.\n- Check every remaining option against the stem, not just the first plausible one; verify each explicitly.\n- Be wary of options that are true statements but do not answer the question asked.\n- Watch absolute words ('always', 'never', 'only') and choose the most complete of two correct-looking options when the stem asks for the best answer.\n- When two options remain, find the one that satisfies all conditions; a subtle qualifier usually decides it.\n- Do not favor the longest option by default; distractors are often written to look thorough."
+  },
+  {
+    "id": "logic-puzzles",
+    "title": "Logic puzzles and constraints",
+    "hint": "Deduction puzzles, assignment grids, truth-teller and liar problems",
+    "keywords": [
+      "головоломка",
+      "логика",
+      "загадка",
+      "ограничения",
+      "пазл",
+      "puzzle",
+      "logic",
+      "constraint",
+      "deduce",
+      "assignment",
+      "liar",
+      "grid",
+      "who lives",
+      "clue"
+    ],
+    "text": "- Write down all entities, attributes, and the full list of constraints before deducing anything.\n- Build a grid or table of possibilities and mark each elimination as soon as it is derived.\n- Start from the most constrained clue, the one with the fewest possibilities or a direct equality.\n- Check each new deduction against all earlier clues; a contradiction usually means a misread constraint.\n- For truth-teller and liar problems, assume one case, propagate it, and test both branches for consistency.\n- For scheduling or assignment, count the slots and confirm that no option is left empty or filled twice.\n- Verify the final assignment by checking every original clue against it, one at a time."
+  },
+  {
+    "id": "competitive-programming",
+    "title": "Competitive programming",
+    "hint": "Algorithm problems with input limits, edge cases, and complexity targets",
+    "keywords": [
+      "алгоритм",
+      "программирование",
+      "олимпиадное",
+      "codeforces",
+      "complexity",
+      "оценка",
+      "edge case",
+      "competitive",
+      "leetcode",
+      "input constraints",
+      "сложность",
+      "тест",
+      "solution"
+    ],
+    "text": "- Restate the input format, constraints, and output requirements; the size of n sets the complexity target.\n- Estimate operation counts: about 10^8 simple operations fit a typical time limit, so O(n^2) fails at n = 2*10^5.\n- Choose the algorithm from the constraints: sorting, prefix sums, two pointers, binary search on the answer, DSU, Dijkstra, or DP.\n- Enumerate edge cases: n = 1, empty input, all equal values, zero, negatives, maximum values, and overflow beyond 32 bits.\n- Use 64-bit integers when sums or products can exceed 2^31; apply the required modulus at each step.\n- Trace the code by hand on the sample input and one tricky hand-made case before presenting it.\n- Avoid deep recursion on large inputs; prefer iterative traversal when depth can reach 10^5 or more."
+  },
+  {
+    "id": "strict-instruction-following",
+    "title": "Strict instruction following",
+    "hint": "Prompts with exact counts, formats, forbidden words, or language rules",
+    "keywords": [
+      "ровно",
+      "json",
+      "запрет",
+      "exact",
+      "forbidden",
+      "word count",
+      "bullet",
+      "constraint",
+      "only output"
+    ],
+    "text": "- List every explicit constraint (count, format, language, forbidden words, required sections, ending) before writing.\n- Satisfy hard formatting rules literally: exact number of bullets, paragraphs, sentences, or words; exact title or wrapper markup.\n- For JSON-only output, emit one valid JSON object with no prose, no code fences, and no trailing text.\n- Answer entirely in the requested language and do not mix in words from another language when this is forbidden.\n- Avoid forbidden words and phrases everywhere, including headings and closing remarks; search the draft for them.\n- Do not add extras that break counts: no preamble or postscript when the prompt asks for exact sections.\n- After drafting, check capitalization, required keyword frequency, and the exact ending phrase."
+  },
+  {
+    "id": "factual-qa-anti-hallucination",
+    "title": "Factual questions and anti-hallucination",
+    "hint": "Factual lookups where invented details or citations would be harmful",
+    "keywords": [
+      "источник",
+      "ссылка",
+      "статистика",
+      "фактчек",
+      "citation",
+      "source",
+      "url",
+      "statistic",
+      "who was",
+      "when did",
+      "verify"
+    ],
+    "text": "- Answer only what you recall with high confidence; if unsure, say so explicitly instead of guessing.\n- Do not invent citations, DOIs, URLs, quotes, page numbers, statistics, or names; omit them if you cannot recall them reliably.\n- Separate known facts from reconstructions and label estimates as approximate.\n- For obscure or very recent questions, say the information may be outdated or unavailable instead of extrapolating.\n- Check the question for a false premise and correct it before answering.\n- Prefer a short, precise answer over a long one padded with unverified details, since longer answers add error.\n- Give a single fact once, with a confidence level when certainty is below high."
+  },
+  {
+    "id": "long-document-qa",
+    "title": "Long-document question answering",
+    "hint": "Questions answered from a long attached text, report, or contract",
+    "keywords": [
+      "документ",
+      "отчет",
+      "контракт",
+      "статья",
+      "цитата",
+      "раздел",
+      "document",
+      "passage",
+      "section",
+      "quote",
+      "contract",
+      "report",
+      "according to"
+    ],
+    "text": "- Locate the passages that answer the question before writing; scan headings, tables, and defined terms.\n- Quote the exact supporting sentence or phrase with its section or location to ground each claim.\n- Check the whole text for exceptions, amendments, or later updates that override an earlier statement.\n- Distinguish what the text states from what it implies; say 'not stated' when the document lacks the answer.\n- For numeric questions, extract each number with its unit and date, then compute in a separate step.\n- Resolve pronouns and references ('it', 'the said party') to the correct entity before answering.\n- When sources conflict, report both with their locations instead of silently choosing one."
+  },
+  {
+    "id": "estimation-fermi",
+    "title": "Estimation and Fermi problems",
+    "hint": "Order-of-magnitude estimates from rough assumptions and known references",
+    "keywords": [
+      "оценка",
+      "прикидка",
+      "приблизительно",
+      "сколько примерно",
+      "ферми",
+      "порядок",
+      "estimate",
+      "fermi",
+      "order of magnitude",
+      "approximately",
+      "roughly",
+      "back of envelope",
+      "guess",
+      "how much"
+    ],
+    "text": "- Decompose the target quantity into a product of factors you can estimate independently.\n- Anchor each factor to a known reference value and state the assumption explicitly.\n- Use round numbers and powers of ten; precision beyond one significant figure adds noise.\n- Compute the order of magnitude first, then refine only the largest uncertain factor.\n- Bound the answer with low and high assumptions to confirm it falls in a plausible range.\n- Check units at each multiplication step.\n- Report the result as an approximate value with its order of magnitude, not a falsely precise number."
+  },
+  {
+    "id": "probability-statistics",
+    "title": "Probability and statistics",
+    "hint": "Probability, expectation, conditional probability, or statistical inference questions",
+    "keywords": [
+      "вероятность",
+      "статистика",
+      "среднее",
+      "дисперсия",
+      "байес",
+      "выборка",
+      "probability",
+      "statistics",
+      "expected",
+      "variance",
+      "bayes",
+      "conditional",
+      "chance",
+      "distribution"
+    ],
+    "text": "- Define the sample space and the event precisely; state whether outcomes are equally likely.\n- Choose the rule: complement for 'at least one', multiplication for independent events, Bayes for conditional probability.\n- Watch classic traps: base-rate neglect, the gambler's fallacy, whether order matters, and with versus without replacement.\n- Use linearity of expectation before computing full distributions.\n- For variance, use Var(X) = E[X^2] - E[X]^2; a variance of a sum needs covariance terms unless the variables are independent.\n- Check that every probability lies in [0, 1] and that the outcomes of a partition sum to 1.\n- For inference, distinguish sample statistics from population parameters and name the test or interval that applies."
+  },
+  {
+    "id": "unit-conversion-dimensional",
+    "title": "Unit conversion and dimensional analysis",
+    "hint": "Any calculation mixing units, prefixes, powers, or temperature scales",
+    "keywords": [
+      "единицы",
+      "перевод",
+      "конвертация",
+      "размерность",
+      "метр",
+      "килограмм",
+      "градус",
+      "unit",
+      "convert",
+      "dimension",
+      "units",
+      "kelvin",
+      "meter"
+    ],
+    "text": "- Write every quantity with its units and set conversions as fractions that cancel the unwanted units.\n- Check the dimensions of both sides of any formula before substituting numbers.\n- Work in one unit system, usually SI, for intermediate steps and convert to the requested unit only at the end.\n- Watch prefix and power traps: 1 km^2 is 10^6 m^2, and cubic conversions multiply three times.\n- For temperature, use kelvin for absolute ratios; offset scales do not apply to differences.\n- Verify the magnitude against a known reference, such as walking speed of about 1.4 m/s or human mass of about 70 kg.\n- Round only at the end, keeping significant figures consistent with the least precise input."
+  },
+  {
+    "id": "date-time-calendar",
+    "title": "Date, time, and calendar calculations",
+    "hint": "Day counts, weekdays, durations, time zones, or business-day arithmetic",
+    "keywords": [
+      "день",
+      "неделя",
+      "календарь",
+      "время",
+      "часовой пояс",
+      "дней",
+      "date",
+      "calendar",
+      "weekday",
+      "days between",
+      "time zone",
+      "leap year",
+      "business days"
+    ],
+    "text": "- Fix the reference date and time zone first; state whether the endpoints are inclusive.\n- Count days using ordinal day numbers or a known anchor date, not by estimating month lengths.\n- Apply leap-year rules: divisible by 4, except century years unless divisible by 400.\n- Handle month-end arithmetic explicitly; adding one month to January 31 does not give a fixed day count.\n- For weekdays, anchor to a known date and count modulo 7, then apply any weekend or holiday rules the question gives.\n- For durations across daylight-saving changes, reason in UTC or state the local-time assumption.\n- For 'n business days', skip weekends and listed holidays, then recount the endpoint to confirm."
+  },
+  {
+    "id": "formal-proofs",
+    "title": "Formal proofs",
+    "hint": "Proofs by induction, contradiction, construction, or exhaustive cases",
+    "keywords": [
+      "доказательство",
+      "доказать",
+      "теорема",
+      "лемма",
+      "индукция",
+      "противоречие",
+      "proof",
+      "prove",
+      "theorem",
+      "lemma",
+      "induction",
+      "contradiction",
+      "contrapositive",
+      "qed"
+    ],
+    "text": "- State the claim precisely and name the proof technique before writing (induction, contradiction, contrapositive, construction, counting).\n- For induction, verify the base case explicitly and make the inductive step use the hypothesis at exactly n.\n- For contradiction, state the negated assumption and derive a clearly false consequence.\n- Make every quantifier and case explicit, and check that the cases are exhaustive.\n- Justify each inference by a named lemma or definition; do not skip steps described as 'clearly' true.\n- Test the argument on a small concrete example or boundary case to expose hidden assumptions.\n- Confirm that every hypothesis is used; a proof that never uses a needed hypothesis is usually wrong."
+  },
+  {
+    "id": "physics-problem-solving",
+    "title": "Physics problem solving",
+    "hint": "Mechanics, electromagnetism, or thermodynamics problems with numbers or symbols",
+    "keywords": [
+      "физика",
+      "сила",
+      "энергия",
+      "импульс",
+      "движение",
+      "ток",
+      "physics",
+      "force",
+      "energy",
+      "momentum",
+      "velocity",
+      "newton",
+      "conservation",
+      "mechanics"
+    ],
+    "text": "- Sketch the system and list knowns, unknowns, and assumptions with units before choosing equations.\n- Select the principle that fits the system: conservation of energy or momentum, Newton's laws, or a Lagrangian for constrained motion.\n- Choose a coordinate system aligned with symmetry or constraints, and define the sign convention explicitly.\n- Solve symbolically first and substitute numbers last, which makes limiting-case checks possible.\n- Check limiting cases (zero, very large, or equal parameters) against physically expected behavior.\n- Verify dimensions and the order of magnitude of the final answer.\n- Watch traps: forgetting friction or the normal force, mixing rest and lab frames, and treating gauge-dependent quantities as observables."
+  },
+  {
+    "id": "chemistry-stoichiometry",
+    "title": "Chemistry: stoichiometry and mechanisms",
+    "hint": "Reaction balancing, limiting reagents, yields, equilibria, or mechanisms",
+    "keywords": [
+      "химия",
+      "реакция",
+      "моль",
+      "стехиометрия",
+      "равновесие",
+      "механизм",
+      "chemistry",
+      "reaction",
+      "mole",
+      "stoichiometry",
+      "equilibrium",
+      "yield",
+      "acid",
+      "mechanism"
+    ],
+    "text": "- Write a balanced equation first; check atom counts and charge balance for every element and ion.\n- Convert masses to moles with the correct molar mass, then identify the limiting reagent by comparing mole ratios.\n- Keep moles as the intermediate quantity and track significant figures and units at every step.\n- For yields, compute the theoretical yield from the limiting reagent, then apply the percent yield.\n- For mechanisms, follow electron movement: track the nucleophile, electrophile, leaving group, and intermediates.\n- For equilibrium, set up an ICE table and check whether the x << initial-concentration approximation is valid.\n- For acid-base problems, identify strong versus weak species and check the pH against the expected range."
+  },
+  {
+    "id": "self-verification-checklist",
+    "title": "Self-verification for hard problems",
+    "hint": "Hard problems needing a final answer check before replying",
+    "keywords": [
+      "проверка",
+      "проверить",
+      "ответ",
+      "решение",
+      "верификация",
+      "check",
+      "verify",
+      "double-check",
+      "sanity",
+      "answer",
+      "solve",
+      "hard problem",
+      "reasoning"
+    ],
+    "text": "- Restate the question and check the final answer against exactly what was asked (units, form, range, which of several quantities).\n- Re-derive the key step by a different method, such as an alternative formula, a small-case test, or a reverse calculation.\n- Substitute the answer back into the original constraints or equations and confirm they hold.\n- Check magnitude, sign, and limiting cases; reject results that are implausible on physical or logical grounds.\n- Hunt for common slips: off-by-one errors, dropped negative signs, wrong branches, copied numbers, and double-counted cases.\n- If two methods disagree, locate the first divergent step rather than averaging the answers.\n- State the final answer clearly once verified, with a confidence level if any step remains uncertain."
   }
 ]

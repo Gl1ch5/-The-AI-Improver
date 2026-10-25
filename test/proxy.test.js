@@ -211,7 +211,6 @@ test('a real task the classifier calls trivial still gets guidance', async () =>
 });
 
 test('a style asked for once sticks for the rest of the dialog, even on small talk', async () => {
-  await admin('/guides', 'POST', { id: 'human-test', title: 'Human voice', hint: 'casual', text: 'Talk like a friend.', stickyTriggers: ['как человек'] });
   seen.length = 0;
   await (await chat({
     model: 'improved-gpt',
@@ -223,9 +222,8 @@ test('a style asked for once sticks for the rest of the dialog, even on small ta
   })).json();
   const sys = seen.at(-1).messages[0];
   assert.equal(sys.role, 'system');
-  assert.match(sys.content, /Talk like a friend/);
+  assert.match(sys.content, /Talk like a human|natural spoken Russian/i);
   assert.doesNotMatch(sys.content, /Focus for this request/);
-  await admin('/guides/human-test', 'DELETE');
 });
 
 test('unknown model returns OpenAI-style 404', async () => {

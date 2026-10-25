@@ -93,8 +93,17 @@ function cachePut(key, value) {
   if (cache.size > 2000) cache.delete(cache.keys().next().value);
 }
 
+// One line per category with bare ids: built-in ids are descriptive, so this
+// keeps ~120 guides under ~800 tokens. Custom guides carry their hint since
+// their ids may say nothing. The text is static, so providers cache it.
 export function catalog(guides) {
-  return guides.map(g => `${g.id}: ${g.hint || g.title}`).join('\n');
+  const groups = new Map();
+  for (const g of guides) {
+    const label = g.builtin === false || !g.category ? g.category || 'custom' : g.category;
+    const entry = g.builtin === false ? `${g.id} (${g.hint || g.title})` : g.id;
+    groups.set(label, [...(groups.get(label) || []), entry]);
+  }
+  return [...groups].map(([cat, ids]) => `${cat}: ${ids.join(', ')}`).join('\n');
 }
 
 export function parseJsonLoose(text) {
