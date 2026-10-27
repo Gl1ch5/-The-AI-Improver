@@ -34,10 +34,14 @@ function errorLines(text, max = 400) {
   return out.join(' | ');
 }
 
+// A conversation is identified by its opening: model plus the first few
+// messages. Agents only append, so the opening stays the same for the whole
+// session, while two unrelated chats that both start "who are you?" differ
+// on the next message and no longer merge.
 export function sessionKey(model, messages) {
-  const first = firstUserText(messages);
-  if (!first) return null;
-  return crypto.createHash('sha1').update(model + '\0' + first.slice(0, 2000)).digest('hex').slice(0, 16);
+  if (!firstUserText(messages)) return null;
+  const opening = messages.slice(0, 3).map(m => m.role + ':' + clip(textOf(m.content), 500)).join('\n');
+  return crypto.createHash('sha1').update(model + '\0' + opening).digest('hex').slice(0, 16);
 }
 
 // Called for every proxied request. Keeps a reference to the longest message

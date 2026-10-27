@@ -326,3 +326,15 @@ test('learning mode turns a finished session into a note that fires on its error
   assert.equal(resumed.skipped, 'short');
   await admin('/learning', 'PUT', { enabled: false });
 });
+
+test('two unrelated chats with the same first message are learned separately', async () => {
+  await admin('/learning', 'PUT', { enabled: true });
+  const a = [{ role: 'user', content: 'who are you?' }, { role: 'assistant', content: 'I am a bot.' }, { role: 'user', content: 'Расскажи про Python' }];
+  const b = [{ role: 'user', content: 'who are you?' }, { role: 'assistant', content: 'I am an agent.' }, { role: 'user', content: 'Сделай лендинг' }];
+  await (await chat({ model: 'improved-gpt', messages: a })).json();
+  await (await chat({ model: 'improved-gpt', messages: b })).json();
+  const pending = await admin('/learning');
+  assert.equal(pending.sessions.filter(x => x.title === 'who are you?').length, 2);
+  await admin('/learning/flush', 'POST', {});
+  await admin('/learning', 'PUT', { enabled: false });
+});

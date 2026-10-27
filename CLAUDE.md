@@ -18,7 +18,7 @@ OpenAI-compatible proxy. A small classifier reads the latest user message, picks
 
 ## Commands
 
-- `npm test` — must pass before every commit (currently 17 tests).
+- `npm test` — must pass before every commit (currently 18 tests).
 - Logs: `journalctl -u ai-improver` has one `[req] {json}` line per request (routing, guides, timings, 80-char preview) and one `[learn] {json}` line per analysed session.
 - `node --env-file=.env server/index.js` — run locally on port 3210.
 
