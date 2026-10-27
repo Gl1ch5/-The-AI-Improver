@@ -349,16 +349,16 @@ const VIEWS = {
   logs() {
     return `
       ${head('Журнал', 'Последние запросы через прокси.', '<button class="btn" data-a="reloadLogs">Обновить</button><button class="btn ghost danger" data-a="resetStats">Сбросить статистику</button>')}
-      <div class="card" style="overflow:auto">${S.logs.length ? `<table>
+      <div class="card" style="overflow:auto">${S.logs.length ? `<table class="logt">
         <thead><tr><th>Время</th><th>Модель</th><th>Запрос</th><th>Решение</th><th>Классиф.</th><th>Всего</th><th>Статус</th></tr></thead>
         <tbody>${S.logs.map(l => `<tr>
-          <td class="num">${new Date(l.at).toLocaleTimeString()}</td>
-          <td><div>${esc(l.model)}</div><div class="faint small mono">${esc(l.upstreamModel || '')}</div></td>
-          <td style="max-width:320px"><div>${esc(l.preview)}</div>${l.critique ? `<div class="faint small">${esc(l.critique)}</div>` : ''}${l.thinking ? `<div class="faint small">мышление (${l.thinkMs} мс): ${esc(l.thinking)}</div>` : ''}${l.advice ? `<div class="faint small">советник: ${esc(l.advice)}</div>` : ''}${l.error ? `<div class="small" style="color:var(--bad)">${esc(l.error)}</div>` : ''}</td>
-          <td><div class="row" style="gap:4px">${(l.guides || []).map(g => `<span class="pill">${esc(g)}</span>`).join('') || `<span class="faint small">${esc(l.complexity || '')}</span>`}${l.tool ? '<span class="pill">советник</span>' : ''}</div></td>
-          <td class="num">${esc(l.source || '')}<br>${l.classifierMs ?? 0} мс</td>
-          <td class="num">${l.totalMs ?? '…'} мс</td>
-          <td><span class="pill ${l.status === 200 ? 'ok' : l.status ? 'bad' : 'warn'}">${l.status || '…'}</span></td>
+          <td class="num" data-l="Время">${new Date(l.at).toLocaleTimeString()}</td>
+          <td data-l="Модель"><div>${esc(l.model)}</div><div class="faint small mono">${esc(l.upstreamModel || '')}</div></td>
+          <td class="q" style="max-width:320px"><div>${esc(l.preview)}</div>${l.critique ? `<div class="faint small">${esc(l.critique)}</div>` : ''}${l.thinking ? `<div class="faint small">мышление (${l.thinkMs} мс): ${esc(l.thinking)}</div>` : ''}${l.advice ? `<div class="faint small">советник: ${esc(l.advice)}</div>` : ''}${l.error ? `<div class="small" style="color:var(--bad)">${esc(l.error)}</div>` : ''}</td>
+          <td data-l="Решение"><div class="row" style="gap:4px">${(l.guides || []).map(g => `<span class="pill">${esc(g)}</span>`).join('') || `<span class="faint small">${esc(l.complexity || '')}</span>`}${l.tool ? '<span class="pill">советник</span>' : ''}</div></td>
+          <td class="num" data-l="Классиф.">${esc(l.source || '')} <br>${l.classifierMs ?? 0} мс</td>
+          <td class="num" data-l="Всего">${l.totalMs ?? '…'} мс</td>
+          <td data-l="Статус"><span class="pill ${l.status === 200 ? 'ok' : l.status ? 'bad' : 'warn'}">${l.status || '…'}</span></td>
         </tr>`).join('')}</tbody></table>` : '<div class="empty">Запросов ещё не было</div>'}</div>`;
   }
 };

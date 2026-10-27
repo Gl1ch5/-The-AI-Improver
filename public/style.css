@@ -57,7 +57,7 @@ code, .mono { font-family: var(--mono); font-size: 12.5px; }
 .nav svg { width: 16px; height: 16px; opacity: .8; }
 .side .foot { margin-top: auto; padding: 10px; color: var(--faint); font-size: 12px; }
 
-main { padding: 32px 40px 80px; max-width: 1180px; width: 100%; }
+main { padding: 32px 40px 80px; max-width: 1180px; width: 100%; min-width: 0; }
 .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
 .head p { margin: 4px 0 0; color: var(--muted); }
 
@@ -69,6 +69,7 @@ main { padding: 32px 40px 80px; max-width: 1180px; width: 100%; }
   padding: 20px;
 }
 .card + .card { margin-top: 14px; }
+.grid > .card + .card { margin-top: 0; }
 .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .grid { display: grid; gap: 14px; }
 .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -183,12 +184,12 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); white-space: n
 .empty { padding: 30px; text-align: center; color: var(--faint); }
 
 @media (max-width: 920px) {
-  .app { grid-template-columns: 1fr; }
+  .app { grid-template-columns: minmax(0, 1fr); }
   .side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 2px; }
   .brand { padding: 4px 10px; width: 100%; }
   .side .foot { display: none; }
   main { padding: 20px 16px 60px; }
-  .g2, .g3, .g4, .play { grid-template-columns: 1fr; }
+  .g2, .g3, .g4, .play { grid-template-columns: minmax(0, 1fr); }
   .head { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 640px) {
@@ -222,6 +223,16 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); white-space: n
   .modal .actions .btn { flex: 1; }
   .login { width: 100%; }
   table { display: block; overflow-x: auto; white-space: nowrap; }
+  /* Request log: one stacked block per request instead of a wide table. */
+  table.logt, .logt tbody, .logt tr, .logt td { display: block; white-space: normal; }
+  .logt thead { display: none; }
+  .logt tr { padding: 12px 0; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+  .logt tr:first-child { border-top: 0; padding-top: 0; }
+  .logt td { padding: 0; border: 0; max-width: none !important; }
+  .logt td.q { order: -1; flex-basis: 100%; overflow-wrap: anywhere; }
+  .logt td.num br { display: none; }
+  .logt td.q .small { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .logt td.num[data-l="Классиф."]::before { content: '· '; }
   .toast { max-width: calc(100% - 32px); white-space: normal; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
