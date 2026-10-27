@@ -1,0 +1,445 @@
+{
+  "base": "https://grzxk.ru/improver/v1",
+  "models": [
+    "gemini-raw",
+    "gemini-improved"
+  ],
+  "n": 10,
+  "seed": 42,
+  "summary": [
+    {
+      "suite": "gsm8k",
+      "model": "gemini-raw",
+      "n": 10,
+      "correct": 10,
+      "accuracy": 100,
+      "errors": 0,
+      "medianMs": 4945,
+      "avgOutTokens": 322
+    },
+    {
+      "suite": "gsm8k",
+      "model": "gemini-improved",
+      "n": 10,
+      "correct": 10,
+      "accuracy": 100,
+      "errors": 0,
+      "medianMs": 5239,
+      "avgOutTokens": 318
+    },
+    {
+      "suite": "mmlupro",
+      "model": "gemini-raw",
+      "n": 10,
+      "correct": 9,
+      "accuracy": 90,
+      "errors": 0,
+      "medianMs": 6441,
+      "avgOutTokens": 584
+    },
+    {
+      "suite": "mmlupro",
+      "model": "gemini-improved",
+      "n": 10,
+      "correct": 9,
+      "accuracy": 90,
+      "errors": 0,
+      "medianMs": 8524,
+      "avgOutTokens": 571
+    },
+    {
+      "suite": "humaneval",
+      "model": "gemini-raw",
+      "n": 10,
+      "correct": 10,
+      "accuracy": 100,
+      "errors": 0,
+      "medianMs": 3733,
+      "avgOutTokens": 186
+    },
+    {
+      "suite": "humaneval",
+      "model": "gemini-improved",
+      "n": 10,
+      "correct": 10,
+      "accuracy": 100,
+      "errors": 0,
+      "medianMs": 4073,
+      "avgOutTokens": 226
+    }
+  ],
+  "details": {
+    "gsm8k/gemini-raw": [
+      {
+        "ok": true,
+        "ms": 4945,
+        "out": "Nissa initially hires 60 elves.\n\n1. A third of the elves quit after children vomit on them:\n   $$\\frac{1}{3} \\times 60 = 20 \\text{ elves quit}$$\n   Remaining elves:\n   $$60 - 20 = 40 \\text{ elves}$$\n\n2. Then 10 of the remaining elves quit:\n   $$40 - 10 = 30 \\text{ elves}$$\n\nAnswer: 30",
+        "tokens": 190
+      },
+      {
+        "ok": true,
+        "ms": 5130,
+        "out": "To find the total number of medals given out for counting:\n\n1. Ali has 22 medals.\n2. Izzy has 5 fewer medals than Ali: $22 - 5 = 17$ medals.\n3. Together, Ali and Izzy have: $22 + 17 = 39$ medals.\n4. Since they have 10 times fewer medals than the total number given out, the total number of medals is 10 times their combined amount: $39 \\times 10 = 390$.\n\nAnswer: 390",
+        "tokens": 235
+      },
+      {
+        "ok": true,
+        "ms": 4598,
+        "out": "To find the total number of hours James runs in a week:\n\n1. Calculate the total miles he runs per week:\n   $$\\text{Total miles} = 12\\text{ miles/day} \\times 5\\text{ days/week} = 60\\text{ miles/week}$$\n\n2. Calculate the total hours spent running per week:\n   $$\\text{Total hours} = \\frac{60\\text{ miles}}{10\\text{ miles/hour}} = 6\\text{ hours}$$\n\nAnswer: 6",
+        "tokens": 203
+      },
+      {
+        "ok": true,
+        "ms": 6202,
+        "out": "To find the total number of lions in the enclosure, we add up the female lions, male lions, and cubs:\n\n1. Female lions: 12\n2. Male lions: 12 / 2 = 6\n3. Lion cubs: 14\n\nTotal = 12 + 6 + 14 = 32\n\nAnswer: 32",
+        "tokens": 125
+      },
+      {
+        "ok": true,
+        "ms": 6345,
+        "out": "To find Peter's age, let the ages of Peter, Paul, and John (Jean) be represented by $P$, $L$, and $J$ respectively.\n\nFrom the problem statement, we have the following equations:\n1. $P + L + J = 100$\n2. $L = J + 10$\n3. $P = L + J$\n\nSubstituting the third equation into the first equation:\n$$P + (L + J) = 100$$\n$$P + P = 100$$\n$$2P = 100$$\n$$P = 50$$\n\nAnswer: 50",
+        "tokens": 458
+      },
+      {
+        "ok": true,
+        "ms": 3412,
+        "out": "as in each box than Martha:\n\n1. Calculate the number of chocolate bars in each of Peter's boxes:\n   $$\\frac{64 \\text{ bars}}{4 \\text{ boxes}} = 16 \\text{ bars per box}$$\n\n2. Calculate the number of chocolate bars in each of Martha's boxes:\n   $$\\frac{56 \\text{ bars}}{7 \\text{ boxes}} = 8 \\text{ bars per box}$$\n\n3. Find the difference between the number of bars per box:\n   $$16 - 8 = 8$$\n\nAnswer: 8",
+        "tokens": 223
+      },
+      {
+        "ok": true,
+        "ms": 3819,
+        "out": "To find the total number of classes that visited the Science Center last week, we calculate the number of classes for each day:\n\n- **Monday:** 32 classes\n- **Tuesday:** $32 \\times 2 = 64$ classes\n- **Wednesday:** $32 \\times 3 = 96$ classes\n- **Thursday:** 30 classes\n- **Friday:** 25 classes\n\nNow, sum the classes for all days:\n$$\\text{Total} = 32 + 64 + 96 + 30 + 25 = 247$$\n\nAnswer: 247",
+        "tokens": 298
+      },
+      {
+        "ok": true,
+        "ms": 8563,
+        "out": ".\n5. **Third train arrives:** arrives one hour (60 minutes) after the second train leaves, so at $65 + 60 = 125$ minutes ($t = 125$).\n6. **Third train departs:** leaves immediately ($t = 125$).\n7. **Fourth train arrives:** arrives 20 minutes after the third train leaves, so at $125 + 20 = 145$ minutes ($t = 145$).\n\nPaul will board this fourth train, so he waits a total of 145 minutes.\n\nAnswer: 145",
+        "tokens": 879
+      },
+      {
+        "ok": true,
+        "ms": 3881,
+        "out": "ince 1 out of every 2 people who visit the dealership buys a car, Jason needs:\n   $$15 \\text{ cars} \\times 2 \\text{ visitors per car} = 30 \\text{ visitors}$$\n\n2. **Calculate the number of telephone calls needed:**\n   Since it takes 25 telephone calls to get 1 person to visit the dealership, Jason needs:\n   $$30 \\text{ visitors} \\times 25 \\text{ calls per visitor} = 750 \\text{ calls}$$\n\nAnswer: 750",
+        "tokens": 309
+      },
+      {
+        "ok": true,
+        "ms": 3941,
+        "out": " we calculate his total earnings and expenses:\n\n1. **Total allowance earned:**\n   $$\\$6 \\times 3 \\text{ weeks} = \\$18$$\n\n2. **Total spent on ice cream:**\n   Ryan bought ice cream for himself and 3 friends, which is 4 people in total.\n   $$4 \\times \\$1.25 = \\$5.00$$\n\n3. **Money remaining:**\n   $$\\$18 - \\$5 = \\$13$$\n\n4. **Number of movie tickets Ryan can buy:**\n   $$\\$13 \\div \\$6.50 = 2$$\n\nAnswer: 2",
+        "tokens": 297
+      }
+    ],
+    "gsm8k/gemini-improved": [
+      {
+        "ok": true,
+        "ms": 5239,
+        "out": "r the first group leaves:**\n   $$\\text{Remaining elves} = 60\\text{ elves} - 20\\text{ elves} = 40\\text{ elves}$$\n\n4. **Second group that quit:**\n   10 of the remaining elves quit after having their shins kicked:\n   $$\\text{Elves quitting (group 2)} = 10\\text{ elves}$$\n\n5. **Final number of elves left:**\n   $$\\text{Final elves left} = 40\\text{ elves} - 10\\text{ elves} = 30\\text{ elves}$$\n\nAnswer: 30",
+        "tokens": 397
+      },
+      {
+        "ok": true,
+        "ms": 3630,
+        "out": "medals than Ali:\n   $$\\text{Izzy} = 22 - 5 = 17\\text{ medals}$$\n\n3. **Combined medals (Ali and Izzy):**\n   $$\\text{Together} = 22 + 17 = 39\\text{ medals}$$\n\n4. **Total medals given out:**\n   Together, they have $10$ times fewer medals than the total number of medals given out. This means the total is $10$ times their combined sum:\n   $$\\text{Total} = 39 \\times 10 = 390\\text{ medals}$$\n\nAnswer: 390",
+        "tokens": 210
+      },
+      {
+        "ok": true,
+        "ms": 6119,
+        "out": "g speed = $10\\text{ miles/hour}$\n\n**Step 1: Calculate the total weekly mileage**\n$$\\text{Total weekly distance} = 12\\text{ miles/day} \\times 5\\text{ days/week} = 60\\text{ miles/week}$$\n\n**Step 2: Calculate the total weekly hours**\n$$\\text{Total time} = \\frac{\\text{Total distance}}{\\text{Speed}} = \\frac{60\\text{ miles}}{10\\text{ miles/hour}} = 6\\text{ hours}$$\n\nJames runs 6 hours a week.\n\nAnswer: 6",
+        "tokens": 425
+      },
+      {
+        "ok": true,
+        "ms": 6294,
+        "out": "nt for each group:\n\n1. **Female lions:**\n   $$\\text{Female lions} = 12\\text{ lions}$$\n\n2. **Male lions:**\n   There are half as many male lions as female lions:\n   $$\\text{Male lions} = \\frac{12}{2} = 6\\text{ lions}$$\n\n3. **Lion cubs:**\n   $$\\text{Lion cubs} = 14\\text{ lions}$$\n\n4. **Total lions:**\n   Add all the groups together:\n   $$\\text{Total lions} = 12 + 6 + 14 = 32\\text{ lions}$$\n\nAnswer: 32",
+        "tokens": 163
+      },
+      {
+        "ok": true,
+        "ms": 5149,
+        "out": "om equation (2), $L - J = 10\\text{ years}$.\n\nAdding these two equations:\n$$2L = 60\\text{ years} \\implies L = 30\\text{ years}$$\n$$J = 50 - 30 = 20\\text{ years}$$\n\nCheck all conditions:\n- $P + L + J = 50 + 30 + 20 = 100\\text{ years}$ (Holds true)\n- Paul is $30 - 20 = 10\\text{ years}$ older than John (Holds true)\n- Peter's age is $30 + 20 = 50\\text{ years}$, which matches $P$ (Holds true)\n\nAnswer: 50",
+        "tokens": 450
+      },
+      {
+        "ok": true,
+        "ms": 6107,
+        "out": "}} = 16\\text{ bars/box}$$\n\n3. **Calculate chocolate bars per box for Martha:**\n   $$\\text{Martha's bars per box} = \\frac{56\\text{ bars}}{7\\text{ boxes}} = 8\\text{ bars/box}$$\n\n4. **Find the difference between Peter's and Martha's bars per box:**\n   $$\\text{Difference} = 16\\text{ bars/box} - 8\\text{ bars/box} = 8\\text{ bars/box}$$\n\nPeter has 8 more chocolate bars in each box than Martha.\n\nAnswer: 8",
+        "tokens": 292
+      },
+      {
+        "ok": true,
+        "ms": 5186,
+        "out": " as many as Monday $= 2 \\times 32 = 64\\text{ classes}$\n* **Wednesday:** Three times as many as Monday $= 3 \\times 32 = 96\\text{ classes}$\n* **Thursday:** $30\\text{ classes}$\n* **Friday:** $25\\text{ classes}$\n\nNow, sum the classes for all five days:\n$$\\text{Total} = 32 + 64 + 96 + 30 + 25$$\n\nStep-by-step addition:\n* $32 + 64 = 96$\n* $96 + 96 = 192$\n* $192 + 30 = 222$\n* $222 + 25 = 247$\n\nAnswer: 247",
+        "tokens": 233
+      },
+      {
+        "ok": true,
+        "ms": 6218,
+        "out": " 60 = 125\\text{ minutes}$$\n   - Dwell time: Leaves immediately, so dwell time is $0\\text{ minutes}$.\n   - Departs at: $125 + 0 = 125\\text{ minutes}$\n\n4. **Fourth Train:**\n   - Arrives $20\\text{ minutes}$ after the third train leaves:\n     $$\\text{Arrival time} = 125 + 20 = 145\\text{ minutes}$$\n\nPaul waits until the fourth train arrives, which is at $145\\text{ minutes}$ from the start.\n\nAnswer: 145",
+        "tokens": 420
+      },
+      {
+        "ok": true,
+        "ms": 4314,
+        "out": " visitors}$$\n\n**3. Calculate the number of telephone calls needed:**\n$$\\text{Calls needed} = 30\\text{ visitors} \\times \\frac{25\\text{ calls}}{1\\text{ visitor}} = 750\\text{ calls}$$\n\n**Verification:**\n* Making $750\\text{ calls} \\div 25\\text{ calls/visitor} = 30\\text{ visitors}$.\n* With $30\\text{ visitors} \\div 2\\text{ visitors/sale} = 15\\text{ sales}$.\n\nThe calculations are consistent.\n\nAnswer: 750",
+        "tokens": 303
+      },
+      {
+        "ok": true,
+        "ms": 5103,
+        "out": "ple}$\n   * Cost per ice cream cone = $\\$1.25$\n   * $\\text{Total ice cream cost} = 4 \\times \\$1.25 = \\$5.00$\n\n3. **Calculate Ryan's remaining money:**\n   * $\\text{Remaining money} = \\$18.00 - \\$5.00 = \\$13.00$\n\n4. **Calculate how many movie tickets he can buy:**\n   * Cost per movie ticket = $\\$6.50$\n   * $\\text{Number of tickets} = \\frac{\\$13.00}{\\$6.50/\\text{ticket}} = 2\\text{ tickets}$\n\nAnswer: 2",
+        "tokens": 288
+      }
+    ],
+    "mmlupro/gemini-raw": [
+      {
+        "ok": false,
+        "ms": 9473,
+        "out": "ical, rational, and validated by consensual symbol systems (such as shared language).\n- The **parataxic mode** is prelogical, characterized by personal (private) symbols, magical thinking, and attributing causal relationships to events simply because they occur close together in time. Sullivan viewed schizophrenic behavior and thought as an extreme regression to this **parataxic mode**.\n\nAnswer: J",
+        "tokens": 963
+      },
+      {
+        "ok": true,
+        "ms": 8646,
+        "out": "ce Sheryl is normal, her genotype must be **$Hh$**.\n7. **Shirley** is normal and has six normal sons (probability of having six normal sons if she were a carrier is $(1/2)^6 = 1/64$), indicating that her genotype is most likely **$HH$**.\n\nMatching this to the options:\n- Sally: $Hh$\n- Sam: $H\\nearrow$\n- Saul: $h\\nearrow$\n- Sarah: $Hh$\n- Sheryl: $Hh$\n- Solomon: $h\\nearrow$\n- Shirley: $HH$\n\nAnswer: D",
+        "tokens": 874
+      },
+      {
+        "ok": true,
+        "ms": 6926,
+        "out": "ox 48.02\\text{ g}$\n   - Mass of Hydrogen ($\\text{H}$) = $58\\text{ g} \\times 0.172 \\approx 9.98\\text{ g}$\n\n2. **Calculate the number of moles (atoms) of each element:**\n   - Moles of $\\text{C}$ = $\\frac{48.02\\text{ g}}{12.011\\text{ g/mol}} \\approx 4$\n   - Moles of $\\text{H}$ = $\\frac{9.98\\text{ g}}{1.008\\text{ g/mol}} \\approx 10$\n\nThus, the molecular formula is $\\text{C}_4\\text{H}_{10}$.\n\nAnswer: G",
+        "tokens": 567
+      },
+      {
+        "ok": true,
+        "ms": 4761,
+        "out": "total time elapsed is $60.0\\text{ minutes}$, which corresponds to:\n   $$\\text{Number of half-lives} = \\frac{60.0\\text{ min}}{30\\text{ min}} = 2$$\n3. After 1 half-life, $\\frac{1}{2}$ of the original substance remains.\n4. After 2 half-lives, $\\left(\\frac{1}{2}\\right)^2 = \\frac{1}{4}$ of the original substance remains.\n\nTherefore, $\\frac{1}{4}$ of the azomethane originally present remains.\n\nAnswer: E",
+        "tokens": 370
+      },
+      {
+        "ok": true,
+        "ms": 9769,
+        "out": " $1:3$.\n   $$n(\\text{KClO}_3) = \\frac{0.0447}{3} \\approx 0.0149\\text{ moles}$$\n\n3. **Calculate the molar mass of $\\text{KClO}_3$:**\n   $$\\text{Molar mass} = 39.10\\text{ (K)} + 35.45\\text{ (Cl)} + 3 \\times 16.00\\text{ (O)} = 122.55\\text{ g/mol}$$\n\n4. **Calculate the mass of $\\text{KClO}_3$:**\n   $$\\text{Mass} = 0.0149\\text{ moles} \\times 122.55\\text{ g/mol} \\approx 1.83 - 1.84\\text{ g}$$\n\nAnswer: J",
+        "tokens": 1104
+      },
+      {
+        "ok": true,
+        "ms": 4880,
+        "out": "ron (hydrogen-like) system with atomic number $Z = 2$.\n\nThe energy required to ionize a one-electron system from its ground state ($n_1 = 1$ to $n_2 = \\infty$) is proportional to $Z^2$:\n$$E = Z^2 \\cdot E_H$$\n\nGiven that the ionization energy of hydrogen ($Z = 1$) is $E_H = 13.527\\text{ eV}$:\n$$E_{\\text{He}^+} = 2^2 \\times 13.527\\text{ eV} = 4 \\times 13.527\\text{ eV} = 54.108\\text{ eV}$$\n\nAnswer: F",
+        "tokens": 413
+      },
+      {
+        "ok": true,
+        "ms": 6441,
+        "out": "The first true British newspaper in the modern sense was the *Oxford Gazette*, first published on November 7, 1665. It was printed in Oxford because the royal court had temporarily relocated there to escape the Great Plague of London (it later moved to London and became the *London Gazette*).\n\nAnswer: B",
+        "tokens": 464
+      },
+      {
+        "ok": true,
+        "ms": 4122,
+        "out": "ocksider**: A popular style of boat shoe.\n* **Oxford**: A lace-up dress shoe characterized by closed lacing.\n* **Espadrille**: A casual shoe typically featuring a canvas or fabric upper and a sole made of braided jute/rope.\n* **Brogan**: A heavy, ankle-high work shoe or boot.\n* **Gingham**: A plain-woven cotton or blended fabric characterized by a checkered pattern, not a style of shoe.\n\nAnswer: H",
+        "tokens": 330
+      },
+      {
+        "ok": true,
+        "ms": 4302,
+        "out": "he effective tax rate for each individual:\n\n1. **Mr. Gribbon:**\n   - Income: $10,000\n   - Tax paid: $1,500\n   - Tax rate: $\\frac{1,500}{10,000} = 15\\%$\n\n2. **Mr. Doyle:**\n   - Income: $50,000\n   - Tax paid: $\\$50,000 - \\$45,000 = \\$5,000$\n   - Tax rate: $\\frac{5,000}{50,000} = 10\\%$\n\nSince the tax rate decreases as income increases (from 15% to 10%), the tax structure is **regressive**.\n\nAnswer: F",
+        "tokens": 423
+      },
+      {
+        "ok": true,
+        "ms": 4400,
+        "out": "his determines the technical relationship between inputs and outputs (represented by isoquants and the Marginal Rate of Technical Substitution).\n2. **The Prices of Inputs:** The relative costs of inputs such as labor and capital determine the isocost lines. \n\nThe optimal input combination is reached where an isoquant is tangent to the lowest possible isocost line ($MRTS = \\frac{w}{r}$).\n\nAnswer: D",
+        "tokens": 331
+      }
+    ],
+    "mmlupro/gemini-improved": [
+      {
+        "ok": false,
+        "ms": 12002,
+        "out": "odes: **prototaxic**, **parataxic**, and **syntaxic**. \n\nThe **parataxic mode** is prelogical, characterized by private/autistic symbols and the assumption of causal connections between events that merely occur coincidentally (parataxic association). Sullivan posited that schizophrenic thought and behavior represent a regression to and manifestation of this parataxic mode of experience.\n\nAnswer: J",
+        "tokens": 1104
+      },
+      {
+        "ok": true,
+        "ms": 55502,
+        "out": "ns with 100% probability. In classical Mendelian genetics problems of this type, a daughter with a large number of exclusively normal sons is inferred to have the genotype **$HH$**.\n\nMatching these determined genotypes to the given choices:\n- Sally: $Hh$\n- Sam: $H\\nearrow$\n- Saul: $h\\nearrow$\n- Sarah: $Hh$\n- Sheryl: $Hh$\n- Solomon: $h\\nearrow$\n- Shirley: $HH$\n\nThis matches option **D**.\n\nAnswer: D",
+        "tokens": 529
+      },
+      {
+        "ok": true,
+        "ms": 8524,
+        "out": "ormula $\\text{C}_2\\text{H}_5$.\n\n3. **Scale to the molecular formula:**\n   - Empirical formula mass of $\\text{C}_2\\text{H}_5 = (2 \\times 12.011) + (5 \\times 1.008) = 29.06\\text{ g/mol}$\n   - Scaling factor $n = \\frac{\\text{Molecular Weight}}{\\text{Empirical Weight}} = \\frac{58}{29.06} \\approx 2$\n\n   Therefore, the molecular formula is $(\\text{C}_2\\text{H}_5)_2 = \\text{C}_4\\text{H}_{10}$.\n\nAnswer: G",
+        "tokens": 831
+      },
+      {
+        "ok": true,
+        "ms": 53093,
+        "out": "e the number of half-lives ($n$) in 60.0 minutes:**\n   $$n = \\frac{t}{t_{1/2}} = \\frac{60.0\\text{ minutes}}{30.0\\text{ minutes}} = 2\\text{ half-lives}$$\n\n3. **Calculate the remaining fraction:**\n   For a first-order process, the fraction of reactant remaining after $n$ half-lives is:\n   $$\\text{Fraction remaining} = \\left(\\frac{1}{2}\\right)^n = \\left(\\frac{1}{2}\\right)^2 = \\frac{1}{4}$$\n\nAnswer: E",
+        "tokens": 239
+      },
+      {
+        "ok": true,
+        "ms": 66948,
+        "out": "_2)}{3} = \\frac{0.04464\\text{ mol}}{3} \\approx 0.01488\\text{ mol}$$\n\n3. **Convert moles of $\\text{KClO}_3$ to grams:**\n   The molar mass of $\\text{KClO}_3$ is:\n   $$\\text{M}(\\text{KClO}_3) = 39.10 + 35.45 + (3 \\times 16.00) = 122.55\\text{ g/mol}$$\n\n   $$\\text{Mass} = 0.01488\\text{ mol} \\times 122.55\\text{ g/mol} \\approx 1.82\\text{ g} - 1.84\\text{ g}$$\n\nThis closely matches option **J**.\n\nAnswer: J",
+        "tokens": 1422
+      },
+      {
+        "ok": true,
+        "ms": 6885,
+        "out": "he energy of a single-electron system in its ground state ($n = 1$) is given by the Bohr model:\n$$E = Z^2 E_{\\text{H}}$$\n\nwhere:\n- $Z$ is the atomic number (nuclear charge). For helium, $Z = 2$.\n- $E_{\\text{H}}$ is the ionization energy of hydrogen, given as $13.527\\text{ eV}$.\n\nSubstituting the values:\n$$E = (2)^2 \\times 13.527\\text{ eV} = 4 \\times 13.527\\text{ eV} = 54.108\\text{ eV}$$\n\nAnswer: F",
+        "tokens": 393
+      },
+      {
+        "ok": true,
+        "ms": 4607,
+        "out": "The first regularly published English newspaper in the modern sense was the *Oxford Gazette*, first printed on November 7, 1665, in **Oxford** (where King Charles II and his court had relocated to escape the Great Plague of London). It later moved and was renamed *The London Gazette*.\n\nAnswer: B",
+        "tokens": 212
+      },
+      {
+        "ok": true,
+        "ms": 5816,
+        "out": ":** A brand and common name for a boat shoe or deck shoe.\n* **Oxford:** A formal laced leather shoe characterized by closed lacing.\n* **Espadrille:** A light canvas shoe with a plaited fiber (often jute) sole.\n* **Brogan:** A heavy, ankle-high work shoe or boot.\n* **Gingham:** A medium-weight plain-woven cotton or cotton-blend fabric, known for its checkered pattern, not a type of shoe.\n\nAnswer: H",
+        "tokens": 304
+      },
+      {
+        "ok": true,
+        "ms": 4805,
+        "out": " pay = $\\$45,000$\n   - Taxes paid = $\\$50,000 - \\$45,000 = \\$5,000$\n   - Effective tax rate = $\\frac{\\$5,000}{\\$50,000} = 0.10 = 10\\%$\n\n**Analysis:**\n- As income increases from $\\$10,000$ to $\\$50,000$, the average tax rate decreases from $15\\%$ to $10\\%$.\n- A tax system where higher earners pay a lower percentage of their income in taxes than lower earners is defined as **regressive**.\n\nAnswer: F",
+        "tokens": 278
+      },
+      {
+        "ok": true,
+        "ms": 7156,
+        "out": "tal cost and the slope of the isocost line (the ratio of input prices, such as $w/r$). \n\nThe firm minimizes cost at the point of tangency where the marginal rate of technical substitution equals the ratio of input prices ($\\text{MRTS} = \\frac{w}{r}$). Therefore, the choice of the optimal input combination is directly governed by the production function and the relative prices of inputs.\n\nAnswer: D",
+        "tokens": 400
+      }
+    ],
+    "humaneval/gemini-raw": [
+      {
+        "ok": true,
+        "ms": 2503,
+        "out": "```python\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n    return len(set(string.lower()))\n```",
+        "tokens": 84
+      },
+      {
+        "ok": true,
+        "ms": 2561,
+        "out": "```python\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n    return string.swapcase()\n```",
+        "tokens": 62
+      },
+      {
+        "ok": true,
+        "ms": 3733,
+        "out": "t(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n```",
+        "tokens": 139
+      },
+      {
+        "ok": true,
+        "ms": 4085,
+        "out": " 'u'. Here, 'y' is also a\n    vowel, but only when it is at the end of the given word.\n\n    Example:\n    >>> vowels_count(\"abcde\")\n    2\n    >>> vowels_count(\"ACEDY\")\n    3\n    \"\"\"\n    if not s:\n        return 0\n\n    s_lower = s.lower()\n    vowels = set(\"aeiou\")\n    count = sum(1 for char in s_lower if char in vowels)\n    \n    if s_lower[-1] == 'y':\n        count += 1\n        \n    return count\n```",
+        "tokens": 200
+      },
+      {
+        "ok": true,
+        "ms": 3744,
+        "out": " is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n\n    primes = [p for p in range(2, 100) if is_prime(p)]\n    \n    for i in primes:\n        for j in primes:\n            for k in primes:\n                if i * j * k == a:\n                    return True\n    return False\n```",
+        "tokens": 217
+      },
+      {
+        "ok": true,
+        "ms": 2454,
+        "out": "u will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n    return s.replace(',', ' ').split()\n```",
+        "tokens": 137
+      },
+      {
+        "ok": true,
+        "ms": 4577,
+        "out": "        4: \"Four\",\n        5: \"Five\",\n        6: \"Six\",\n        7: \"Seven\",\n        8: \"Eight\",\n        9: \"Nine\"\n    }\n    \n    # Filter numbers between 1 and 9 inclusive\n    filtered = [x for x in arr if 1 <= x <= 9]\n    \n    # Sort in descending order (equivalent to sort then reverse)\n    filtered.sort(reverse=True)\n    \n    # Map to digit names\n    return [digit_names[x] for x in filtered]\n```",
+        "tokens": 455
+      },
+      {
+        "ok": true,
+        "ms": 4109,
+        "out": "b c a b') == {'a': 2, 'b': 2}\n    histogram('b b b b a') == {'b': 4}\n    histogram('') == {}\n\n    \"\"\"\n    letters = test.split()\n    if not letters:\n        return {}\n    \n    counts = {}\n    for letter in letters:\n        counts[letter] = counts.get(letter, 0) + 1\n        \n    max_count = max(counts.values())\n    return {letter: count for letter, count in counts.items() if count == max_count}\n```",
+        "tokens": 248
+      },
+      {
+        "ok": true,
+        "ms": 2490,
+        "out": "al order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"aaaaaaa\"\n    \"\"\"\n    if not words:\n        return \"\"\n    \n    # Sort primarily by descending number of unique characters (-len(set(w))),\n    # and secondarily by lexicographical order (w).\n    return min(words, key=lambda w: (-len(set(w)), w))\n```",
+        "tokens": 193
+      },
+      {
+        "ok": true,
+        "ms": 3060,
+        "out": "```python\nimport hashlib\n\ndef string_to_md5(text):\n    \"\"\"\n    Given a string 'text', return its md5 hash equivalent string.\n    If 'text' is an empty string, return None.\n\n    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    \"\"\"\n    if not text:\n        return None\n    return hashlib.md5(text.encode(\"utf-8\")).hexdigest()\n```",
+        "tokens": 128
+      }
+    ],
+    "humaneval/gemini-improved": [
+      {
+        "ok": true,
+        "ms": 3081,
+        "out": "```python\ndef count_distinct_characters(string: str) -> int:\n    \"\"\"Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n    return len(set(string.lower()))\n```",
+        "tokens": 84
+      },
+      {
+        "ok": true,
+        "ms": 5102,
+        "out": "tring.swapcase()\n\nif __name__ == \"__main__\":\n    import doctest\n\n    doctest.testmod()\n```\n\n### Running the code\nRun the script directly with Python 3:\n```bash\npython script.py\n```\nThis runs the embedded doctest (`flip_case('Hello') -> 'hELLO'`). The function handles empty strings, unicode characters, and non-alphabetic symbols natively, and raises a `TypeError` if a non-string argument is passed.",
+        "tokens": 216
+      },
+      {
+        "ok": true,
+        "ms": 4886,
+        "out": "- 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n```\n\n### Running & Assumptions\n- **Run**: Call `decode_shift(encoded_text)` passing any string previously encoded with `encode_shift`.\n- **Assumption**: The input consists of lowercase ASCII letters (`'a'` through `'z'`), consistent with `encode_shift`. Python's modulo operator `%` naturally handles negative numbers correctly (e.g., `-5 % 26 == 21`).",
+        "tokens": 232
+      },
+      {
+        "ok": true,
+        "ms": 3908,
+        "out": "o a\n    vowel, but only when it is at the end of the given word.\n\n    Example:\n    >>> vowels_count(\"abcde\")\n    2\n    >>> vowels_count(\"ACEDY\")\n    3\n    \"\"\"\n    if not s:\n        return 0\n\n    standard_vowels = {\"a\", \"e\", \"i\", \"o\", \"u\"}\n    lower_s = s.lower()\n\n    count = sum(1 for char in lower_s if char in standard_vowels)\n    if lower_s.endswith(\"y\"):\n        count += 1\n\n    return count\n```",
+        "tokens": 214
+      },
+      {
+        "ok": true,
+        "ms": 5315,
+        "out": "primes[i]\n        for j in range(i, len(primes)):\n            p2 = primes[j]\n            p1_p2 = p1 * p2\n            if p1_p2 > a:\n                break\n            for k in range(j, len(primes)):\n                p3 = primes[k]\n                prod = p1_p2 * p3\n                if prod == a:\n                    return True\n                if prod > a:\n                    break\n\n    return False\n```",
+        "tokens": 357
+      },
+      {
+        "ok": true,
+        "ms": 3287,
+        "out": "g of words separated by commas or spaces.\n\n    Your task is to split the string into words and return an array of the\n    words.\n\n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n    return [word for word in re.split(r\"[,\\s]+\", s) if word]\n```",
+        "tokens": 157
+      },
+      {
+        "ok": true,
+        "ms": 5668,
+        "out": ", return an empty array:\n      arr = []\n      return []\n\n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55]\n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n    valid_numbers = [num for num in arr if 1 <= num <= 9]\n    valid_numbers.sort(reverse=True)\n    return [DIGIT_NAMES[num] for num in valid_numbers]\n```",
+        "tokens": 429
+      },
+      {
+        "ok": true,
+        "ms": 4073,
+        "out": "b': 1, 'c': 1}\n    histogram('a b b a') == {'a': 2, 'b': 2}\n    histogram('a b c a b') == {'a': 2, 'b': 2}\n    histogram('b b b b a') == {'b': 4}\n    histogram('') == {}\n    \"\"\"\n    letters = test.split()\n    if not letters:\n        return {}\n\n    counts = Counter(letters)\n    max_count = max(counts.values())\n\n    return {letter: count for letter, count in counts.items() if count == max_count}\n```",
+        "tokens": 233
+      },
+      {
+        "ok": true,
+        "ms": 3850,
+        "out": " find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\", \"cc\"]) == \"aaaaaaa\"\n    \"\"\"\n    if not words:\n        return None\n\n    # Sort words primarily by number of unique characters descending (-len(set(w))),\n    # and secondarily by lexicographical order ascending (w).\n    return min(words, key=lambda w: (-len(set(w)), w))\n```",
+        "tokens": 202
+      },
+      {
+        "ok": true,
+        "ms": 3433,
+        "out": "```python\nimport hashlib\n\ndef string_to_md5(text: str) -> str | None:\n    \"\"\"\n    Given a string 'text', return its md5 hash equivalent string.\n    If 'text' is an empty string, return None.\n\n    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    \"\"\"\n    if not text:\n        return None\n    return hashlib.md5(text.encode(\"utf-8\")).hexdigest()\n```",
+        "tokens": 135
+      }
+    ]
+  }
+}

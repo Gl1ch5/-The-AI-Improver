@@ -1,0 +1,392 @@
+[
+  {
+    "id": "business",
+    "title": "Business, product & strategy",
+    "hint": "business plans, marketing, product decisions, startups, pricing, strategy",
+    "keywords": [
+      "бизнес",
+      "business",
+      "маркетинг",
+      "marketing",
+      "стартап",
+      "startup",
+      "продукт",
+      "product",
+      "стратеги",
+      "strategy",
+      "монетизац",
+      "pricing",
+      "цен",
+      "клиент",
+      "customer",
+      "конкурент",
+      "competitor",
+      "бизнес-план"
+    ],
+    "text": "- Start from the goal and constraints (budget, timeline, market); ask for or state assumptions.\n- Be concrete: numbers, examples, prioritized actions with rough effort and impact.\n- Name the main risks and the cheapest way to test the key assumption first.\n- Avoid generic frameworks dumped without application to the user's case."
+  },
+  {
+    "id": "prompting",
+    "title": "Prompt engineering",
+    "hint": "writing prompts or system prompts for LLMs, AI agents",
+    "keywords": [
+      "промпт",
+      "prompt",
+      "системный промпт",
+      "system prompt",
+      "llm",
+      "gpt",
+      "нейросет",
+      "агент",
+      "agent"
+    ],
+    "text": "- Clarify role, task, context, constraints and output format; put examples where format matters.\n- Be explicit and positive (\"do X\") rather than vague; give the why behind non-obvious rules.\n- Separate instructions from data with clear delimiters; keep it as short as it can be while unambiguous.\n- Suggest how to test the prompt on a few edge-case inputs."
+  },
+  {
+    "id": "marketing-growth",
+    "title": "Marketing and Growth",
+    "hint": "Campaigns, funnels, growth experiments, positioning, channel attribution",
+    "keywords": [
+      "маркетинг",
+      "рост",
+      "воронка",
+      "growth",
+      "marketing",
+      "funnel",
+      "аарр",
+      "эксперимент",
+      "конверсия",
+      "канал",
+      "позиционирование",
+      "retention",
+      "удержание"
+    ],
+    "text": "- Start from one goal metric and one audience; state positioning as: for X who Y, Z, unlike W.\n- Map the funnel with AARRR and fix the leakiest stage first.\n- Rank experiments with ICE or RICE, but calibrate Confidence with evidence; subjective scores drift toward optimism.\n- Define each experiment before launch: hypothesis, success threshold, sample size, and stop date.\n- Judge retention with cohort curves, not averages; a curve flattening after week 4 signals fit.\n- Attribute channels with UTM tags and holdout tests; last-click reports overstate branded search and retargeting.\n- Benchmark conversion against your own history; generic industry figures are often vendor marketing.\n- Avoid vanity metrics (impressions, follower counts); tie every channel to signups or revenue.\n- Check consent rules (GDPR, CAN-SPAM) before email outreach or ad targeting."
+  },
+  {
+    "id": "product-management",
+    "title": "Product Management",
+    "hint": "PRDs, feature specs, roadmaps, prioritization, product trade-off decisions",
+    "keywords": [
+      "продукт",
+      "prd",
+      "требования",
+      "приоритизация",
+      "roadmap",
+      "роадмап",
+      "rice",
+      "юзер стори",
+      "метрики",
+      "спецификация",
+      "mvp",
+      "product"
+    ],
+    "text": "- Open a PRD with the problem, the target customer, and the evidence for the problem; the solution comes after.\n- State goals and explicit non-goals in measurable form, for example: cut onboarding drop-off from 40% to 25% in 60 days.\n- Write stories as: As a <role>, I want <capability>, so that <outcome>, with Given-When-Then acceptance criteria.\n- Prioritize with RICE (Reach x Impact x Confidence / Effort) or a value-versus-effort matrix, and show the scoring inputs.\n- List alternatives considered and why they were rejected; reviewers always ask about the option you skipped.\n- Cover edge cases, error states, permissions, analytics events, and a rollout and rollback plan in the spec.\n- Keep a PRD to about two pages; move detail into linked designs and tickets.\n- Separate roadmap commitments (outcomes, quarters) from delivery estimates; do not present guesses as firm dates."
+  },
+  {
+    "id": "business-plan-unit-economics",
+    "title": "Business Plans and Unit Economics",
+    "hint": "Startup plans, financial models, LTV/CAC, payback, pricing, runway",
+    "keywords": [
+      "бизнес-план",
+      "юнит-экономика",
+      "ltv",
+      "cac",
+      "окупаемость",
+      "unit economics",
+      "финмодель",
+      "маржа",
+      "стартап",
+      "churn",
+      "отток",
+      "ценообразование",
+      "runway"
+    ],
+    "text": "- Build unit economics per customer: ARPU, gross margin, churn, CAC; LTV = ARPU x gross margin / churn.\n- Target LTV:CAC of about 3:1 and CAC payback under 12 months for self-serve models; enterprise sales cycles tolerate longer payback.\n- Compute payback as CAC / (ARPU x gross margin), not CAC / ARPU; ignoring margin overstates recovery speed.\n- Model base, downside, and upside cases on a separate sheet; tie each assumption to a source or test.\n- Calculate runway as cash divided by monthly net burn, and name the month the company must raise or cut costs.\n- Price from value and willingness to pay, validated with interviews or A/B tests, not from cost-plus alone.\n- Replace top-down market claims (1% of a 10 billion market) with a bottom-up count of reachable customers.\n- Separate revenue from cash collection; annual prepayments change runway, not unit economics."
+  },
+  {
+    "id": "personal-finance-investing",
+    "title": "Personal Finance and Investing Basics",
+    "hint": "Budgets, emergency funds, debt payoff, index investing, retirement accounts",
+    "keywords": [
+      "финансы",
+      "инвестиции",
+      "бюджет",
+      "индексный фонд",
+      "сбережения",
+      "подушка",
+      "долг",
+      "пенсия",
+      "expense ratio",
+      "диверсификация",
+      "investing",
+      "budget"
+    ],
+    "text": "- Build the emergency fund first: 3 to 6 months of essential expenses in a liquid, insured account such as a high-yield savings account.\n- Pay off debt above roughly 7-8% interest before investing beyond the employer retirement match.\n- Prefer low-cost, broadly diversified index funds; most index funds charge well under 0.2%, so compare total expense ratios.\n- Set the stock-bond split from time horizon and risk tolerance; money needed within 3 years belongs in cash or short bonds.\n- Use tax-advantaged retirement accounts first and check current-year contribution limits.\n- Expect volatility: broad equity indexes have fallen 30-50%; decide the plan before a crash.\n- Avoid concentrated single-stock bets, leverage, and high-fee products like many annuities.\n- Frame answers as education, not individualized advice; a fee-only fiduciary planner can review specifics."
+  },
+  {
+    "id": "legal-information",
+    "title": "Legal Information",
+    "hint": "Laws, contracts, rights, disputes, regulations; jurisdiction-dependent answers",
+    "keywords": [
+      "закон",
+      "право",
+      "юрист",
+      "контракт",
+      "договор",
+      "иск",
+      "суд",
+      "юрисдикция",
+      "статья",
+      "законодательство",
+      "права",
+      "legal",
+      "contract",
+      "lawsuit"
+    ],
+    "text": "- Establish the jurisdiction (country, state, region) and the date first; laws and their interpretation change.\n- State that this is general information, not legal advice; recommend a licensed lawyer for binding decisions.\n- Cite statutes, articles, or cases by official name and number only when confident they exist.\n- Distinguish statute, regulation, case law, and contract terms; they carry different weight.\n- Identify decisive facts and deadlines (limitation, notice, appeal periods); missed deadlines end claims.\n- For contracts, check parties, term, termination, liability caps, governing law, and indemnity.\n- Present options with trade-offs (negotiate, mediate, small claims, litigation), not one verdict.\n- Flag high-stakes matters (criminal charges, immigration, custody, large debts, dismissal) for prompt professional help."
+  },
+  {
+    "id": "medical-health-info",
+    "title": "Medical and Health Information",
+    "hint": "Symptoms, medications, test results, conditions, when to seek care",
+    "keywords": [
+      "здоровье",
+      "симптомы",
+      "врач",
+      "лекарство",
+      "анализы",
+      "диагноз",
+      "боль",
+      "медицина",
+      "дозировка",
+      "health",
+      "symptoms",
+      "medication",
+      "doctor"
+    ],
+    "text": "- Never diagnose; describe possible causes and which features make each more or less likely.\n- Lead with emergency red flags: chest pain with breathlessness, stroke signs (face droop, arm weakness, speech change), sudden worst headache, heavy bleeding.\n- For urgent non-emergency signs (fever over 39C for 3+ days, unexplained weight loss, blood in urine or stool), advise a clinician visit within days.\n- Anchor claims to WHO, NICE, AHA or national health service recommendations; flag weak evidence.\n- For medications, give standard dose ranges and key interactions; advise pharmacist checks for kidney or liver disease and pregnancy.\n- Ask for age, pregnancy, conditions, medications, and symptom duration before narrowing options.\n- Give numbers with units and reference ranges; lab ranges vary between laboratories.\n- Keep it calm: what to watch for and what to ask the doctor."
+  },
+  {
+    "id": "mental-health-support",
+    "title": "Mental Health and Emotional Support",
+    "hint": "Stress, anxiety, low mood, grief, burnout, relationship distress, venting",
+    "keywords": [
+      "стресс",
+      "тревога",
+      "депрессия",
+      "грусть",
+      "выгорание",
+      "одиночество",
+      "психолог",
+      "anxiety",
+      "stress",
+      "grief",
+      "burnout"
+    ],
+    "text": "- Lead with empathy: reflect the specific feeling in the person's own words before offering advice.\n- Validate the feeling, not harmful conclusions: that sounds exhausting, not you are right, everyone is against you.\n- Ask one open question at a time, such as what the hardest part has been, rather than a list of questions.\n- Offer practical tools only when wanted: paced breathing, 5-4-3-2-1 grounding, short problem-solving.\n- Do not diagnose depression or anxiety, and do not promise outcomes such as it will all be fine.\n- With signs of hopelessness or self-harm, ask directly about suicide, then give crisis options: the local emergency number (112 in Russia and the EU, 911 in the US) and a local crisis or trust line.\n- Encourage trusted people or a therapist as complements, and respect autonomy in decisions.\n- Keep replies warm and moderate in length; long lists of coping advice can feel dismissive during distress."
+  },
+  {
+    "id": "tutoring-socratic",
+    "title": "Tutoring and Concept Teaching",
+    "hint": "Homework help, learning new topics, practice problems, checking understanding",
+    "keywords": [
+      "объяснить",
+      "учеба",
+      "урок",
+      "репетитор",
+      "задача",
+      "понимание",
+      "socratic",
+      "tutor",
+      "homework",
+      "practice",
+      "quiz",
+      "study",
+      "сократ"
+    ],
+    "text": "- Diagnose before teaching: ask what the learner already thinks or tried, and pinpoint the exact misconception.\n- When the learner is solving a problem, withhold the final answer; give one targeted hint or guiding question per reply.\n- Scaffold: start with a worked analogous example, then fade to a similar problem the learner solves alone.\n- Check understanding by asking for a demonstration (show me the next step), not by asking does that make sense.\n- Climb a question ladder from recall to application to transfer, moving up only after a correct answer.\n- Give the full explanation directly when asked for a definition or formula, or when time is short.\n- Point out errors specifically: name the step that failed and why, rather than marking the whole answer wrong.\n- End with a short summary and one retrieval question for later, spaced over days rather than crammed."
+  },
+  {
+    "id": "language-learning",
+    "title": "Language Learning",
+    "hint": "Learning a foreign language, grammar, vocabulary, practice, level assessment",
+    "keywords": [
+      "изучение языка",
+      "грамматика",
+      "лексика",
+      "словарь",
+      "перевод",
+      "cefr",
+      "уровень",
+      "spaced repetition",
+      "fluency",
+      "vocabulary",
+      "practice"
+    ],
+    "text": "- Anchor level assessment to CEFR (A1 to C2) and describe what the learner can do, not only what they know.\n- Teach high-frequency vocabulary first, roughly the top 1,000-2,000 words, which cover most everyday text and speech.\n- Use spaced repetition (Anki-style or SM-2 family schedulers) for vocabulary; intervals grow after each correct recall.\n- Pair grammar with input: short example sentences in context beat isolated rule lists.\n- Correct selectively: fix the one or two error patterns that impede meaning, and recast in conversation rather than interrupting.\n- Practice listening, reading, speaking, and writing, with output in every session, not only input.\n- Flag false friends and contrasts with the learner's native language when they cause errors.\n- Recommend frequent short sessions (15-30 minutes daily), which outperform rare long sessions."
+  },
+  {
+    "id": "career-interviews",
+    "title": "Career Advice and Interviews",
+    "hint": "Job search, resumes, interview preparation, salary negotiation, career change",
+    "keywords": [
+      "карьера",
+      "резюме",
+      "собеседование",
+      "интервью",
+      "работа",
+      "зарплата",
+      "переговоры",
+      "star",
+      "поиск работы",
+      "career",
+      "interview",
+      "resume",
+      "salary"
+    ],
+    "text": "- Tailor the resume to the job description: mirror key terms, lead with quantified results, one page under 10 years.\n- Prepare 5-7 STAR stories (Situation, Task, Action, Result), keeping setup near 20% of the answer and ending on a measurable result.\n- Expect behavioral, technical, and case questions separately; practice each out loud, not only in writing.\n- Prepare questions about success metrics, team structure, and the first 90 days.\n- For salary, research market data for role, location, and level, then anchor above your target.\n- Negotiate the total package (base, bonus, equity, start date), and ask for time before accepting.\n- Send a follow-up within 24 hours referencing one specific point from the conversation.\n- For career changes, map transferable strengths to the target role's requirements and close gaps with one concrete project or certification."
+  },
+  {
+    "id": "travel-planning",
+    "title": "Travel Planning",
+    "hint": "Trip itineraries, logistics, seasons, budgets, visas, transport",
+    "keywords": [
+      "путешествие",
+      "поездка",
+      "маршрут",
+      "отель",
+      "виза",
+      "билеты",
+      "сезон",
+      "бюджет",
+      "travel",
+      "itinerary",
+      "visa",
+      "flights",
+      "trip"
+    ],
+    "text": "- Confirm dates, travelers, budget, and pace first; three cities in seven days needs very different logistics than a slow trip.\n- Check entry rules early (passport validity, visa or eTA, transit documents) on official government sites.\n- Account for seasons: monsoon, hurricane, ski, school-holiday, and festival periods change prices, closures, and crowds.\n- Build day-by-day plans with realistic transit times and 30-60 minute buffers between transfers.\n- Group activities by geography, and book timed-entry attractions and popular restaurants in advance.\n- Estimate costs by category (flights, lodging, transport, food, activities) plus 10-15% contingency, and state currency and price date.\n- Mention travel insurance and cancellation terms, plus time zone and the local emergency number.\n- Flag that hours, fares, and routes change; verify before booking."
+  },
+  {
+    "id": "cooking-recipes",
+    "title": "Cooking and Recipes",
+    "hint": "Recipes, quantities, cooking times, substitutions, scaling portions",
+    "keywords": [
+      "рецепт",
+      "готовка",
+      "кулинария",
+      "ингредиенты",
+      "замена",
+      "граммы",
+      "духовка",
+      "выпечка",
+      "cooking",
+      "recipe",
+      "substitute",
+      "baking",
+      "portions"
+    ],
+    "text": "- Give quantities in grams and milliliters; flour by volume can vary 20% or more.\n- State yield, prep time, cook time, and resting time at the top of every recipe.\n- Give oven temperatures in C and F, and note the fan-oven adjustment, typically 15-20C lower.\n- Specify doneness cues and internal temperatures: poultry 74C (165F), pork 63C with rest, bread around 93-99C inside.\n- For substitutions, preserve function: acid for acid, fat for fat, and keep leavening ratios; say when texture will change.\n- Scale carefully: salt, spices, and leavening do not scale linearly, and very large batches need longer cooking.\n- Warn about common mistakes: overcrowding the pan, salting too late, underseasoning starches, opening the oven too early.\n- Include food safety: refrigerate leftovers within 2 hours, and avoid raw egg for pregnant or immunocompromised people."
+  },
+  {
+    "id": "fitness-nutrition",
+    "title": "Fitness and Nutrition",
+    "hint": "Training programs, exercise form, protein intake, calorie targets, weight goals",
+    "keywords": [
+      "фитнес",
+      "тренировка",
+      "питание",
+      "белок",
+      "калории",
+      "набор массы",
+      "похудение",
+      "упражнения",
+      "fitness",
+      "protein",
+      "workout",
+      "calories",
+      "nutrition"
+    ],
+    "text": "- Program resistance training around progressive overload: add reps, load, or sets gradually and log them weekly.\n- Plan 2-4 weekly sessions, with roughly 10-20 hard sets per muscle group per week for hypertrophy.\n- Set protein at about 1.4-2.0 g/kg bodyweight per day for most exercisers; 2.3-3.1 g/kg may help retain lean mass while cutting.\n- Spread protein across 3-4 meals of roughly 20-40 g each, or 0.25 g/kg per meal, per the ISSN position stand.\n- For fat loss, use a moderate deficit of about 300-500 kcal/day (roughly 0.5-1% of bodyweight per week).\n- Include warm-up, technique cues, and 2-3 minute rests for heavy compound lifts.\n- Screen before advising intense training: chest pain, dizziness, joint injury, or pregnancy need a clinician first.\n- Avoid detox products and extreme diets; creatine monohydrate and caffeine have the strongest supplement evidence."
+  },
+  {
+    "id": "spreadsheets-formulas",
+    "title": "Spreadsheets and Formulas",
+    "hint": "Excel or Google Sheets formulas, lookups, pivots, data cleanup",
+    "keywords": [
+      "таблица",
+      "формула",
+      "excel",
+      "эксель",
+      "гугл таблицы",
+      "sheets",
+      "vlookup",
+      "index match",
+      "xlookup",
+      "сводная",
+      "функция",
+      "filter"
+    ],
+    "text": "- Confirm the app and version first; XLOOKUP and dynamic arrays need current versions, while older Excel lacks them.\n- Prefer INDEX/MATCH for compatibility and left-side lookups; XLOOKUP reads well for exact matches with a not-found argument.\n- Always use exact match (0 or FALSE) in lookups; approximate match on unsorted data fails silently.\n- Use absolute references ($A$1) and bounded ranges; avoid whole-column references in heavy formulas.\n- Clean data before formulas: check numbers stored as text, trailing spaces, and mixed date formats; TRIM, VALUE, and DATEVALUE help.\n- Wrap lookups in IFNA or IFERROR only where a blank is meaningful, so real errors stay visible.\n- Use FILTER, SORT, and UNIQUE for dynamic lists, and check for blocked cells that stop spill ranges.\n- Verify with a small known sample and a total check, and record assumptions in a notes tab."
+  },
+  {
+    "id": "ml-engineering",
+    "title": "Machine Learning Engineering",
+    "hint": "Model training, evaluation, overfitting, data leakage, metric choice",
+    "keywords": [
+      "машинное обучение",
+      "модель",
+      "обучение",
+      "переобучение",
+      "утечка данных",
+      "метрики",
+      "валидация",
+      "тест",
+      "overfitting",
+      "leakage",
+      "evaluation"
+    ],
+    "text": "- Split data before any preprocessing; fit scalers, encoders, and imputers on training data only.\n- For time series, use time-based or expanding-window validation and never build features from future rows.\n- Split by entity (customer, patient, session) when samples are correlated, so one entity never appears in both train and test.\n- Establish a baseline first (majority class, linear model, or last value) and report every experiment against it.\n- Diagnose overfitting from train versus validation curves; fix with early stopping, regularization, or simpler models.\n- Match metrics to cost: precision and recall for imbalanced classes, PR-AUC when positives are rare, calibration when thresholds matter.\n- Treat near-perfect scores as leakage until proven otherwise; ablate suspicious columns.\n- Keep the test set untouched until final evaluation; report variance across seeds or folds."
+  },
+  {
+    "id": "research-literature-review",
+    "title": "Research and Literature Review",
+    "hint": "Literature reviews, source quality, citation verification, evidence synthesis",
+    "keywords": [
+      "исследование",
+      "литература",
+      "обзор литературы",
+      "источники",
+      "цитирование",
+      "статьи",
+      "рецензирование",
+      "evidence",
+      "citations",
+      "peer review",
+      "systematic review",
+      "prisma"
+    ],
+    "text": "- Define the question with PICO (population, intervention, comparison, outcome) or an equivalent before searching.\n- Search at least two databases (PubMed, Scopus, Web of Science, Google Scholar) and log queries and dates.\n- Rank evidence by design: systematic reviews and RCTs above cohort and case-control studies, which rank above expert opinion and blogs.\n- Appraise each study with a tool such as the Cochrane risk-of-bias tool or CASP; PRISMA 2020 governs reporting, not study quality.\n- Verify every citation by resolving its DOI or PubMed ID; never invent authors, years, volumes, or quotes.\n- Check retraction status; separate preprints and predatory journals from peer review.\n- Report effect sizes with confidence intervals, not only p-values, and note sample size and heterogeneity.\n- State limitations openly; synthesize by theme, not paper by paper."
+  },
+  {
+    "id": "telegram-bots-aiogram",
+    "title": "Telegram Bot Development",
+    "hint": "Building Telegram bots with aiogram or python-telegram-bot",
+    "keywords": [
+      "телеграм бот",
+      "telegram",
+      "бот",
+      "aiogram",
+      "python-telegram-bot",
+      "хендлер",
+      "роутер",
+      "fsm",
+      "мидлварь",
+      "webhook",
+      "polling",
+      "callback"
+    ],
+    "text": "- Organize handlers in Router modules per feature and include them in one Dispatcher; do not attach handlers at module scope.\n- Pass shared dependencies (DB session, config) through middleware, not globals.\n- Use FSM only for multi-step dialogs; keep state in Redis or a database in production, since in-memory storage is lost on restart.\n- Always answer callback queries with callback.answer() to stop the loading spinner.\n- Run polling or webhook, never both; verify the webhook secret token and offload heavy work to tasks.\n- Respect rate limits (about 30 messages per second overall, 20 per minute per group) and back off on TelegramRetryAfter.\n- Make handlers idempotent; record processed update_id values when side effects matter.\n- Keep tokens in environment variables and log exceptions with update context via an error handler."
+  }
+]

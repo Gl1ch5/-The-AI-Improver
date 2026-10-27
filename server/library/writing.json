@@ -1,0 +1,382 @@
+[
+  {
+    "id": "writing",
+    "title": "Writing & editing",
+    "hint": "articles, posts, emails, essays, copywriting, editing and proofreading text",
+    "keywords": [
+      "напиши текст",
+      "статью",
+      "статья",
+      "пост",
+      "письмо",
+      "email",
+      "эссе",
+      "essay",
+      "копирайт",
+      "copywriting",
+      "отредактируй",
+      "edit",
+      "перепиши",
+      "rewrite",
+      "резюме",
+      "resume",
+      "описание",
+      "description",
+      "сопроводительн"
+    ],
+    "text": "- Identify audience, goal and tone first; match the language and register of the user.\n- Strong opening that delivers the point; one idea per paragraph; concrete details over abstractions.\n- Cut filler, clichés and hedging (\"в современном мире\", \"it's important to note\"). Prefer active voice, short sentences mixed with longer ones.\n- Use structure (headings, lists) only when it helps scanning.\n- When editing, preserve the author's voice and meaning; fix what is wrong, don't rewrite everything."
+  },
+  {
+    "id": "creative",
+    "title": "Creative writing",
+    "hint": "stories, poems, scripts, game lore, characters, worldbuilding",
+    "keywords": [
+      "рассказ",
+      "story",
+      "стих",
+      "poem",
+      "сценарий",
+      "script for video",
+      "персонаж",
+      "character",
+      "лор",
+      "lore",
+      "сюжет",
+      "plot",
+      "фэнтези",
+      "fantasy",
+      "сказк"
+    ],
+    "text": "- Show, don't tell: specific sensory details, actions and dialogue instead of stated emotions.\n- Avoid predictable openings and endings, stock phrases and moralizing conclusions.\n- Give characters wants and conflict; vary rhythm; keep a consistent point of view and tense.\n- For poems: deliberate meter/rhyme or deliberate free verse — never accidental half-rhyme.\n- Respect requested length and form precisely."
+  },
+  {
+    "id": "translation",
+    "title": "Translation",
+    "hint": "translate text between languages, localization",
+    "keywords": [
+      "переведи",
+      "перевод",
+      "translate",
+      "translation",
+      "на английский",
+      "на русский",
+      "in english",
+      "локализ",
+      "localiz"
+    ],
+    "text": "- Translate meaning and tone, not word by word; keep idioms natural in the target language.\n- Preserve formatting, markup, placeholders ({name}, %s) and code untouched.\n- Keep terminology consistent; leave proper names and brand names as is unless a standard form exists.\n- Output only the translation unless the user asked for notes."
+  },
+  {
+    "id": "humanizer",
+    "title": "Humanize text, remove AI tells",
+    "hint": "Rewrite text to sound human; remove AI writing patterns",
+    "keywords": [
+      "humanizer",
+      "humanize",
+      "как человек",
+      "по-человечески",
+      "живым языком",
+      "убери ии-штампы",
+      "ai tells",
+      "sounds like ai",
+      "звучит как ии",
+      "перепиши естественно"
+    ],
+    "text": "- Mark every tell first, strongest first: delve, pivotal, tapestry, showcase, underscore, testament, nestled.\n- Replace 'serves as', 'stands as' and 'features' with plain 'is' or 'has'.\n- Cut staging like 'It's not just X, it's Y', 'Honestly?' and 'Let that sink in'; state the point.\n- Break forced triads like 'innovation, inspiration, and insights' down to the items that really exist.\n- Delete chatbot residue: 'Great question!', 'I hope this helps', and disclaimers about limited sources.\n- Drop vague attributions ('experts argue', 'industry reports') unless you can name the source.\n- Remove trailing -ing closers ('reflecting its continued relevance') and summaries that repeat the paragraph.\n- Strip decorative bold, emoji headings and curly quotes; keep names, numbers, code and links exactly as given.\n- If the user gave sample writing, match its rhythm and punctuation."
+  },
+  {
+    "id": "talk-like-human",
+    "title": "Casual chat like a normal person",
+    "hint": "Casual conversation when the user wants a plain, human tone",
+    "keywords": [
+      "talk like a human",
+      "как человек",
+      "по-простому",
+      "по-человечески",
+      "как друг",
+      "давай просто",
+      "болтать",
+      "разговорный тон",
+      "casual chat",
+      "talk like a friend"
+    ],
+    "text": "- Answer in one to three short sentences unless the user asks for depth.\n- Write plain paragraphs: no bullet lists, headings, bold labels or tables.\n- Use contractions and the user's register: slang in, slang out; formal in, formal out.\n- Skip assistant-speak: 'Certainly!', 'Great question', 'As an AI', 'I hope this helps'.\n- Respond to what the person just said before adding information; a short reaction is fine.\n- Give a real opinion when asked and say 'I think' once, not in every sentence.\n- Ask at most one follow-up question, and only when it moves the conversation forward.\n- Leave out disclaimers and offers of more help unless something is truly unclear.\n- In Russian, write natural spoken Russian: no канцелярит, no long dashes chains, casual «ты» if they use «ты».",
+    "stickyTriggers": [
+      "как человек",
+      "по-человечески",
+      "как друг",
+      "как живой человек",
+      "talk like a human",
+      "talk like a friend",
+      "talk like a normal person",
+      "без официоза"
+    ]
+  },
+  {
+    "id": "russian-infostyle",
+    "title": "Russian infostyle editing",
+    "hint": "Edit Russian text: cut filler, add facts, plain words",
+    "keywords": [
+      "инфостиль",
+      "пиши сокращай",
+      "ильяхов",
+      "стоп-слова",
+      "канцелярит",
+      "как сократить",
+      "убери воду",
+      "сократи текст",
+      "упрости текст",
+      "штампы"
+    ],
+    "text": "- Remove introductory filler: 'Как известно', 'Кстати', 'Стоит отметить', 'Следует сказать', 'Например' when it adds nothing.\n- Replace evaluations with facts: 'мгновенная загрузка' becomes 'загружается за три секунды'.\n- Replace clichés like 'команда профессионалов' with what the team actually does.\n- Swap fancy words for plain ones: 'кадровый ресурс' becomes 'сотрудники'; 'осуществлять' becomes a plain verb.\n- Turn verbal nouns back into verbs: 'занимаемся продажами' becomes 'продаём'.\n- Replace vague quantities with exact figures: 'более восьми' becomes 'девять' when the number is known.\n- Cut euphemisms and criticize the work, not the person.\n- Replace 'кто, как не мы, знает' claims with a specific case or number.\n- Keep the simplest wording that keeps the meaning; simple does not mean primitive."
+  },
+  {
+    "id": "copywriting-ads",
+    "title": "Copywriting and ads",
+    "hint": "Write ad copy, slogans and selling text that converts",
+    "keywords": [
+      "реклама",
+      "рекламный текст",
+      "копирайтинг",
+      "продающий текст",
+      "слоган",
+      "заголовок объявления",
+      "призыв",
+      "ad copy",
+      "copywriting",
+      "call to action"
+    ],
+    "text": "- Open with the reader's problem or desire, not with the brand.\n- Put one benefit per line, and back it with a number or a concrete detail.\n- Keep headlines under eight words and make the promise specific.\n- Ban empty superlatives: 'best', 'revolutionary', 'unique', 'premium quality'.\n- End with one clear call to action: a single verb and a single next step.\n- Cut adjectives first; if a line survives without them, it was a stronger line.\n- Write two or three headline variants and pick the one a stranger understands in three seconds."
+  },
+  {
+    "id": "email-business",
+    "title": "Business email and correspondence",
+    "hint": "Write business emails, replies and follow-ups concisely",
+    "keywords": [
+      "письмо",
+      "деловое письмо",
+      "email",
+      "имейл",
+      "ответ клиенту",
+      "follow-up",
+      "тема письма",
+      "subject line",
+      "корреспонденция",
+      "вежливо"
+    ],
+    "text": "- Put the ask or the decision in the subject line.\n- State the purpose in the first sentence; skip 'I hope this email finds you well'.\n- Keep one request per email; if there are several, number them.\n- Put the deadline in its own sentence with the exact date and time zone.\n- Stay under about 120 words for routine messages.\n- End with the next step and who owns it.\n- Sign off with name and role; do not apologize for the email itself."
+  },
+  {
+    "id": "social-media-posts",
+    "title": "Social posts: Telegram, X, LinkedIn",
+    "hint": "Write posts for Telegram, X or LinkedIn channels",
+    "keywords": [
+      "пост",
+      "телеграм",
+      "телеграм-канал",
+      "твиттер",
+      "икс",
+      "линкедин",
+      "соцсети",
+      "социальные сети",
+      "tweet",
+      "linkedin post"
+    ],
+    "text": "- Make the first line a hook under twelve words that promises a payoff.\n- Use one idea per post and short paragraphs of one to two lines.\n- On X, stay under 280 characters and skip threads unless asked.\n- On LinkedIn, use line breaks and end with a question or a concrete takeaway.\n- On Telegram, keep plain text and use emoji sparingly, at most one or two.\n- Limit hashtags to two or three, and only where people search for them.\n- Cut 'Excited to announce', 'Thrilled to share' and other announcement filler; say what happened."
+  },
+  {
+    "id": "storytelling-fiction",
+    "title": "Fiction prose craft",
+    "hint": "Write narrative fiction, scenes and short stories",
+    "keywords": [
+      "рассказ",
+      "проза",
+      "художественный текст",
+      "сюжет",
+      "сцена",
+      "повесть",
+      "storytelling",
+      "fiction",
+      "show don't tell",
+      "нарратив"
+    ],
+    "text": "- Show emotion through action and concrete detail; never write 'she felt sad'.\n- Give each scene one specific sensory detail beyond sight.\n- Vary sentence length; put a short sentence after a long one at turning points.\n- Cut 'suddenly', 'somehow' and other filler that signals drama without causing it.\n- Use 'said' or no tag in dialogue; let the words carry the tone.\n- End a scene on a change in the situation, not on a summary of what it meant.\n- Avoid a tidy moral in the last line; leave one question open."
+  },
+  {
+    "id": "poetry-lyrics",
+    "title": "Poetry and song lyrics",
+    "hint": "Write poems, verses, song lyrics and rhymed text",
+    "keywords": [
+      "стихи",
+      "стих",
+      "песня",
+      "текст песни",
+      "рифма",
+      "лирика",
+      "поэзия",
+      "куплет",
+      "lyrics",
+      "poem"
+    ],
+    "text": "- Build each stanza around one concrete image rather than abstract feelings.\n- Let rhymes carry meaning; if a rhyme forces an inverted or padded line, rewrite the line.\n- Keep the meter steady within a poem and check it by reading aloud.\n- Make the chorus repeat one hook line with a small change in the last line.\n- Avoid worn pairs like 'любовь-кровь', 'сердце-боль' and 'небо-слеза' unless subverted.\n- Default to four-line stanzas unless the form calls for another length.\n- Trust white space: remove the explanatory final stanza."
+  },
+  {
+    "id": "screenwriting-video-scripts",
+    "title": "Video and screen scripts",
+    "hint": "Write YouTube, Reels or Shorts scripts and voiceovers",
+    "keywords": [
+      "сценарий",
+      "видео",
+      "ролик",
+      "youtube",
+      "reels",
+      "shorts",
+      "озвучка",
+      "скрипт",
+      "видеосценарий",
+      "screenplay"
+    ],
+    "text": "- Hook the viewer in the first three seconds and state the payoff.\n- Cover one idea per video; cut any beat that does not serve it.\n- Keep spoken lines under about fifteen words and write them for the ear.\n- Add a new beat or visual change every twenty to thirty seconds.\n- Cut 'Hey guys, welcome back' and channel housekeeping from the opening.\n- Mark visuals separately from voiceover so the editor can cut them.\n- End with one call to action, not three."
+  },
+  {
+    "id": "editing-proofreading",
+    "title": "Editing and proofreading",
+    "hint": "Proofread or edit text without changing its voice",
+    "keywords": [
+      "редактура",
+      "корректура",
+      "вычитка",
+      "правка",
+      "отредактируй",
+      "опечатки",
+      "пунктуация",
+      "проверь текст",
+      "proofread",
+      "grammar"
+    ],
+    "text": "- Fix errors first: typos, doubled words, wrong case, broken agreement.\n- Make the smallest edit that solves the problem; keep the author's voice.\n- Check tense and person; flag switches unless they are deliberate.\n- Verify names, numbers, dates and quotes against the source text.\n- Check punctuation around quotes, dashes and lists.\n- If asked for a list of changes, give the original and the fix side by side.\n- Do not add new claims or rewrite sentences that are already correct."
+  },
+  {
+    "id": "summarization",
+    "title": "Summarizing long texts",
+    "hint": "Summarize articles, reports, transcripts or long documents",
+    "keywords": [
+      "суммируй",
+      "конспект",
+      "резюме",
+      "краткое содержание",
+      "сократи",
+      "выжимка",
+      "главное",
+      "summarize",
+      "summary",
+      "tl;dr"
+    ],
+    "text": "- Lead with the main conclusion in the first sentence.\n- Keep the numbers, names, dates and claims exactly as the source states them.\n- Cut examples, anecdotes and background unless they carry the argument.\n- Match the requested length; without one, aim for about ten percent of the source.\n- Do not open with 'The article discusses' or 'This text is about'.\n- State what was omitted or uncertain in the source.\n- Do not add your own judgment unless asked; attribute opinions to their author."
+  },
+  {
+    "id": "academic-essay",
+    "title": "Academic and essay writing",
+    "hint": "Write essays, term papers and academic arguments",
+    "keywords": [
+      "эссе",
+      "реферат",
+      "курсовая",
+      "диплом",
+      "научная статья",
+      "академический",
+      "academic",
+      "essay",
+      "thesis",
+      "аргумент"
+    ],
+    "text": "- State the thesis in the first paragraph and keep every paragraph tied to it.\n- Make one claim per paragraph, then give the evidence and what it shows.\n- Cite real sources only; never invent references, quotes or statistics.\n- Hedge with a specific scope ('in this sample of 40 schools') rather than 'perhaps'.\n- Define each key term once and use it the same way throughout.\n- Open with the argument, not 'In today's society' or 'Since ancient times'.\n- Name the strongest counterargument and answer it in the body.\n- Make the conclusion add a point, not repeat the introduction."
+  },
+  {
+    "id": "resume-cover-letter",
+    "title": "Resume and cover letter",
+    "hint": "Write resumes, CVs and cover letters for job applications",
+    "keywords": [
+      "резюме",
+      "сопроводительное письмо",
+      "cover letter",
+      "resume",
+      "вакансия",
+      "карьера",
+      "достижения",
+      "работодатель"
+    ],
+    "text": "- Start each bullet with a strong action verb followed by a measurable result.\n- Include numbers: revenue, percentages, team size, time saved.\n- Drop 'responsible for', 'hard-working team player' and 'detail-oriented'.\n- Mirror the wording of the job posting where the candidate really matches it.\n- Keep a resume to one page under about ten years of experience.\n- Write a cover letter of three short paragraphs: why this role, proof, next step.\n- Name one specific detail about the company to show the letter was written for it."
+  },
+  {
+    "id": "seo-articles",
+    "title": "SEO articles",
+    "hint": "Write search-optimized articles and web content",
+    "keywords": [
+      "seo",
+      "статья для сайта",
+      "поисковик",
+      "ключевые слова",
+      "продвижение",
+      "заголовок",
+      "мета-описание",
+      "поисковый запрос",
+      "keyword",
+      "search intent"
+    ],
+    "text": "- Match the search intent: answer the query in the first paragraph.\n- Put the primary keyword in the title, the H1 and the first hundred words.\n- Use one H2 per subtopic, phrased as a question people search for.\n- Give a direct answer of forty to sixty words for featured snippets.\n- Keep keyword density low; repeat the phrase only where a reader would expect it.\n- Cut filler openers like 'In today's fast-paced world'.\n- Write a meta description of 150 to 160 characters that promises a specific answer."
+  },
+  {
+    "id": "speeches-presentations",
+    "title": "Speeches and presentation text",
+    "hint": "Write speeches, toasts, talks and presentation scripts",
+    "keywords": [
+      "речь",
+      "выступление",
+      "презентация",
+      "доклад",
+      "тост",
+      "спич",
+      "speech",
+      "presentation",
+      "talk",
+      "слайды"
+    ],
+    "text": "- Write for the ear: short sentences under about twenty words.\n- Open with a concrete story or number, not 'Thank you all for coming'.\n- Give each section one message and repeat the key line once.\n- Mark pauses and emphasis in the script; plan about 130 to 150 words per minute.\n- Keep slides to keywords and figures; the speaker carries the sentences.\n- Close with one thing to think or do, then stop talking."
+  },
+  {
+    "id": "dialogue-roleplay",
+    "title": "Dialogue and character voice",
+    "hint": "Write character dialogue, roleplay replies and personas",
+    "keywords": [
+      "диалог",
+      "ролевая игра",
+      "персонаж",
+      "roleplay",
+      "character voice",
+      "реплика",
+      "в роли",
+      "голос персонажа",
+      "роль"
+    ],
+    "text": "- Give each character a distinct vocabulary, sentence length and habit of speech.\n- Keep the character's knowledge limits; they do not know what the author knows.\n- Let subtext carry feeling: the character says less than they mean.\n- Answer the other character's last line before advancing the plot.\n- Keep replies scene-length unless the user asks for more.\n- Do not break character with disclaimers or assistant-style explanations.\n- Show reactions in brief physical action, not paragraphs of narration."
+  },
+  {
+    "id": "journalism-news",
+    "title": "Journalism and news style",
+    "hint": "Write news reports, news items and factual articles",
+    "keywords": [
+      "новость",
+      "новости",
+      "журналистика",
+      "заметка",
+      "репортаж",
+      "news",
+      "journalism",
+      "лид",
+      "перевёрнутая пирамида",
+      "редакция"
+    ],
+    "text": "- Open the lead with who did what, where and when.\n- Use the inverted pyramid: the most important facts first, detail after.\n- Attribute every claim to a named source or document.\n- Separate reported facts from opinion; label opinion clearly.\n- Use no adjectives of judgment such as 'shocking' or 'brilliant'.\n- Quote people verbatim and mark any paraphrase.\n- Write a neutral headline that matches the lead without sensational words."
+  }
+]

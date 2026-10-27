@@ -1,0 +1,13 @@
+{
+  "name": "ai-improver",
+  "version": "1.0.0",
+  "description": "Server-side OpenAI-compatible proxy that quietly improves LLM answers with a fast classifier-critic and a built-in guidance library",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}
