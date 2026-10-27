@@ -191,4 +191,37 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); white-space: n
   .g2, .g3, .g4, .play { grid-template-columns: 1fr; }
   .head { flex-direction: column; align-items: flex-start; }
 }
+@media (max-width: 640px) {
+  .side { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .side::-webkit-scrollbar { display: none; }
+  .brand { flex: none; width: auto; padding: 0 12px 0 4px; }
+  .brand small { display: none; }
+  .nav { display: flex; gap: 2px; }
+  .nav a { flex: none; padding: 7px 10px; font-size: 13px; white-space: nowrap; }
+  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main { padding: 16px 16px 60px; }
+  h1 { font-size: 19px; }
+  .head { margin-bottom: 18px; }
+  .head > .row { width: 100%; flex-wrap: wrap; }
+  .head > .row > * { flex: 1 1 auto; }
+  .card { padding: 16px; }
+  .card-head { flex-wrap: wrap; }
+  .item { flex-wrap: wrap; gap: 10px; }
+  .item > .btn, .item > .switch { flex: none; }
+  .item .sub { white-space: normal; overflow-wrap: anywhere; }
+  .msg { max-width: 96%; }
+  .msgs { max-height: 50vh; }
+  .composer { flex-direction: column; align-items: stretch; }
+  .composer .btn { width: 100%; }
+  .spread { flex-wrap: wrap; gap: 10px; }
+  .spread > .btn { width: 100%; }
+  .seg { flex-wrap: wrap; }
+  .modal { padding: 18px; border-radius: 14px; }
+  .modal .actions { flex-wrap: wrap; }
+  .modal .actions > div { display: flex; gap: 8px; width: 100%; }
+  .modal .actions .btn { flex: 1; }
+  .login { width: 100%; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+  .toast { max-width: calc(100% - 32px); white-space: normal; text-align: center; }
+}
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
