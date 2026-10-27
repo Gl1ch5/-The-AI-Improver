@@ -8,6 +8,7 @@ import { prepare, handleStream, handleJson, HttpError } from './proxy.js';
 import { classify, clearClassifierCache } from './classifier.js';
 import { listModels, providerById } from './upstream.js';
 import { stats } from './stats.js';
+import { clearThinkerCache } from './thinker.js';
 import { track, sweep, startLearner, learnerState } from './learner.js';
 
 const PORT = Number(process.env.PORT || 3210);
@@ -124,6 +125,7 @@ function publicState() {
     providers: c.providers.map(p => ({ ...p, apiKey: '', apiKeyPreview: mask(p.apiKey), apiKeySet: !!p.apiKey })),
     classifier: c.classifier,
     advisor: c.advisor,
+    thinking: c.thinking,
     learning: c.learning,
     models: c.models,
     guides: c.guides,
@@ -162,6 +164,10 @@ async function chatCompletions(req, res) {
       classifierMs: cls.ms,
       classifierError: cls.error,
       injectedTokens: prep.meta.injectedTokens,
+      thinking: prep.meta.thinking?.text || undefined,
+      thinkSrc: prep.meta.thinking?.source,
+      thinkMs: prep.meta.thinking?.ms,
+      thinkErr: prep.meta.thinking?.error,
       tool: prep.toolEnabled
     });
     if (prep.meta.injected) {
@@ -221,6 +227,9 @@ function logRequest(e, body) {
     matched: e.matched?.length ? e.matched : undefined,
     clsMs: e.classifierMs,
     clsErr: e.classifierError,
+    think: e.thinkSrc,
+    thinkMs: e.thinkMs,
+    thinkErr: e.thinkErr,
     inj: e.injectedTokens,
     advisor: e.tool || undefined,
     ms: e.totalMs,
@@ -246,6 +255,7 @@ const PROVIDER_FIELDS = ['name', 'baseUrl', 'apiKey'];
 const GUIDE_FIELDS = ['title', 'hint', 'keywords', 'stickyTriggers', 'patterns', 'topic', 'text', 'enabled', 'edited', 'category'];
 const CLASSIFIER_FIELDS = ['enabled', 'providerId', 'model', 'temperature', 'maxTokens', 'timeoutMs', 'maxInputChars', 'cacheTtlSec', 'skipTrivial', 'extraBody', 'systemPrompt'];
 const ADVISOR_FIELDS = ['providerId', 'model', 'maxTokens', 'timeoutMs', 'systemPrompt'];
+const THINKING_FIELDS = ['providerId', 'model', 'maxTokens', 'timeoutMs', 'maxInputChars', 'draftPrompt', 'reviewPrompt'];
 const LEARNING_FIELDS = ['enabled', 'providerId', 'model', 'idleMin', 'minUserTurns', 'minMessages', 'maxInputChars', 'maxTokens', 'timeoutMs', 'autoEnable', 'maxLearned', 'systemPrompt'];
 
 function crud(list, id, patch, fields, res, makeNew) {
@@ -324,6 +334,11 @@ async function admin(req, res, url) {
       Object.assign(cfg.advisor, pick(body, ADVISOR_FIELDS));
       out = cfg.advisor;
       break;
+    case 'thinking':
+      Object.assign(cfg.thinking, pick(body, THINKING_FIELDS));
+      clearThinkerCache();
+      out = cfg.thinking;
+      break;
     case 'learning':
       if (id === 'flush' && method === 'POST') {
         await sweep(cfg, true);
@@ -355,7 +370,7 @@ async function admin(req, res, url) {
         }
       }
       if (method === 'DELETE') {
-        if (cfg.models.some(m => m.providerId === id) || cfg.classifier.providerId === id) return apiError(res, 409, 'Provider is in use');
+        if (cfg.models.some(m => m.providerId === id) || [cfg.classifier, cfg.advisor, cfg.thinking, cfg.learning].some(x => x.providerId === id)) return apiError(res, 409, 'Provider is in use');
         cfg.providers = cfg.providers.filter(x => x.id !== id);
         out = { ok: true };
         break;

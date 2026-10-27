@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { BUILTIN_GUIDES, DEFAULT_CLASSIFIER_PROMPT, DEFAULT_ADVISOR_PROMPT, DEFAULT_LEARNER_PROMPT } from './guides.js';
+import { BUILTIN_GUIDES, DEFAULT_CLASSIFIER_PROMPT, DEFAULT_ADVISOR_PROMPT, DEFAULT_LEARNER_PROMPT, DEFAULT_THINK_DRAFT_PROMPT, DEFAULT_THINK_REVIEW_PROMPT } from './guides.js';
 
 export const DATA_DIR = process.env.DATA_DIR || path.resolve(process.cwd(), 'data');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
@@ -41,6 +41,17 @@ function defaults() {
       maxTokens: 200,
       timeoutMs: 6000,
       systemPrompt: DEFAULT_ADVISOR_PROMPT
+    },
+    thinking: {
+      // "Think" mode: the fast model drafts an analysis, then checks it.
+      // Empty providerId/model = reuse the classifier model.
+      providerId: '',
+      model: '',
+      maxTokens: 400,
+      timeoutMs: 8000,
+      maxInputChars: 3000,
+      draftPrompt: DEFAULT_THINK_DRAFT_PROMPT,
+      reviewPrompt: DEFAULT_THINK_REVIEW_PROMPT
     },
     learning: {
       // After an agent session goes quiet, a small model distils it into
@@ -86,6 +97,7 @@ export function loadConfig() {
       ...saved,
       classifier: { ...base.classifier, ...saved.classifier },
       advisor: { ...base.advisor, ...saved.advisor },
+      thinking: { ...base.thinking, ...saved.thinking },
       learning: { ...base.learning, ...saved.learning }
     };
     // Built-in guides follow the shipped library unless the operator edited
@@ -132,7 +144,13 @@ export function resetGuide(id) {
   return config.guides[i];
 }
 
-export const defaultPrompts = { classifier: DEFAULT_CLASSIFIER_PROMPT, advisor: DEFAULT_ADVISOR_PROMPT, learner: DEFAULT_LEARNER_PROMPT };
+export const defaultPrompts = {
+  classifier: DEFAULT_CLASSIFIER_PROMPT,
+  advisor: DEFAULT_ADVISOR_PROMPT,
+  learner: DEFAULT_LEARNER_PROMPT,
+  thinkDraft: DEFAULT_THINK_DRAFT_PROMPT,
+  thinkReview: DEFAULT_THINK_REVIEW_PROMPT
+};
 
 // Admin password: env ADMIN_PASSWORD wins; otherwise one is generated once and
 // written to data/admin-password.txt so the operator can read it on the server.

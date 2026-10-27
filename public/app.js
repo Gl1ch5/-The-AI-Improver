@@ -118,7 +118,7 @@ async function loadView() {
 const head = (title, sub, actions = '') => `<div class="head"><div><h1>${title}</h1><p>${sub}</p></div><div class="row">${actions}</div></div>`;
 const sw = (name, on, label = '') => `<label class="switch"><input type="checkbox" name="${name}" ${on ? 'checked' : ''}><i></i>${label}</label>`;
 const provName = id => S.state.providers.find(p => p.id === id)?.name || '—';
-const modeLabel = { off: 'выкл', pre: 'подсказки', tool: 'советник', both: 'подсказки + советник' };
+const modeLabel = { off: 'выкл', pre: 'подсказки', tool: 'советник', both: 'подсказки + советник', think: 'двойное мышление' };
 
 const CAT_LABEL = { all: 'Все', behavior: 'Поведение', writing: 'Тексты', design: 'Дизайн', coding: 'Код', reasoning: 'Рассуждения', domains: 'Сферы', custom: 'Свои', learned: 'Выученные' };
 
@@ -197,10 +197,11 @@ const VIEWS = {
           <div class="sub">${esc(provName(m.providerId))} · <span class="mono">${esc(m.upstreamModel || '—')}</span> · ${modeLabel[m.enhance?.mode || 'off']}${m.systemPrompt ? ' · свой промпт' : ''}</div></div>
           <button class="btn sm" data-a="editModel" data-id="${m.id}">Изменить</button>
         </div>`).join('') || '<div class="empty">Моделей нет</div>'}</div></div>
-      <div class="card"><h3>Режимы</h3><div class="grid g3" style="margin-top:12px">
+      <div class="card"><h3>Режимы</h3><div class="grid g2" style="margin-top:12px">
         <div><b>Подсказки</b><p class="muted small">До отправки классификатор выбирает инструкции и пишет короткую критику; это незаметно добавляется в системный контекст. Минимум задержки.</p></div>
         <div><b>Советник</b><p class="muted small">Для сложных задач модель получает скрытый инструмент. Перед ответом она отправляет туда план, быстрая модель критикует его, и ответ продолжается — клиент этого не видит.</p></div>
         <div><b>Подсказки + советник</b><p class="muted small">Оба механизма. Максимальное качество, немного больше токенов.</p></div>
+        <div><b>Двойное мышление</b><p class="muted small">Подсказки, плюс быстрая модель сначала продумывает задачу (параллельно с классификатором), затем проверяет и исправляет свой черновик. Итог тихо получает основная модель. +1–2 с на новый запрос.</p></div>
       </div></div>`;
   },
 
@@ -237,6 +238,21 @@ const VIEWS = {
         </div>
         <label class="f"><span>Системный промпт советника</span><textarea name="systemPrompt" rows="4">${esc(a.systemPrompt)}</textarea></label>
         <div class="row spread"><button type="button" class="btn ghost sm" data-a="resetPrompt" data-k="advisor">Вернуть промпт по умолчанию</button><button class="btn primary">Сохранить</button></div>
+      </form>
+      <form class="card stack" id="thinkForm">
+        <div class="card-head" style="margin:0"><h2>Мышление (режим «двойное мышление»)</h2></div>
+        <div class="grid g2">
+          <label class="f"><span>Провайдер</span><select name="providerId">${provOpts(S.state.thinking.providerId, true)}</select></label>
+          <label class="f"><span>Модель</span><input name="model" value="${esc(S.state.thinking.model)}" placeholder="как у классификатора"></label>
+        </div>
+        <div class="grid g3">
+          <label class="f"><span>Макс. токенов на проход</span><input type="number" name="maxTokens" value="${S.state.thinking.maxTokens}"></label>
+          <label class="f"><span>Таймаут прохода, мс</span><input type="number" name="timeoutMs" value="${S.state.thinking.timeoutMs}"></label>
+          <label class="f"><span>Символов запроса</span><input type="number" name="maxInputChars" value="${S.state.thinking.maxInputChars}"></label>
+        </div>
+        <label class="f"><span>Проход 1 — черновик размышлений</span><textarea name="draftPrompt" rows="4">${esc(S.state.thinking.draftPrompt)}</textarea></label>
+        <label class="f"><span>Проход 2 — проверка черновика</span><textarea name="reviewPrompt" rows="4">${esc(S.state.thinking.reviewPrompt)}</textarea></label>
+        <div class="row spread"><div class="row"><button type="button" class="btn ghost sm" data-a="resetPrompt" data-k="thinkDraft" data-f="draftPrompt">Черновик по умолчанию</button><button type="button" class="btn ghost sm" data-a="resetPrompt" data-k="thinkReview" data-f="reviewPrompt">Проверка по умолчанию</button></div><button class="btn primary">Сохранить</button></div>
       </form>
       <form class="card stack" id="testForm">
         <div class="card-head" style="margin:0"><h2>Проверка</h2><span class="muted small">покажет, что будет подмешано</span></div>
@@ -338,7 +354,7 @@ const VIEWS = {
         <tbody>${S.logs.map(l => `<tr>
           <td class="num">${new Date(l.at).toLocaleTimeString()}</td>
           <td><div>${esc(l.model)}</div><div class="faint small mono">${esc(l.upstreamModel || '')}</div></td>
-          <td style="max-width:320px"><div>${esc(l.preview)}</div>${l.critique ? `<div class="faint small">${esc(l.critique)}</div>` : ''}${l.advice ? `<div class="faint small">советник: ${esc(l.advice)}</div>` : ''}${l.error ? `<div class="small" style="color:var(--bad)">${esc(l.error)}</div>` : ''}</td>
+          <td style="max-width:320px"><div>${esc(l.preview)}</div>${l.critique ? `<div class="faint small">${esc(l.critique)}</div>` : ''}${l.thinking ? `<div class="faint small">мышление (${l.thinkMs} мс): ${esc(l.thinking)}</div>` : ''}${l.advice ? `<div class="faint small">советник: ${esc(l.advice)}</div>` : ''}${l.error ? `<div class="small" style="color:var(--bad)">${esc(l.error)}</div>` : ''}</td>
           <td><div class="row" style="gap:4px">${(l.guides || []).map(g => `<span class="pill">${esc(g)}</span>`).join('') || `<span class="faint small">${esc(l.complexity || '')}</span>`}${l.tool ? '<span class="pill">советник</span>' : ''}</div></td>
           <td class="num">${esc(l.source || '')}<br>${l.classifierMs ?? 0} мс</td>
           <td class="num">${l.totalMs ?? '…'} мс</td>
@@ -392,6 +408,15 @@ const AFTER = {
       e.preventDefault();
       const f = e.target;
       await api('/advisor', { method: 'PUT', body: { providerId: f.providerId.value, model: f.model.value.trim(), maxTokens: Number(f.maxTokens.value), timeoutMs: Number(f.timeoutMs.value), systemPrompt: f.systemPrompt.value } });
+      await refresh();
+      toast('Сохранено');
+    });
+    $('#thinkForm').onsubmit = run(async e => {
+      e.preventDefault();
+      const f = e.target;
+      const body = { providerId: f.providerId.value, model: f.model.value.trim(), draftPrompt: f.draftPrompt.value, reviewPrompt: f.reviewPrompt.value };
+      for (const k of ['maxTokens', 'timeoutMs', 'maxInputChars']) body[k] = Number(f[k].value);
+      await api('/thinking', { method: 'PUT', body });
       await refresh();
       toast('Сохранено');
     });
@@ -689,7 +714,7 @@ const ACTIONS = {
   }),
   resetPrompt: el => {
     const form = el.closest('form');
-    form.systemPrompt.value = S.state.defaults[el.dataset.k];
+    form[el.dataset.f || 'systemPrompt'].value = S.state.defaults[el.dataset.k];
     toast('Промпт вставлен — нажмите «Сохранить»');
   },
   clearChat: () => {

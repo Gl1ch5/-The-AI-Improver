@@ -1,7 +1,8 @@
-import { classify, lastUserText, stickyGuides } from './classifier.js';
+import { classify, lastUserText, stickyGuides, isTrivial } from './classifier.js';
 import { providerById, chatRequest, quickCompletion } from './upstream.js';
 import { stats, estTokens } from './stats.js';
 import { patternGuides } from './learner.js';
+import { startDraft, finishThinking } from './thinker.js';
 
 export const ADVISOR_TOOL = 'quality_review';
 
@@ -29,9 +30,10 @@ export class HttpError extends Error {
 
 // ---------- request preparation ----------
 
-function buildGuidance(cfg, model, cls, toolEnabled) {
+function buildGuidance(cfg, model, cls, toolEnabled, thought) {
   const e = model.enhance;
   const parts = [];
+  if (thought) parts.push(`Prepared analysis (a draft from a faster model: use what holds, verify the rest):\n${thought}`);
   if (e.critique && cls.critique && !cls.trivialOnlySticky) parts.push(`Focus for this request: ${cls.critique}`);
   const used = [];
   if (e.guides) {
@@ -81,12 +83,16 @@ export async function prepare(cfg, body) {
   if (!provider) throw new HttpError(500, `Provider for model '${model.name}' is not configured`, 'server_error');
 
   const mode = model.enhance?.mode || 'off';
-  let cls = { guides: [], complexity: 'simple', critique: '', source: 'off', ms: 0 };
-  if (mode !== 'off') cls = await classify(cfg, body.messages, stats);
-
   // Only on a fresh user turn: in agent loops the last message is a tool result,
   // and re-reviewing the plan on every step would add latency for nothing.
   const freshTurn = body.messages.at(-1)?.role === 'user';
+  // Think mode: the first thinking pass runs alongside the classifier.
+  const thinking = mode === 'think' && !isTrivial(lastUserText(body.messages));
+  const draft = thinking && freshTurn ? startDraft(cfg, body.messages, stats) : null;
+  let cls = { guides: [], complexity: 'simple', critique: '', source: 'off', ms: 0 };
+  if (mode !== 'off') cls = await classify(cfg, body.messages, stats);
+  let thought = null;
+  if (thinking) thought = await finishThinking(cfg, body.messages, cls, draft, stats, !freshTurn);
   const toolEnabled =
     (mode === 'tool' || mode === 'both') && freshTurn && cls.complexity === 'complex' && body.tool_choice !== 'none';
   if (mode !== 'off') {
@@ -99,7 +105,7 @@ export async function prepare(cfg, body) {
   const guidance =
     mode === 'off' || (cls.complexity === 'trivial' && !cls.sticky?.length && !cls.matched?.length)
       ? { text: '', used: [] }
-      : buildGuidance(cfg, mode === 'tool' ? { ...model, enhance: { ...model.enhance, guides: false, critique: false } } : model, cls, toolEnabled);
+      : buildGuidance(cfg, mode === 'tool' ? { ...model, enhance: { ...model.enhance, guides: false, critique: false } } : model, cls, toolEnabled, thought?.text);
 
   const messages = mergeSystem(body.messages, model.systemPrompt?.trim(), guidance.text);
   const upstreamBody = { ...body, ...(model.extraBody || {}), model: model.upstreamModel, messages };
@@ -117,6 +123,7 @@ export async function prepare(cfg, body) {
     toolEnabled,
     meta: {
       classification: cls,
+      thinking: thought,
       guides: guidance.used,
       injected: guidance.text,
       injectedTokens: estTokens(guidance.text) + estTokens(model.systemPrompt)

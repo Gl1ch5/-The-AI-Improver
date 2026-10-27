@@ -29,6 +29,12 @@ Guides:
 // Prompt used when the main model calls the hidden advisor tool with its plan.
 export const DEFAULT_ADVISOR_PROMPT = `You are a strict, fast reviewer. Another AI assistant shows you its plan for answering a user. Reply with 1-4 terse bullet points: concrete flaws, missing steps or risks in the plan, and how to fix them. If the plan is good, say "Plan OK" plus at most one improvement. No preamble.`;
 
+// Think mode, pass 1: the fast model thinks the task through before the main model.
+export const DEFAULT_THINK_DRAFT_PROMPT = `You think a request through for another AI assistant that will answer it. You never answer the user. In at most 150 words of terse bullets: what is really asked (incl. implicit needs), the key facts, steps or calculations with their results, edge cases, and the likely traps. If something must be computed or decided, do it. No preamble.`;
+
+// Think mode, pass 2: the same model checks its own draft.
+export const DEFAULT_THINK_REVIEW_PROMPT = `You check a draft analysis written for another AI assistant before it answers a request. Recompute anything computed, drop wrong or irrelevant points, add what is missing, and use the router critique if given. Output ONLY the corrected analysis as at most 120 words of terse bullets, marking anything uncertain with "(verify)". No preamble.`;
+
 // Learning mode: turns a finished session digest into reusable notes. Runs once
 // per session, after it goes quiet, never on the request path.
 export const DEFAULT_LEARNER_PROMPT = `You turn a finished AI-assistant work session into reusable working notes for future sessions on the same stack. Output ONLY JSON:

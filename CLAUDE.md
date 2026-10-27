@@ -7,6 +7,7 @@ OpenAI-compatible proxy. A small classifier reads the latest user message, picks
 - `server/index.js` — HTTP server, `/v1/*` (client API) and `/api/*` (admin API), static UI.
 - `server/proxy.js` — request preparation, advisor round-trip, streaming. Advisor only on a fresh user turn.
 - `server/classifier.js` — classifier, cache, local heuristics, sticky guides, `catalog()`.
+- `server/thinker.js` — "think" mode: the fast model drafts an analysis (in parallel with the classifier), then checks it; the result goes into the main model's notes. Agent steps reuse the cached brief.
 - `server/learner.js` — learning mode: tracks sessions by first user message, digests a quiet session, writes `learned` guides; `patternGuides()` attaches a learned guide instantly when its error text appears in the latest user/tool message.
 - `server/guides.js` — loads the library; classifier, advisor and learner prompts live here.
 - `server/library/*.json` — the guide library (6 categories, ~118 guides). Source of truth for guide text.
@@ -18,7 +19,7 @@ OpenAI-compatible proxy. A small classifier reads the latest user message, picks
 
 ## Commands
 
-- `npm test` — must pass before every commit (currently 18 tests).
+- `npm test` — must pass before every commit (currently 19 tests).
 - Logs: `journalctl -u ai-improver` has one `[req] {json}` line per request (routing, guides, timings, 80-char preview) and one `[learn] {json}` line per analysed session.
 - `node --env-file=.env server/index.js` — run locally on port 3210.
 

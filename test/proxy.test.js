@@ -12,6 +12,7 @@ const BASE = `http://127.0.0.1:${PORT}`;
 let proc, mock, cookie, apiKey;
 const seen = [];
 const learnerInputs = [];
+const thinkReviews = [];
 
 // Fake OpenAI-compatible upstream that plays classifier, advisor and main model.
 function startMock() {
@@ -42,6 +43,13 @@ function startMock() {
         text: '- Resolve child nodes with @onready var x = $Path and check is_instance_valid() before use.\n- Invalid get index on null means the node path is wrong or the node was freed; print get_path() and fix the scene tree instead of guarding every access.'
       };
       return res.end(JSON.stringify({ choices: [{ message: { content: JSON.stringify({ notes: [note] }) } }] }));
+    }
+    if (sys.includes('think a request through')) {
+      return res.end(JSON.stringify({ choices: [{ message: { content: '- 17*23 = 401' } }] }));
+    }
+    if (sys.includes('check a draft analysis')) {
+      thinkReviews.push(body.messages[1].content);
+      return res.end(JSON.stringify({ choices: [{ message: { content: '- 17*23 = 391, not 401' } }] }));
     }
     if (sys.includes('strict, fast reviewer')) {
       return res.end(JSON.stringify({ choices: [{ message: { content: '- Add a pricing section' } }] }));
@@ -240,6 +248,40 @@ test('a style asked for once sticks for the rest of the dialog, even on small ta
   assert.equal(sys.role, 'system');
   assert.match(sys.content, /Talk like a human|natural spoken Russian/i);
   assert.doesNotMatch(sys.content, /Focus for this request/);
+});
+
+test('think mode: the fast model drafts, checks its draft, and the main model gets the result', async () => {
+  const state = await admin('/state');
+  await admin('/models/' + state.models[0].id, 'PUT', { enhance: { mode: 'think', guides: true, critique: true, maxGuides: 2 } });
+  seen.length = 0;
+  const q = 'Сделай лендинг и посчитай 17*23 для цены';
+  await (await chat({ model: 'improved-gpt', messages: [{ role: 'user', content: q }] })).json();
+  const sys = seen.at(-1).messages[0].content;
+  assert.match(sys, /Prepared analysis[\s\S]*391, not 401/);
+  assert.doesNotMatch(sys, /= 401$/m, 'the unchecked draft is not passed on');
+  assert.match(sys, /Web \/ UI design/, 'guides still apply');
+  assert.match(thinkReviews.at(-1), /Draft analysis:\n- 17\*23 = 401/);
+  assert.match(thinkReviews.at(-1), /Router critique: Needs a clear hero/);
+  assert.equal(seen.length, 4, 'classifier + draft + review + main');
+
+  // An agent step after a tool result reuses the brief without new model calls.
+  seen.length = 0;
+  await (await chat({
+    model: 'improved-gpt',
+    messages: [
+      { role: 'user', content: q },
+      { role: 'assistant', content: null, tool_calls: [{ id: 't1', type: 'function', function: { name: 'read_file', arguments: '{}' } }] },
+      { role: 'tool', tool_call_id: 't1', content: 'ok' }
+    ]
+  })).json();
+  assert.equal(seen.length, 1);
+  assert.match(seen[0].messages[0].content, /391, not 401/);
+
+  // Small talk skips thinking entirely.
+  seen.length = 0;
+  await (await chat({ model: 'improved-gpt', messages: [{ role: 'user', content: 'спасибо!' }] })).json();
+  assert.equal(seen.length, 1);
+  await admin('/models/' + state.models[0].id, 'PUT', { enhance: { mode: 'pre', guides: true, critique: true, maxGuides: 2 } });
 });
 
 test('unknown model returns OpenAI-style 404', async () => {
